@@ -1,6 +1,6 @@
 # Nerfies
 
-This is the repository that contains source code for the [Nerfies website](https://nerfies.github.io).
+This is the repository that contains source code for the [Nerfies website](https://if-you-love-me-forever-52lin1314.github.io).
 
 If you find Nerfies useful for your work please cite:
 ```
