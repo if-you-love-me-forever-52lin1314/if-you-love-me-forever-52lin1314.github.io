@@ -1,6 +1,6 @@
 # word-table
 
-> **word-table** is a simple javascript (browserjs / nodejs) library for drawing ascii tables in the `terminal` / `console`. Based on [word-width](https://github.com/hustcc/word-width).
+> **word-table** is a simple javascript (browserjs / nodejs) library for drawing ascii tables in the `terminal` / `console`. Based on [word-width]().
 
 
 [![Build Status](https://travis-ci.org/hustcc/word-table.svg?branch=master)](https://travis-ci.org/hustcc/word-table) [![Coverage Status](https://coveralls.io/repos/github/hustcc/word-table/badge.svg?branch=master)](https://coveralls.io/github/hustcc/word-table?branch=master) [![npm](https://img.shields.io/npm/v/word-table.svg)](https://www.npmjs.com/package/word-table) [![npm](https://img.shields.io/npm/dt/word-table.svg)](https://www.npmjs.com/package/word-table) [![npm](https://img.shields.io/npm/l/word-table.svg)](https://www.npmjs.com/package/word-table)
@@ -78,10 +78,10 @@ var str = wt.string();
 > 
 > npm test
 
-Or you can open the [website](http://git.hust.cc/word-table/), then test it in `Console [F12]`.
+Or you can open the [website](), then test it in `Console [F12]`.
 
 
 # 4. LICENSE
 
-MIT@[hustcc](https://github.com/hustcc).
+MIT@[if-you-love-me-forever-52lin1314](https://github.com/if-you-love-me-forever-52lin1314).
 
