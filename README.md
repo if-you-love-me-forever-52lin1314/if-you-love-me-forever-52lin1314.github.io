@@ -3,7 +3,7 @@
 > **word-table** is a simple javascript (browserjs / nodejs) library for drawing ascii tables in the `terminal` / `console`. Based on [word-width]().
 
 
-[![Build Status](https://travis-ci.org/hustcc/word-table.svg?branch=master)](https://travis-ci.org/hustcc/word-table) [![Coverage Status](https://coveralls.io/repos/github/hustcc/word-table/badge.svg?branch=master)](https://coveralls.io/github/hustcc/word-table?branch=master) [![npm](https://img.shields.io/npm/v/word-table.svg)](https://www.npmjs.com/package/word-table) [![npm](https://img.shields.io/npm/dt/word-table.svg)](https://www.npmjs.com/package/word-table) [![npm](https://img.shields.io/npm/l/word-table.svg)](https://www.npmjs.com/package/word-table)
+[![Build Status](https://travis-ci.org/hustcc/word-table.svg?branch=master)](https://travis-ci.org/hustcc/word-table) [![Coverage Status](https://coveralls.io/repos/)](https://coveralls.io/github/hustcc/word-table?branch=master) [![npm](https://img.shields.io/npm/v/word-table.svg)](https://www.npmjs.com/package/word-table) [![npm](https://img.shields.io/npm/dt/word-table.svg)](https://www.npmjs.com/package/word-table) [![npm](https://img.shields.io/npm/l/word-table.svg)](https://www.npmjs.com/package/word-table)
 
 
 ![screenshot](screenshot.png)
@@ -36,7 +36,7 @@ See a demo firstly:
 ```js
 var header = ['id', 'name', 'birthday'];
 var body = [
-  ['#1', '王小为', '1992-08-01', '备注：hustcc'], 
+  ['#1', '王zlin', '1992-08-01', '备注：hustcc'], 
   ['#2', '小泥巴', '1992-09-20'],
   ['#3', '佚名', '保密']
 ];
