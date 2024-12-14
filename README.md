@@ -1,6 +1,6 @@
-# word@@table
+# JavaScript for printing tables
 
-> **word@@table** is a simple javascript (browserjs / nodejs) library for drawing ascii tables in the `terminal` / `console`. Based on [word-width]().
+> **JavaScript for printing tables** is a simple javascript (browserjs / nodejs) library for drawing ascii tables in the `terminal` / `console`. Based on [JavaScript for printing tables]().
 
 
 [![Build Status](https://travis-ci.org/hustcc/word-table.svg?branch=master)](https://travis-ci.org/hustcc/word-table) [![Coverage Status](https://coveralls.io/repos/)](https://coveralls.io/github/hustcc/word-table?branch=master) [![npm](https://img.shields.io/npm/v/word-table.svg)](https://www.npmjs.com/package/word-table) [![npm](https://img.shields.io/npm/dt/word-table.svg)](https://www.npmjs.com/package/word-table) [![npm](https://img.shields.io/npm/l/word-table.svg)](https://www.npmjs.com/package/word-table)
@@ -11,7 +11,7 @@
 
 # 1. Install & Import
 
-> **npm install word-table**
+> **npm install JavaScript for printing tables**
 
 
  - Import it with `script` tag in HTML.
@@ -23,9 +23,9 @@
  - Import it with `require`.
 
 ```js
-var WordTable = require('word-table');
+var JavaScript for printing tables = require('word-table');
 //or
-import WordTable from 'word-table';
+import JavaScript for printing tables from 'word-table';
 ```
 
 
@@ -42,7 +42,7 @@ var body = [
 ];
 
 // basic usage
-var wt = new WordTable(header, body);
+var wt = new JavaScript for printing tables(header, body);
 console.log(wt.string());
 ```
 
@@ -62,7 +62,7 @@ Detail usage and demo code, can see [here](tests/test.js), and run `npm test` ca
 The api are all chainable method, e.g.
 
 ```js
-var wt = new WordTable();
+var wt = new JavaScript for printing tables();
 wt.reset()
   .setHeader(['id', 'name', 'birthday'])
   .appendBody(['#3', '佚名', '保密']);
@@ -83,5 +83,5 @@ Or you can open the [website](), then test it in `Console [F12]`.
 
 # 4. LICENSE
 
-MIT@[if-you-love-me-forever-52lin1314](https://github.com/if-you-love-me-forever-52lin1314).
+MIT@[52lin9999](https://github.com/52lin9999).
 
