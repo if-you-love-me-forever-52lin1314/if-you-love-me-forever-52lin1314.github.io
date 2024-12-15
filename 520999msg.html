@@ -1,0 +1,216 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0" />
+<title>msg demo</title>
+<!-- 引入 msg.js -->
+<script src="./msg.js"></script>
+</head>
+<body>
+
+<h2>效果图</h2>
+
+<div>
+	<div id="shili">
+		<div>
+			<img src="https://res.weiunity.com/msg/images/info.png" />
+		</div>
+		<div>
+			<img src="https://res.weiunity.com/msg/images/success.png" />
+		</div>
+		<div>
+			<img src="https://res.weiunity.com/msg/images/failure.png" />
+		</div>
+		<div>
+			<img src="https://res.weiunity.com/msg/images/loading.gif" />
+		</div>
+		<div style="clear: both;"></div>
+	</div>
+	<div id="shili">
+		<div>
+			<img src="https://res.weiunity.com/msg/images/confirm_simple.png" />
+		</div>
+		<div>
+			<img src="https://res.weiunity.com/msg/images/confirm_button.png" />
+		</div>
+		<div style="clear: both;"></div>
+	</div>
+</div>
+<div style="clear: both;"></div>
+
+<h4>简单的弹出提示</h4>
+<button onclick="msg.info('Hello Msg');">提示信息</button>
+<button onclick="msg.success('操作成功');">成功提示</button>
+<button onclick="msg.failure('操作失败');">失败提示</button>
+
+
+<h4>加载中 提示</h4>
+<button onclick="msg.loading('加载中');">加载中提示</button>
+<button onclick="msg.close();">关闭提示</button>
+<h4>弹出提示，提示消失时执行其他命令</h4>
+<button onclick="msg.info('Hello Msg', function(){ alert(1); });">提示信息，消失时弹出alert</button>
+<button onclick="msg.success('操作成功', function(){ alert(1); });">成功提示，消失时弹出alert</button>
+<button onclick="msg.failure('操作失败', function(){ alert(1); });">失败提示，消失时弹出alert</button>
+
+<h4>信息确定、取消的 confirm 提示</h4>
+<button onclick="msg_confirm_simple();">最简单使用</button>
+<button onclick="msg_confirm();">自定义按钮</button>
+<script>
+function msg_confirm_simple(){
+	msg.confirm('你真的真的确定你很帅吗？',function(){
+		alert('你点了确定');
+	});
+}
+
+function msg_confirm(){
+	msg.confirm({
+		text:'这里演示自定义按钮数量、触发效果。',
+		buttons:{
+			按钮1:function(){
+				alert('点了按钮一');
+			},
+			按钮2:function(){
+				msg.info('点了按钮二');
+			},
+			按钮3:function(){
+				msg.info('点了按钮三');
+			}
+		} 
+	});
+}
+</script>
+
+<h4>弹出层</h4>
+<button onclick="msg.popups('Hallo，是管雷鸣创造了我！');">普通弹出层</button>
+<button onclick="msg.popups({text:'Hallo，是管雷鸣创造了我！',background:'#FF5722',width:'200px', height:'100px'});">自定义宽高背景的弹出层</button>
+<button onclick="msg.popups({
+		text:'Hallo，是管雷鸣创造了我！我没有关闭按钮，你要执行 <pre>msg.close();</pre> 来关闭我',
+		close:false,
+		width:'380px',
+		height:'200px'
+	});">没有关闭按钮的弹出框</button>
+
+
+<h4>input 输入框</h4>
+<button onclick="
+	msg.input('请输入您的名字',function(value){
+		alert('您输入的是:'+value);
+	});"
+>弹出单行文本输入框</button>
+<button onclick="
+	msg.input('请输入您的名字',function(value){
+		alert('您输入的是:'+value);
+	}, '默认值是管雷鸣');"
+">弹出带有默认值的单行文本输入框</button>
+
+<button onclick="
+	msg.textarea('请输入您的名字',function(value){
+		alert('您输入的是:'+value);
+	});"
+>弹出多行文本输入框</button>
+<button onclick="
+	msg.textarea('请输入您的名字',function(value){
+		alert('您输入的是:'+value);
+	}, '默认值是管雷鸣');"
+">弹出带有默认值的多行文本输入框</button>
+
+
+<h4>鼠标跟随提示</h4>
+<button id="mouseTipTest">鼠标放到我上面看看</button>
+<script>
+msg.tip({
+	id: 'mouseTipTest',
+	text: '哈喽，我是鼠标提示的内容'
+});
+</script>
+
+<div style="padding-top:50px;">
+	<h3>快速使用</h3>
+	<div>
+		<h4>1. 引入js文件</h4>
+		<pre>
+	&lt;script src="https://res.weiunity.com/msg/msg.js"&gt;&lt;/script&gt;
+		</pre>
+		
+	</div>
+	<div>
+		<h4>2. 一句话调用：</h4> 
+		<pre>
+	msg.info('Hello Msg');
+		</pre>		
+		
+	</div>
+	<style>
+		#shili>div{float:left;}
+		#shili>div>div{font-size:13px; text-align:center;}
+		img{width:160px;}
+	</style>
+	<div id="shili">
+		<div>
+			<img src="https://res.weiunity.com/msg/images/info.png" />
+			<div>msg.info('Hello Msg');</div>
+		</div>
+		<div>
+			<img src="https://res.weiunity.com/msg/images/success.png" />
+			<div>msg.success('操作成功');</div>
+		</div>
+		<div>
+			<img src="https://res.weiunity.com/msg/images/failure.png" />
+			<div>msg.failure('操作失败');</div>
+		</div>
+		<div>
+			<img src="https://res.weiunity.com/msg/images/loading.gif" />
+			<div>msg.loading('加载中');</div>
+			<div>msg.close();  //关闭</div>
+		</div>
+	</div>
+	<div style="clear: both;"></div>	
+	
+	<div>
+		<h4>弹出窗，弹出层使用：</h4> 
+		<pre>
+//普通弹出框。普通弹出窗只是显示内容，所以直接吧内容传入就可以了
+msg.popups('我是弹出窗口，可以传入文字、也可以传入html');
+
+//自定义弹出框。自定义，传入了一个自定义属性，内容文本也算是其中的一个属性。改弹出层自动会居中显示。
+msg.popups({
+	text:'Hallo，是管雷鸣创造了我！',	//弹出窗显示的内容，支持html
+	url:'https://www.leimingyun.com/index.html', //设置弹出窗口要打开的网址，如果url跟text同时设置，那么优先采用url， text设置将无效
+	height:'100px',		//弹出层显示的高度。不传默认是 auto。 传入如 100px 、 10rem 、 10% 等 
+	width:'90%',		//弹出层显示的宽度。不传默认是 90%。 传入如 100px 、 10rem 、 10% 等
+	close:true,			//是否显示右上角的关闭按钮，不传默认是true，显示关闭按钮
+	background:'#2e2d3c',	//背景颜色。十六进制颜色编码。不传默认是 '#2e2d3c'
+	opacity:92,			//弹出层的透明度，默认是92, 取值0~100，0是不透明，100是全部透明
+	padding:'3px',		//弹出层四周留的空隙，默认是1rem。可传入如 10px 、 1rem 等
+});
+
+
+//信息确定、取消的confirm提示 （待完善，只是初步增加）
+msg.confirm({
+	text:'hallo',
+	buttons:{
+		'确认':function(){
+			alert('点了确认');
+		},
+		'取消':function(){
+			alert('点了取消');
+		}
+	} 
+});
+
+		</pre>
+	</div>
+	
+</div>
+<div style="padding-top:50px; font-size:13px;color:gray;">
+	信息提醒，不依赖任何乱七八糟框架及其他文件，导入 msg.js ，msg.info('Hello msg') 一句代码使用！
+ 	<br/>作者：管雷鸣
+ 	<br/>个人网站：<a href="http://www.guanleiming.com" target="_black">www.guanleiming.com</a>
+ 	<br/>个人微信: xnx3com
+ 	<br/>公司：潍坊雷鸣云网络科技有限公司
+ 	<br/>公司官网：<a href="http://www.leimingyun.com" target="_black">www.leimingyun.com</a>
+</div>
+
+</body>
+</html>
