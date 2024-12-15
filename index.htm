@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0" />
 <title>lin-msg demo</title>
-<!-- 引入 520999msg.js -->
+<!-- 引入 lin-msg.js -->
 <script src="./msg.js"></script>
 </head>
 <body>
@@ -83,10 +83,10 @@ function msg_confirm(){
 </script>
 
 <h4>Popup</h4>
-<button onclick="msg.popups('Hallo，520999 created me！');">Ordinary pop-up layer</button>
-<button onclick="msg.popups({text:'Hallo，520999 created me！',background:'#FF5722',width:'200px', height:'100px'});">Pop up layer with custom width and height background</button>
+<button onclick="msg.popups('Hallo，lin created me！');">Ordinary pop-up layer</button>
+<button onclick="msg.popups({text:'Hallo，lin created me！',background:'#FF5722',width:'200px', height:'100px'});">Pop up layer with custom width and height background</button>
 <button onclick="msg.popups({
-		text:'Hallo，520999 created me！I don't have a close button, you need to execute it <pre>msg.close();</pre> Come and close me',
+		text:'Hallo，lin created me！I don't have a close button, you need to execute it <pre>msg.close();</pre> Come and close me',
 		close:false,
 		width:'380px',
 		height:'200px'
@@ -102,7 +102,7 @@ function msg_confirm(){
 <button onclick="
 	msg.input('Please enter your name',function(value){
 		alert('What did you enter:'+value);
-	}, 'The default value is 520999');"
+	}, 'The default value is lin');"
 ">Pop up a single line text input box with default values</button>
 
 <button onclick="
@@ -113,7 +113,7 @@ function msg_confirm(){
 <button onclick="
 	msg.textarea('Please enter your name',function(value){
 		alert('What did you enter:'+value);
-	}, 'The default value is 520999');"
+	}, 'The default value is lin');"
 ">Pop up a multi line text input box with default values</button>
 
 
@@ -138,7 +138,7 @@ msg.tip({
 	<div>
 		<h4>2. One sentence call：</h4> 
 		<pre>
-	msg.info('Hello 520999Msg');
+	msg.info('Hello lin-msg');
 		</pre>		
 		
 	</div>
@@ -150,7 +150,7 @@ msg.tip({
 	<div id="shili">
 		<div>
 			<img src="https://res.weiunity.com/msg/images/info.png" />
-			<div>msg.info('Hello 520999-Msg');</div>
+			<div>msg.info('Hello lin-Msg');</div>
 		</div>
 		<div>
 			<img src="https://res.weiunity.com/msg/images/success.png" />
@@ -176,8 +176,8 @@ msg.popups('I am a pop-up window that can input text or HTML');
 
 //Customize pop-up boxes. Custom, a custom attribute is passed in, and the content text is also one of the attributes. The pop-up layer will automatically display in the center.
 msg.popups({
-	text:'Hallo，520999 created me!',	//The content displayed in the pop-up window supports HTML
-	url:'https://github.com/520999js', //Set the URL to open the pop-up window. If both URL and text are set, URL will be used first, The text setting will be invalid
+	text:'Hallo，lin created me!',	//The content displayed in the pop-up window supports HTML
+	url:'https://github.com/linjs', //Set the URL to open the pop-up window. If both URL and text are set, URL will be used first, The text setting will be invalid
 	height:'100px',		//The height displayed by the pop-up layer. The default is auto. Input values such as 100px 10rem, 10%, etc
 	width:'90%',		//The width of the pop-up layer display. The default is 90%. Input values such as 100px 10rem, 10%, etc
 	close:true,			//Whether to display the close button in the upper right corner, default is true if not passed, display the close button
@@ -205,9 +205,9 @@ msg.confirm({
 	
 </div>
 <div style="padding-top:50px; font-size:13px;color:gray;">
-	Information reminder, without relying on any messy frameworks or other files, import 520999 msg.js ，msg.info('Hello msg') One sentence code usage!
- 	<br/>Author: 520999
- 	<br/>github：<a href="https://github.com/520999js" target="_black">github.com/520999js</a>
+	Information reminder, without relying on any messy frameworks or other files, import lin-msg.js ，msg.info('Hello msg') One sentence code usage!
+ 	<br/>Author: lin
+ 	<br/>github：<a href="https://github.com/linjs" target="_black">github.com/linjs</a>
 
 </div>
 
