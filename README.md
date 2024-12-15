@@ -1,6 +1,6 @@
-# JavaScript for printing tables
+# 520999-JavaScript for printing tables
 
-> **JavaScript for printing tables** is a simple javascript (browserjs / nodejs) library for drawing ascii tables in the `terminal` / `console`. Based on [JavaScript for printing tables]().
+> **520999-JavaScript for printing tables** is a simple javascript (browserjs / nodejs) library for drawing ascii tables in the `terminal` / `console`. Based on [JavaScript for printing tables]().
 
 
 [![Build Status](https://travis-ci.org/hustcc/word-table.svg?branch=master)](https://travis-ci.org/hustcc/word-table) [![Coverage Status](https://coveralls.io/repos/)](https://coveralls.io/github/hustcc/word-table?branch=master) [![npm](https://img.shields.io/npm/v/word-table.svg)](https://www.npmjs.com/package/word-table) [![npm](https://img.shields.io/npm/dt/word-table.svg)](https://www.npmjs.com/package/word-table) [![npm](https://img.shields.io/npm/l/word-table.svg)](https://www.npmjs.com/package/word-table)
@@ -11,7 +11,7 @@
 
 # 1. Install & Import
 
-> **npm install JavaScript for printing tables**
+> **npm install 520999-JavaScript for printing tables**
 
 
  - Import it with `script` tag in HTML.
@@ -36,7 +36,7 @@ See a demo firstly:
 ```js
 var header = ['id', 'name', 'birthday'];
 var body = [
-  ['#1', '王zlin', '1992-08-01', '备注：zelin'], 
+  ['#1', '王小为', '1992-08-01', '备注：520999'], 
   ['#2', '小泥巴', '1992-09-20'],
   ['#3', '佚名', '保密']
 ];
@@ -83,5 +83,5 @@ Or you can open the [website](), then test it in `Console [F12]`.
 
 # 4. LICENSE
 
-MIT@[52lin9999](https://github.com/52lin9999).
+MIT@[52lin9999](https://github.com/520999js).
 
