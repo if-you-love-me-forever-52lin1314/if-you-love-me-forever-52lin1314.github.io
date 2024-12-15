@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0" />
 <title>msg demo</title>
-<!-- 引入 msg.js -->
+<!-- 引入 520999msg.js -->
 <script src="./msg.js"></script>
 </head>
 <body>
@@ -39,21 +39,21 @@
 </div>
 <div style="clear: both;"></div>
 
-<h4>简单的弹出提示</h4>
+<h4>Simple pop-up prompt</h4>
 <button onclick="msg.info('Hello Msg');">提示信息</button>
 <button onclick="msg.success('操作成功');">成功提示</button>
 <button onclick="msg.failure('操作失败');">失败提示</button>
 
 
-<h4>加载中 提示</h4>
+<h4>Loading prompt</h4>
 <button onclick="msg.loading('加载中');">加载中提示</button>
 <button onclick="msg.close();">关闭提示</button>
-<h4>弹出提示，提示消失时执行其他命令</h4>
+<h4>Pop up prompt, execute other commands when prompt disappears</h4>
 <button onclick="msg.info('Hello Msg', function(){ alert(1); });">提示信息，消失时弹出alert</button>
 <button onclick="msg.success('操作成功', function(){ alert(1); });">成功提示，消失时弹出alert</button>
 <button onclick="msg.failure('操作失败', function(){ alert(1); });">失败提示，消失时弹出alert</button>
 
-<h4>信息确定、取消的 confirm 提示</h4>
+<h4>Confirm prompt for information confirmation and cancellation</h4>
 <button onclick="msg_confirm_simple();">最简单使用</button>
 <button onclick="msg_confirm();">自定义按钮</button>
 <script>
@@ -82,10 +82,10 @@ function msg_confirm(){
 </script>
 
 <h4>弹出层</h4>
-<button onclick="msg.popups('Hallo，是管雷鸣创造了我！');">普通弹出层</button>
-<button onclick="msg.popups({text:'Hallo，是管雷鸣创造了我！',background:'#FF5722',width:'200px', height:'100px'});">自定义宽高背景的弹出层</button>
+<button onclick="msg.popups('Hallo，520999 created me！');">普通弹出层</button>
+<button onclick="msg.popups({text:'Hallo，520999 created me！',background:'#FF5722',width:'200px', height:'100px'});">自定义宽高背景的弹出层</button>
 <button onclick="msg.popups({
-		text:'Hallo，是管雷鸣创造了我！我没有关闭按钮，你要执行 <pre>msg.close();</pre> 来关闭我',
+		text:'Hallo，520999 created me！我没有关闭按钮，你要执行 <pre>msg.close();</pre> 来关闭我',
 		close:false,
 		width:'380px',
 		height:'200px'
@@ -112,32 +112,32 @@ function msg_confirm(){
 <button onclick="
 	msg.textarea('请输入您的名字',function(value){
 		alert('您输入的是:'+value);
-	}, '默认值是管雷鸣');"
-">弹出带有默认值的多行文本输入框</button>
+	}, '默认值是520999');"
+">Pop up a multi line text input box with default values</button>
 
 
-<h4>鼠标跟随提示</h4>
-<button id="mouseTipTest">鼠标放到我上面看看</button>
+<h4>Mouse following prompts</h4>
+<button id="mouseTipTest">Place the mouse over me and take a look</button>
 <script>
 msg.tip({
 	id: 'mouseTipTest',
-	text: '哈喽，我是鼠标提示的内容'
+	text: 'Hello, I am the content of the mouse prompt'
 });
 </script>
 
 <div style="padding-top:50px;">
-	<h3>快速使用</h3>
+	<h3>quick-access</h3>
 	<div>
-		<h4>1. 引入js文件</h4>
+		<h4>1. Import JS file</h4>
 		<pre>
 	&lt;script src="https://res.weiunity.com/msg/msg.js"&gt;&lt;/script&gt;
 		</pre>
 		
 	</div>
 	<div>
-		<h4>2. 一句话调用：</h4> 
+		<h4>2. One sentence call：</h4> 
 		<pre>
-	msg.info('Hello Msg');
+	msg.info('Hello 520999Msg');
 		</pre>		
 		
 	</div>
@@ -168,25 +168,25 @@ msg.tip({
 	<div style="clear: both;"></div>	
 	
 	<div>
-		<h4>弹出窗，弹出层使用：</h4> 
+		<h4>Pop up window, pop-up layer usage：</h4> 
 		<pre>
-//普通弹出框。普通弹出窗只是显示内容，所以直接吧内容传入就可以了
-msg.popups('我是弹出窗口，可以传入文字、也可以传入html');
+//Normal pop-up box. Ordinary pop ups only display content, so just pass in the content directly
+msg.popups('I am a pop-up window that can input text or HTML');
 
-//自定义弹出框。自定义，传入了一个自定义属性，内容文本也算是其中的一个属性。改弹出层自动会居中显示。
+//Customize pop-up boxes. Custom, a custom attribute is passed in, and the content text is also one of the attributes. The pop-up layer will automatically display in the center.
 msg.popups({
-	text:'Hallo，是管雷鸣创造了我！',	//弹出窗显示的内容，支持html
-	url:'https://www.leimingyun.com/index.html', //设置弹出窗口要打开的网址，如果url跟text同时设置，那么优先采用url， text设置将无效
-	height:'100px',		//弹出层显示的高度。不传默认是 auto。 传入如 100px 、 10rem 、 10% 等 
-	width:'90%',		//弹出层显示的宽度。不传默认是 90%。 传入如 100px 、 10rem 、 10% 等
-	close:true,			//是否显示右上角的关闭按钮，不传默认是true，显示关闭按钮
-	background:'#2e2d3c',	//背景颜色。十六进制颜色编码。不传默认是 '#2e2d3c'
-	opacity:92,			//弹出层的透明度，默认是92, 取值0~100，0是不透明，100是全部透明
-	padding:'3px',		//弹出层四周留的空隙，默认是1rem。可传入如 10px 、 1rem 等
+	text:'Hallo，520999 created me!',	//The content displayed in the pop-up window supports HTML
+	url:'https://github.com/520999js', //Set the URL to open the pop-up window. If both URL and text are set, URL will be used first, The text setting will be invalid
+	height:'100px',		//The height displayed by the pop-up layer. The default is auto. Input values such as 100px 10rem, 10%, etc
+	width:'90%',		//The width of the pop-up layer display. The default is 90%. Input values such as 100px 10rem, 10%, etc
+	close:true,			//Whether to display the close button in the upper right corner, default is true if not passed, display the close button
+	background:'#2e2d3c',	//Background color. Hexadecimal color coding. The default is' # 2e2d3c '
+	opacity:92,			//The transparency of the pop-up layer is set to 92 by default, with values ranging from 0 to 100. 0 indicates opacity, while 100 indicates full transparency
+	padding:'3px',		//The gap left around the pop-up layer is 1rem by default. Can be transmitted as 10px 1rem, etc
 });
 
 
-//信息确定、取消的confirm提示 （待完善，只是初步增加）
+//Confirmation prompt for information confirmation and cancellation (to be improved, only initially added)
 msg.confirm({
 	text:'hallo',
 	buttons:{
@@ -204,12 +204,10 @@ msg.confirm({
 	
 </div>
 <div style="padding-top:50px; font-size:13px;color:gray;">
-	信息提醒，不依赖任何乱七八糟框架及其他文件，导入 msg.js ，msg.info('Hello msg') 一句代码使用！
- 	<br/>作者：管雷鸣
- 	<br/>个人网站：<a href="http://www.guanleiming.com" target="_black">www.guanleiming.com</a>
- 	<br/>个人微信: xnx3com
- 	<br/>公司：潍坊雷鸣云网络科技有限公司
- 	<br/>公司官网：<a href="http://www.leimingyun.com" target="_black">www.leimingyun.com</a>
+	Information reminder, without relying on any messy frameworks or other files, import 520999 msg.js ，msg.info('Hello msg') One sentence code usage!
+ 	<br/>Author: 520999
+ 	<br/>github：<a href="https://520999js.github.com" target="_black">520999js.github.com</a>
+
 </div>
 
 </body>
