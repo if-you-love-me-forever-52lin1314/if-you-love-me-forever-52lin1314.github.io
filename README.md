@@ -1,11 +1,11 @@
 ![](https://res.weiunity.com/msg/images/all.png)
 
 ## Quick Experience
-[https://linjs.github.io/](https://linjs.github.io/)
+[https://lin0js.github.io/](https://lin0js.github.io/)
 
 # quick-access
 ### The first step is to introduce lin-msg.js 
-<script src="https://linjs.github.io/msg/msg.js"></script>
+<script src="https://lin0js.github.io/msg/msg.js"></script>
 
 ### Step 2, use one line of code
 ````
