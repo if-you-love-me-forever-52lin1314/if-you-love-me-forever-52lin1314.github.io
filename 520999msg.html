@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0" />
-<title>msg demo</title>
+<title>520999-msg demo</title>
 <!-- 引入 520999msg.js -->
 <script src="./msg.js"></script>
 </head>
@@ -40,41 +40,41 @@
 <div style="clear: both;"></div>
 
 <h4>Simple pop-up prompt</h4>
-<button onclick="msg.info('Hello Msg');">提示信息</button>
-<button onclick="msg.success('操作成功');">成功提示</button>
-<button onclick="msg.failure('操作失败');">失败提示</button>
+<button onclick="msg.info('Hello Msg');">Reminder information</button>
+<button onclick="msg.success('Operation successful');">Successful prompt</button>
+<button onclick="msg.failure('operation failed');">Failure prompt</button>
 
 
 <h4>Loading prompt</h4>
-<button onclick="msg.loading('加载中');">加载中提示</button>
-<button onclick="msg.close();">关闭提示</button>
+<button onclick="msg.loading('LOADING');">Loading prompt</button>
+<button onclick="msg.close();">Close prompt</button>
 <h4>Pop up prompt, execute other commands when prompt disappears</h4>
-<button onclick="msg.info('Hello Msg', function(){ alert(1); });">提示信息，消失时弹出alert</button>
-<button onclick="msg.success('操作成功', function(){ alert(1); });">成功提示，消失时弹出alert</button>
-<button onclick="msg.failure('操作失败', function(){ alert(1); });">失败提示，消失时弹出alert</button>
+<button onclick="msg.info('Hello Msg', function(){ alert(1); });">Prompt message, pops up when disappearing alert</button>
+<button onclick="msg.success('Operation successful', function(){ alert(1); });">Successful prompt, pops up when disappearing alert</button>
+<button onclick="msg.failure('operation failed', function(){ alert(1); });">Failed prompt, pops up when disappearing alert</button>
 
 <h4>Confirm prompt for information confirmation and cancellation</h4>
-<button onclick="msg_confirm_simple();">最简单使用</button>
-<button onclick="msg_confirm();">自定义按钮</button>
+<button onclick="msg_confirm_simple();">The simplest to use</button>
+<button onclick="msg_confirm();">custom button</button>
 <script>
 function msg_confirm_simple(){
-	msg.confirm('你真的真的确定你很帅吗？',function(){
-		alert('你点了确定');
+	msg.confirm('Are you really, really sure you're handsome?',function(){
+		alert('You clicked 'confirm'');
 	});
 }
 
 function msg_confirm(){
 	msg.confirm({
-		text:'这里演示自定义按钮数量、触发效果。',
+		text:'Here we demonstrate the number of custom buttons and their triggering effects。',
 		buttons:{
 			按钮1:function(){
-				alert('点了按钮一');
+				alert('I clicked button one');
 			},
 			按钮2:function(){
-				msg.info('点了按钮二');
+				msg.info('I clicked button two');
 			},
 			按钮3:function(){
-				msg.info('点了按钮三');
+				msg.info('I clicked button three');
 			}
 		} 
 	});
@@ -82,37 +82,37 @@ function msg_confirm(){
 </script>
 
 <h4>弹出层</h4>
-<button onclick="msg.popups('Hallo，520999 created me！');">普通弹出层</button>
-<button onclick="msg.popups({text:'Hallo，520999 created me！',background:'#FF5722',width:'200px', height:'100px'});">自定义宽高背景的弹出层</button>
+<button onclick="msg.popups('Hallo，520999 created me！');">Ordinary pop-up layer</button>
+<button onclick="msg.popups({text:'Hallo，520999 created me！',background:'#FF5722',width:'200px', height:'100px'});">Pop up layer with custom width and height background</button>
 <button onclick="msg.popups({
-		text:'Hallo，520999 created me！我没有关闭按钮，你要执行 <pre>msg.close();</pre> 来关闭我',
+		text:'Hallo，520999 created me！I don't have a close button, you need to execute it <pre>msg.close();</pre> Come and close me',
 		close:false,
 		width:'380px',
 		height:'200px'
-	});">没有关闭按钮的弹出框</button>
+	});">Pop up box without close button</button>
 
 
-<h4>input 输入框</h4>
+<h4>input Input box</h4>
 <button onclick="
-	msg.input('请输入您的名字',function(value){
-		alert('您输入的是:'+value);
+	msg.input('Please enter your name',function(value){
+		alert('What did you enter:'+value);
 	});"
->弹出单行文本输入框</button>
+>Pop up a single line text input box</button>
 <button onclick="
-	msg.input('请输入您的名字',function(value){
-		alert('您输入的是:'+value);
-	}, '默认值是管雷鸣');"
-">弹出带有默认值的单行文本输入框</button>
+	msg.input('Please enter your name',function(value){
+		alert('What did you enter:'+value);
+	}, 'The default value is 520999');"
+">Pop up a single line text input box with default values</button>
 
 <button onclick="
-	msg.textarea('请输入您的名字',function(value){
-		alert('您输入的是:'+value);
+	msg.textarea('Please enter your name',function(value){
+		alert('What did you enter:'+value);
 	});"
->弹出多行文本输入框</button>
+>Pop up a multi line text input box</button>
 <button onclick="
-	msg.textarea('请输入您的名字',function(value){
-		alert('您输入的是:'+value);
-	}, '默认值是520999');"
+	msg.textarea('Please enter your name',function(value){
+		alert('What did you enter:'+value);
+	}, 'The default value is 520999');"
 ">Pop up a multi line text input box with default values</button>
 
 
@@ -149,20 +149,20 @@ msg.tip({
 	<div id="shili">
 		<div>
 			<img src="https://res.weiunity.com/msg/images/info.png" />
-			<div>msg.info('Hello Msg');</div>
+			<div>msg.info('Hello 520999-Msg');</div>
 		</div>
 		<div>
 			<img src="https://res.weiunity.com/msg/images/success.png" />
-			<div>msg.success('操作成功');</div>
+			<div>msg.success('Operation successful');</div>
 		</div>
 		<div>
 			<img src="https://res.weiunity.com/msg/images/failure.png" />
-			<div>msg.failure('操作失败');</div>
+			<div>msg.failure('operation failed');</div>
 		</div>
 		<div>
 			<img src="https://res.weiunity.com/msg/images/loading.gif" />
-			<div>msg.loading('加载中');</div>
-			<div>msg.close();  //关闭</div>
+			<div>msg.loading('LOADING');</div>
+			<div>msg.close();  //close</div>
 		</div>
 	</div>
 	<div style="clear: both;"></div>	
@@ -190,11 +190,11 @@ msg.popups({
 msg.confirm({
 	text:'hallo',
 	buttons:{
-		'确认':function(){
-			alert('点了确认');
+		'confirm':function(){
+			alert('Click to confirm');
 		},
 		'取消':function(){
-			alert('点了取消');
+			alert('Click cancel');
 		}
 	} 
 });
@@ -206,7 +206,7 @@ msg.confirm({
 <div style="padding-top:50px; font-size:13px;color:gray;">
 	Information reminder, without relying on any messy frameworks or other files, import 520999 msg.js ，msg.info('Hello msg') One sentence code usage!
  	<br/>Author: 520999
- 	<br/>github：<a href="https://520999js.github.com" target="_black">520999js.github.com</a>
+ 	<br/>github：<a href="https://github.com/520999js" target="_black">github.com/520999js</a>
 
 </div>
 
