@@ -29,18 +29,17 @@
         });
     }); 
 
-	//夜间模式
+// 夜间模式立即执行函数
 (function() {
     // 直接为body元素添加'night'类来应用夜间模式
     document.body.classList.add('night');
+
     // 可选：设置一个cookie来记住用户的偏好（如果需要的话）
     // document.cookie = "night=1;path=/";
+
     // 控制台输出日志信息（可选）
     console.log('夜间模式已开启（全天）');
 })();
-
-		}
-	}
 	//全屏切换
     (function () {
         //全屏 
