@@ -1,5 +1,5 @@
 {
-  "spider": "https://gitee.com/linyydslove/520/raw/lin/ys/52lin.jar",
+  "spider": "./52lin.jar",
   "wallpaper": "http://我不是.肥猫.live/ppic/feimao.php",
   "sites": [
 {"key":"豆豆","name":"52霖VIP影视","type": 3, "api": "csp_DouDou","searchable": 0,"quickSearch": 0,"filterable": 0},
@@ -250,19 +250,19 @@
 		},
 
    //分享
-{"key":"fxz欢视","name":"💖欢视","type":3,"api":"csp_AppTT","playerType":1,"searchable":1,"quickSearch":1,"changeable":1,"jar": "https://cdn09022024.gitlink.org.cn/YGFXZ/TVBOX/raw/branch/master/jar/分享者c.jar","ext":"AO7TcBkd8IPB+BwH4Qma+opv"},
+{"key":"fxz欢视","name":"💖欢视","type":3,"api":"csp_AppTT","playerType":1,"searchable":1,"quickSearch":1,"changeable":1,"jar": "http://github.moeyy.xyz/https://raw.github.com/maoystv/TV/refs/heads/master/jar/分享者c.jar","ext":"AO7TcBkd8IPB+BwH4Qma+opv"},
 {"key":"fxzAI4","name":"💖哇云","type":3,"api":"csp_AppYsV2","searchable":1,"quickSearch":1,"filterable":0,"playerType":1,"ext":"iaHR0cDovLzM5Ljk4LjMyLjI0MTo2Njg4L2FwaS5waHAvemp2My52b2Q=","jar":"http://tv.laohu.cool/laohujar.jar"},
 {"key":"xiaoxiong","name":"💖小熊","type":1,"playerType":1,"searchable":1,"quickSearch":1,"api":"http://154.9.252.167:190/lib/小熊.php?ggao=免费使用","playUrl":"json:http://154.9.252.167:190/json/xiaoxiong.php?key=137811046&url=","categories":[]},
 {"key":"csp_fxzhl","name":"💖河狸","type":3,"api":"csp_AppYsV2","searchable":1,"quickSearch":1,"filterable":1,"ext":"https://www.heli888.cc/api.php/app/"},
 {"key": "农民采集","name": "💖悯农","type": 1,"api": "https://www.xncnews.com/api.php/provide/vod/"},
 {"key":"csp_樱之空","name":"💖樱空","type":3,"api":"csp_XBPQ","ext":{"主页url":"https://www.skr2.cc/","数组":"class=\"vodlist_item&&</div></li>","简介":"style=\"display:none;\"><span>&&</span>","线路数组":"<a&&</a>","线路标题":"52霖科技+>&nbsp;线路</a>","播放数组":"class=\"content_playlist&&</ul>","播放列表":"<li>&&</li>","播放标题":">&&</a>","分类url":"https://www.skr2.cc/vodshow/{cateId}---{class}-----{catePg}---{year}/","分类":"电影$84#大陆剧$81#港台剧$82#桜剧$32#桜漫$1#日漫$46#国漫$47#美漫$85#综艺$91"}},
-{"key": "nu","name": "💖52霖|Nuu","type": 3,"api": "csp_XBPQ", "jar":"https://ghp.ci/https://raw.githubusercontent.com/maoystv/TV/refs/heads/master/jar/XBPQ(2).jar","ext": {"分类url":"https://nuu.su/x/id/{cateId}/page/{catePg}.html","分类": "https://json.heimuer.xyz/api.php/provide/vod?ac=list"}},
+{"key": "nu","name": "💖52霖|Nuu","type": 3,"api": "csp_XBPQ", "jar":"http://github.moeyy.xyz/https://raw.githubusercontent.com/maoystv/TV/refs/heads/master/jar/XBPQ(2).jar","ext": {"分类url":"https://nuu.su/x/id/{cateId}/page/{catePg}.html","分类": "https://json.heimuer.xyz/api.php/provide/vod?ac=list"}},
 {"key":"太平","name":"💖太平优质","type":3,"api":"csp_Xdai","playerType":1,"ext":"caHR0cDovLzExMS4xODAuMTk4LjQwOjExMTB8NTU5MmViZWNmY2U3ODFiMXw1NTkyZWJlY2ZjZTc4MWIx", "jar":"http://tv.laohu.cool/laohujar.jar"},
 {"key": "csp_SP2345","name": "💖2345视频","type": 3, "api": "csp_SP2345","searchable": 1,"quickSearch": 1,"filterable": 1,"jar":""},
-{"key":"蜂2鸟","name":"💖蜂鸟","type":3,"api":"csp_AppSK","jar": "https://ghp.ci/https://raw.githubusercontent.com/maoystv/TV/refs/heads/master/jar/分享者1.zip","searchable":1,"quickSearch":1,"changeable":1,"ext": "FbjPcVZY48PN/RIZ5QqOrspjctNYHd8MCHVY/fi7wUpUQNqG/jfU2giXr76/DC+8eHSS1HMynmg3WiNrBtVgfEJASNqQ2hTVLzJC3SoblKA+CPO6c3h2LRrhcHl6z5b2unGGON8hEYJ29EtB6FH/E01cML7v6RxWYZMJfmBRNw=="},
-{"key":"热播1","name":"💖热播","type":3,"api":"csp_AppTT","timeout":15,"playerType":2,"searchable":1,"quickSearch":1,"changeable":1, "jar": "https://ghp.ci/https://raw.githubusercontent.com/maoystv/TV/refs/heads/master/jar/分享者1.zip","ext":"AO7TcBkd8I/B5wQc4Qma+pU="},
-{"key":"萌米1","name":"💖萌萌","type":3,"api":"csp_AppTT","timeout":15,"playerType":1, "jar": "https://ghp.ci/https://raw.githubusercontent.com/maoystv/TV/refs/heads/master/jar/分享者1.zip","ext":"AO7TcBkd8Iifux0Y8Qze6tVlMg=="},
-{"key":"采集之王","name":"💖采合优质","type":3,"api":"https://ghp.ci/https://raw.githubusercontent.com/maoystv/000/master/js/drpy2.min.js","searchable":1,"quickSearch":1,"ext":"https://git.acwing.com/YGFXZ/0/-/raw/main/采集之王_合_.js?type=url&params=https://git.acwing.com/YGFXZ/0/-/raw/main/采集静态.json"},
+{"key":"蜂2鸟","name":"💖蜂鸟","type":3,"api":"csp_AppSK","jar": "http://github.moeyy.xyz/https://raw.githubusercontent.com/maoystv/TV/refs/heads/master/jar/分享者1.zip","searchable":1,"quickSearch":1,"changeable":1,"ext": "FbjPcVZY48PN/RIZ5QqOrspjctNYHd8MCHVY/fi7wUpUQNqG/jfU2giXr76/DC+8eHSS1HMynmg3WiNrBtVgfEJASNqQ2hTVLzJC3SoblKA+CPO6c3h2LRrhcHl6z5b2unGGON8hEYJ29EtB6FH/E01cML7v6RxWYZMJfmBRNw=="},
+{"key":"热播1","name":"💖热播","type":3,"api":"csp_AppTT","timeout":15,"playerType":2,"searchable":1,"quickSearch":1,"changeable":1, "jar": "http://github.moeyy.xyz/https://raw.githubusercontent.com/maoystv/TV/refs/heads/master/jar/分享者1.zip","ext":"AO7TcBkd8I/B5wQc4Qma+pU="},
+{"key":"萌米1","name":"💖萌萌","type":3,"api":"csp_AppTT","timeout":15,"playerType":1, "jar": "http://github.moeyy.xyz/https://raw.githubusercontent.com/maoystv/TV/refs/heads/master/jar/分享者1.zip","ext":"AO7TcBkd8Iifux0Y8Qze6tVlMg=="},
+{"key":"采集之王","name":"💖采合优质","type":3,"api":"http://github.moeyy.xyz/https://raw.githubusercontent.com/maoystv/000/master/js/drpy2.min.js","searchable":1,"quickSearch":1,"ext":"https://git.acwing.com/YGFXZ/0/-/raw/main/采集之王_合_.js?type=url&params=https://git.acwing.com/YGFXZ/0/-/raw/main/采集静态.json"},
 {"key":"csp_ipianba","name":"💖分享片吧","type":3,"api":"csp_XBPQ","ext":{"分类url": "https://www.ipianba.com/class/{cateId}-{area}-{by}--{lang}----{catePg}---{year}.html","分类":"电影$1#剧集$2#动漫$3#综艺$4"}},
 {"key": "皇冠影视","name": "💎皇冠快播","type": 1,"api": "https://hong.hgyx.vip/api.php/provide/vod/"},
 {"key": "墨白影视","name": "💎墨白快播","type": 1,"api": "https://nm.xxxc137.top/api.php/provide/vod/"},
@@ -279,8 +279,8 @@
 		"key": "drpy_365",
 		"name": "💖365年年",
 		"type": 3,
-		"api": "https://ghp.ci/https://raw.githubusercontent.com/mygoww/xoxo/main/libs/drpy2.min.js",
-		"ext": "https://ghp.ci/https://raw.githubusercontent.com/mygoww/xoxo/main/js/365.js"
+		"api": "http://github.moeyy.xyz/https://raw.githubusercontent.com/mygoww/xoxo/main/libs/drpy2.min.js",
+		"ext": "http://github.moeyy.xyz/https://raw.githubusercontent.com/mygoww/xoxo/main/js/365.js"
 	},
   {
       "key": "csp_appys_fxz酒客",
@@ -300,18 +300,18 @@
       "searchable": 1,
       "changeable": 1,
       "playerType":1,
-      "jar":"https://cdn09022024.gitlink.org.cn/YGFXZ/TVBOX/raw/branch/master/jar/分享者c.jar"},
+      "jar":"http://github.moeyy.xyz/https://raw.github.com/maoystv/TV/refs/heads/master/jar/分享者c.jar"},
   {
 			"key": "fxz布蕾",
 			"name": "💖布蕾",
 			"type": 3,
-			"api": "https://cdn09022024.gitlink.org.cn/YGFXZ/TVBOX/raw/branch/master/JS/drpy2.min.js",
+			"api": "https://github.moeyy.xyz/https://raw.github.com/maoystv/api/refs/heads/main/JS/drpy2.min.js",
 			"searchable": 1,
 			"quickSearch": 1,
 			"filterable": 1,
 			"order_num": 0,
 			"changeable": 0,
-			"ext": "https://cdn09022024.gitlink.org.cn/YGFXZ/TVBOX/raw/branch/master/JS/bulei4K.js"
+			"ext": "https://github.moeyy.xyz/https://raw.github.com/maoystv/TV/refs/heads/master/JS/bulei4K.js"
 		},	
     {
 	  "key": " fxzyg ",
@@ -322,18 +322,18 @@
 	  "quickSearch": 1,
 	  "filterable": 1,
 	"jar":"",
-	  "ext": "https://ghp.ci/https://raw.githubusercontent.com/maoystv/TV/refs/heads/master/XBPQ/分享yg.json"
+	  "ext": "http://github.moeyy.xyz/https://raw.githubusercontent.com/maoystv/TV/refs/heads/master/XBPQ/分享yg.json"
 	},
     {
 			"key": "hipy_js_85ys",
 			"name": "💖分享巴吴",
 			"type": 3,
-			"api": "https://ghp.ci/https://raw.githubusercontent.com/maoystv/api/refs/heads/main/JS/drpy2.min.js",
+			"api": "http://github.moeyy.xyz/https://raw.github.com/maoystv/api/refs/heads/main/JS/drpy2.min.js",
 			"searchable": 1,
 			"quickSearch": 1,
 			"filterable": 1,
 			"order_num": 0,
-			"ext": "https://ghp.ci/https://raw.githubusercontent.com/maoystv/6/refs/heads/main/JS/85k影视.js"
+			"ext": "http://github.moeyy.xyz/https://raw.githubusercontent.com/maoystv/6/refs/heads/main/JS/85k影视.js"
 		},
 	{
 	  "key": " fxz好影",
@@ -343,7 +343,7 @@
 	  "searchable": 1,
 	  "quickSearch": 1,
 	  "filterable": 1,
-	  "ext": "https://ghp.ci/https://raw.githubusercontent.com/maoystv/TV/refs/heads/master/分享好影.json"
+	  "ext": "http://github.moeyy.xyz/https://raw.githubusercontent.com/maoystv/TV/refs/heads/master/分享好影.json"
 	},
    {
       "key": "fxznl",
@@ -353,7 +353,7 @@
       "searchable": 1,
       "quickSearch": 1,
       "filterable": 1,
-      "ext": "https://ghp.ci/https://raw.githubusercontent.com/maoystv/TV/refs/heads/master/分享nl.json"
+      "ext": "http://github.moeyy.xyz/https://raw.githubusercontent.com/maoystv/TV/refs/heads/master/分享nl.json"
     },
    {
       "key": "fxzyz",
@@ -363,7 +363,7 @@
       "searchable": 1,
       "quickSearch": 1,
       "filterable": 1,
-      "ext": "https://ghp.ci/https://raw.githubusercontent.com/maoystv/TV/refs/heads/master/分享YZ.json"
+      "ext": "http://github.moeyy.xyz/https://raw.githubusercontent.com/maoystv/TV/refs/heads/master/分享YZ.json"
     },
         
     {
@@ -373,7 +373,7 @@
       "api": "csp_XBPQ",
       "searchable": 1,
       "changeable": 1,
-      "jar":"https://ghp.ci/https://raw.githubusercontent.com/maoystv/TV/refs/heads/master/jar/XBPQ(2).jar",
+      "jar":"http://github.moeyy.xyz/https://raw.githubusercontent.com/maoystv/TV/refs/heads/master/jar/XBPQ(2).jar",
       "ext": "https://git.acwing.com/YGFXZ/0/-/raw/main/分享SJ.json"
     },
    {
@@ -413,14 +413,14 @@
 		"name": "💖茶狐",
 		"type": 3,
 		"api": "csp_XBPQ",
-		"ext": "https://ghp.ci/https://raw.githubusercontent.com/maoystv/6/main/XBPQ/分享CF.json"
+		"ext": "http://github.moeyy.xyz/https://raw.githubusercontent.com/maoystv/6/main/XBPQ/分享CF.json"
 	}, 
 	{
 		"key": "drpy_jk",
 		"name": "💖即看优质",
 		"type": 3,
-		"api": "https://ghp.ci/https://raw.githubusercontent.com/maoystv/0/main/drpy_libs/drpy2.js",
-		"ext": "https://ghp.ci/https://raw.githubusercontent.com/maoystv/0/main/js/分享JK.js"
+		"api": "http://github.moeyy.xyz/https://raw.githubusercontent.com/maoystv/0/main/drpy_libs/drpy2.js",
+		"ext": "http://github.moeyy.xyz/https://raw.githubusercontent.com/maoystv/0/main/js/分享JK.js"
 	},
     {
       "key": "zztong",
@@ -430,7 +430,7 @@
       "searchable": 1,
       "quickSearch": 1,
       "filterable": 1,
-      "ext": "https://ghp.ci/https://raw.githubusercontent.com/maoystv/6/main/XBPQ/分享fantuan.json"
+      "ext": "http://github.moeyy.xyz/https://raw.githubusercontent.com/maoystv/6/main/XBPQ/分享fantuan.json"
     },
 	{
             "key": "三米ys",
@@ -523,32 +523,15 @@
 			"key": "hipy_js_111tv",
 			"name": "💖111TV自动",
 			"type": 3,
-			"api": "https://ghproxy.cn/https://raw.githubusercontent.com/maoystv/api/refs/heads/main/JS/drpy2.min.js",
+			"api": "http://github.moeyy.xyz//https://raw.githubusercontent.com/maoystv/api/refs/heads/main/JS/drpy2.min.js",
 			"searchable": 1,
 			"quickSearch": 1,
 			"filterable": 1,
 			"order_num": 0,
-			"ext": "https://ghproxy.cn/https://raw.githubusercontent.com/maoystv/6/refs/heads/main/JS/111tv[自动].js"
+			"ext": "http://github.moeyy.xyz//https://raw.githubusercontent.com/maoystv/6/refs/heads/main/JS/111tv[自动].js"
 		},
 
   
-   //电姑网盘
-         {
-            "key": "夸克木偶弹幕",
-	            "name": "木偶4K弹幕",
-            "type": 3,
-            "api": "csp_Wobg",
-            "quickSearch": 1,
-            "changeable": 1,
-            "filterable": 1,
-            "ext": {
-                "token": "https://cdn09022024.gitlink.org.cn/diangu/gxtv/raw/branch/master/lib/token.txt",
-                "cookie": "https://cdn09022024.gitlink.org.cn/diangu/gxtv/raw/branch/master/lib/quark.txt",
-                "uc_cookie": "https://cdn09022024.gitlink.org.cn/diangu/gxtv/raw/branch/master/lib/uc.txt",
-                "site": "http://mogg.top",
-                "danmu": true
-            }
-        },
    //大卫Dwei
     {
       "key": "csp_xp_7xdy",
@@ -795,7 +778,7 @@
 {"key":"vod_卧龙","name":"雷蒙影视 | ️🚀卧龙","type":1,"api":"https://collect.wolongzyw.com/api.php/provide/vod/","searchable":1,"quickSearch":1,"filterable":1},
 {"key":"vod_速播","name":"雷蒙影视 | ️🚀速播","type":1,"api":"https://subocaiji.com/api.php/provide/vod/","searchable":1,"quickSearch":1,"filterable":1},
 {"key":"vod_天空","name":"雷蒙影视 | ️🚀天空","type":1,"api":"http://api.tiankongapi.com/api.php/provide/vod/","playUrl":"","searchable":1,"quickSearch":0,"categories":[]},
-{"key": "黑木耳克隆","name": "黑木耳克隆","type": 4,"api": "https://api.paoyun.eu.org/225.php","searchable": 1,"quickSearch": 1,"filterable": 0,"jar":"https://ghp.ci/https://raw.githubusercontent.com/alantang1977/X/main/jar/kelong.jar"},
+{"key": "黑木耳克隆","name": "黑木耳克隆","type": 4,"api": "https://api.paoyun.eu.org/225.php","searchable": 1,"quickSearch": 1,"filterable": 0,"jar":"http://github.moeyy.xyz/https://raw.githubusercontent.com/alantang1977/X/main/jar/kelong.jar"},
         {
             "key": "xml_哔饭",
             "name": "🚀哔饭〔采集〕",
