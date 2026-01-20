@@ -4,7 +4,7 @@
 //  奈飞、YouTuBe、HBO、Disney、ChatGPT、Apple TV、家庭影音搭建必备品：https://hezu.v1.mk
 
 {
-    "spider": "https://tvbox.catvod.com/xs/spider.jar",
+    "spider": "./潇洒.jar",
     "wallpaper": "https://imgs.catvod.com",
     "logo": "https://tvbox.catvod.com/logo.png",
     "sites": [
