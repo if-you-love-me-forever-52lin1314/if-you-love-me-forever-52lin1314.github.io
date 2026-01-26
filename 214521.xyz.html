@@ -283,11 +283,11 @@ Powered by♥52霖科技♥</p>
         /* 核心样式：固定定位到右侧底部 */
         #music {
             position: fixed;      /* 固定定位，不随页面滚动 */
-            right:0;          /* 距离右侧20px，可根据需要调整 */
-            bottom:0;         /* 距离底部20px，可根据需要调整 */
-            z-index: 9999;        /* 提高层级，避免被其他元素遮挡 */
-            /* 可选：如果播放器有默认宽度，可设置宽度 */
-            width: 300px;         /* 根据实际需求调整宽度 */
+                left: 50%;
+    bottom: 0;
+    transform: translateX(-50%); /* 让元素自身居中 */
+    z-index: 9999;
+    width: 300px;
         }
     </style>
 </head>
