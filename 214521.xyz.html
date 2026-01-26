@@ -277,25 +277,22 @@ Powered by♥52霖科技♥</p>
 <script type="text/javascript" src="js/masonry.min.js" id="masonry-js"></script>
 <script type="text/javascript" src="js/functions.js" id="bushwick-functions-js"></script>
  <!-- 下面行yinyue代码 -->
-    <title>Music Player Example</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>音乐播放器</title>
     <style>
-        /* 固定定位，使播放器位于右下角 */
-        #music-container {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            z-index: 1000; /* 确保它在最上层 */
+        /* 核心样式：固定定位到右侧底部 */
+        #music {
+            position: fixed;      /* 固定定位，不随页面滚动 */
+            right: 20px;          /* 距离右侧20px，可根据需要调整 */
+            bottom: 20px;         /* 距离底部20px，可根据需要调整 */
+            z-index: 9999;        /* 提高层级，避免被其他元素遮挡 */
+            /* 可选：如果播放器有默认宽度，可设置宽度 */
+            width: 300px;         /* 根据实际需求调整宽度 */
         }
     </style>
 </head>
 <body>
-
-<!-- 音乐播放器容器 -->
-<div id="music-container">
+    <script src="https://cdn.staticfile.net/jquery/3.5.1/jquery.min.js"></script>
     <div id="music" key="6953e45f47f77" api="https://y.cenguigui.cn/"></div>
-</div>
-
-<!-- 引入jQuery和播放器脚本 -->
-<script src="https://cdn.staticfile.net/jquery/3.5.1/jquery.min.js"></script>
-<script id="xplayer" src="https://y.cenguigui.cn/Static/player14/js/player.js"></script>
+    <script id="xplayer" src="https://y.cenguigui.cn/Static/player14/js/player.js"></script>
 </body></html>
