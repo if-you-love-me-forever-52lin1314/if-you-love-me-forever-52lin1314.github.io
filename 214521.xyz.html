@@ -282,14 +282,12 @@ Powered by♥52霖科技♥</p>
     <style>
         /* 核心样式：固定定位到右侧底部 */
         #music {
-    position: fixed !important;  /* 强制固定定位，防止被脚本覆盖 */
-    right: 90px !important;     /* 强制距离右侧120px */
-    bottom: 0 !important;        /* 强制贴紧底部 */
-    left: auto !important;       /* 重置left属性，避免脚本自动加left值 */
-    transform: none !important;  /* 重置transform，避免居中偏移 */
-    margin: 0 !important;        /* 重置外边距，避免位置偏移 */
-    z-index: 9999 !important;
-    width: 300px !important;
+    position: fixed;          /* 保留固定定位（居中代码生效的核心） */
+    left: 100%;               /* 先让元素左边缘对齐窗口最右侧 */
+    bottom: 0;                /* 贴紧底部 */
+    transform: translateX(-120px); /* 向左偏移120px，对应你要的右侧间距 */
+    z-index: 9999;
+    width: 300px;             /* 保留宽度，可按需放大 */
         }
     </style>
 </head>
