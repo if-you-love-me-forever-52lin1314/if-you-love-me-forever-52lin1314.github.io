@@ -282,13 +282,14 @@ Powered by♥52霖科技♥</p>
     <style>
         /* 核心样式：固定定位到右侧底部 */
         #music {
-    position: fixed;
-    right:120px;
-    bottom: 0;
-    z-index: 9999;
-    /* 可选宽度，根据播放器适配 */
-    width: 300px;
-
+    position: fixed !important;  /* 强制固定定位，防止被脚本覆盖 */
+    right: 30px !important;     /* 强制距离右侧120px */
+    bottom: 0 !important;        /* 强制贴紧底部 */
+    left: auto !important;       /* 重置left属性，避免脚本自动加left值 */
+    transform: none !important;  /* 重置transform，避免居中偏移 */
+    margin: 0 !important;        /* 重置外边距，避免位置偏移 */
+    z-index: 9999 !important;
+    width: 300px !important;
         }
     </style>
 </head>
