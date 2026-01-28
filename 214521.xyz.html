@@ -284,29 +284,33 @@ Powered by♥52霖科技♥</p>
     <script id="xplayer" src="https://y.cenguigui.cn/Static/player14/js/player.js"></script>
 <!-- 下面行youjianf12 -->
 <script>
-  // 自定义提示弹窗：整合你指定的title和message
+  // 自定义提示弹窗：保留你指定的文字
   function showWarnTip() {
-    alert('嘿！小臂崽子可以啊想偷老子网站？Ctrl组合键不行了\n试试Alt+Shift+F4！');
+    alert('嘿！！小逼崽子你想干啥？？要不要霖哥教你一招\n试试Alt+Shift+F4！');
   }
 
   // 屏蔽右键菜单 + 弹出提示
   document.addEventListener('contextmenu', e => {
-    e.preventDefault(); // 阻止右键默认行为
-    showWarnTip(); // 调用提示弹窗
+    e.preventDefault();
+    showWarnTip();
   });
 
-  // 屏蔽F12、Ctrl+Shift+I/J、Ctrl+U等快捷键 + 弹出提示
-  document.addEventListener('keydown', e => {
-    // 判定禁用的快捷键组合
+  // 核心优化：封装拦截逻辑，同时绑定keydown+keyup双事件
+  function forbidShortcut(e) {
     const isForbiddenKey = 
       e.key === 'F12' || 
       (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J')) ||
-      (e.ctrlKey && e.key === 'U');
+      (e.ctrlKey && e.key === 'U'); // 包含Ctrl+U
     
     if (isForbiddenKey) {
-      e.preventDefault(); // 阻止快捷键默认行为
-      showWarnTip(); // 调用提示弹窗
+      e.preventDefault();
+      e.stopPropagation(); // 新增：阻止事件冒泡，提升拦截效果
+      showWarnTip();
     }
-  });
+  }
+
+  // 同时绑定keydown和keyup，双事件拦截快捷键
+  document.addEventListener('keydown', forbidShortcut);
+  document.addEventListener('keyup', forbidShortcut);
 </script>
 </body></html>
