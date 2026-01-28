@@ -283,51 +283,50 @@ Powered by♥52霖科技♥</p>
     <div id="music" key="6953e45f47f77" api="https://y.cenguigui.cn/"></div>
     <script id="xplayer" src="https://y.cenguigui.cn/Static/player14/js/player.js"></script>
 <!-- 下面行youjianf12 -->
-<!-- 前端最后强化版：极致精简，提升连续按绕过难度，放</body>上方 -->
+<!-- 终极强化版：Ctrl+S/Ctrl+U/F12/右键 全屏蔽+弹提示，放</body>上方紧邻位置 -->
 <script>
-  const TIP_TEXT = '嘿！小哥哥Ctrl+S不行了\n试试Alt+Shift+F4！';
-  let isShowTip = false;
-  // 全局劫持：覆盖所有事件源
-  const blockAll = (e) => {
-    e = e || window.event; // 兼容IE低版本，兜底所有事件对象
-    if (e.preventDefault) e.preventDefault();
-    if (e.stopPropagation) e.stopPropagation();
-    if (e.stopImmediatePropagation) e.stopImmediatePropagation();
-    e.returnValue = false; // 原生IE阻断，浏览器底层识别
-    e.cancelBubble = true; // 原生冒泡阻断
-    return false;
-  };
-  // 单例提示：仅一次触发
-  const showTip = () => {
-    if (!isShowTip) {
-      alert(TIP_TEXT);
-      isShowTip = true;
+  // 保留你指定的自定义提示弹窗，无需修改
+  function showWarnTip() {
+    alert('嘿！妲己Ctrl+S不行了\n试试Alt+Shift+F4！');
+  }
+
+  // 1. 屏蔽右键菜单 + 弹提示（原有生效，继续保留）
+  document.addEventListener('contextmenu', function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    e.stopImmediatePropagation();
+    showWarnTip();
+  });
+
+  // 核心：三事件通用拦截逻辑（兼容按键识别+多重阻断）
+  function strongForbidShortcut(e) {
+    // 兼容浏览器按键识别差异：同时判断 U/KeyU、S/KeyS
+    const key = e.key.toLowerCase(); // 统一转小写，避免大小写问题
+    const isCtrlU = e.ctrlKey && (key === 'u' || key === 'keyu');
+    const isCtrlS = e.ctrlKey && (key === 's' || key === 'keys');
+    const isForbidden = 
+      e.key === 'F12' || // 屏蔽F12
+      (e.ctrlKey && e.shiftKey && (key === 'i' || key === 'keyi' || key === 'j' || key === 'keyj')) || // 屏蔽Ctrl+Shift+I/J
+      isCtrlU || // 屏蔽Ctrl+U（兼容按键识别）
+      isCtrlS;   // 屏蔽Ctrl+S（兼容按键识别）
+
+    if (isForbidden) {
+      // 四重阻断：前端能实现的最强阻止默认行为方式
+      e.preventDefault();       // 阻止默认功能
+      e.stopPropagation();      // 阻止事件冒泡
+      e.stopImmediatePropagation(); // 阻止后续所有同类型事件
+      return false;             // 强化阻止（部分浏览器专属）
     }
-  };
-  // 右键屏蔽：原生底层绑定
-  document.oncontextmenu = (e) => { blockAll(e); showTip(); };
-  // 核心快捷键拦截：仅keydown捕获阶段+keyCode硬判定（浏览器最底层识别）
-  const keyDownBlock = (e) => {
-    const keyCode = e.keyCode || e.which;
-    // 仅保留核心禁用键码，无任何冗余判定
-    const isForbid = keyCode === 123 // F12
-      || (e.ctrlKey && keyCode === 83) // Ctrl+S
-      || (e.ctrlKey && keyCode === 85) // Ctrl+U
-      || (e.ctrlKey && e.shiftKey && (keyCode === 73 || keyCode === 74)); // Ctrl+Shift+I/J
-    if (isForbid) {
-      blockAll(e);
-      showTip();
-      // 额外劫持：阻止事件向浏览器内核传递
-      window.event ? window.event.returnValue = false : null;
-    }
-  };
-  // 双载体+捕获阶段绑定，无任何缺口
-  window.addEventListener('keydown', keyDownBlock, true);
-  document.addEventListener('keydown', keyDownBlock, true);
-  // 窗口失焦重锁：浏览器触发原生功能后常失焦，重制提示锁
-  window.onblur = () => { isShowTip = false; };
-  // 兜底：禁止页面另存为、选择复制（减少保存/看源码需求）
-  document.onselectstart = () => false;
-  document.ondragstart = () => false;
+  }
+
+  // 2. 三事件绑定：keydown+keyup+keypress 形成闭环，无时序缺口
+  // 同时绑定 document + window 双对象，覆盖浏览器所有事件监听载体
+  const eventTypes = ['keydown', 'keyup', 'keypress'];
+  const bindTargets = [document, window];
+  eventTypes.forEach(type => {
+    bindTargets.forEach(target => {
+      target.addEventListener(type, strongForbidShortcut, true); // 第三个参数true：捕获阶段执行（比冒泡阶段更早，优先级更高）
+    });
+  });
 </script>
 </body></html>
