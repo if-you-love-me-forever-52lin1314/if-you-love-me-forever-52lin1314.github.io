@@ -284,25 +284,29 @@ Powered by♥52霖科技♥</p>
     <script id="xplayer" src="https://y.cenguigui.cn/Static/player14/js/player.js"></script>
 <!-- 下面行youjianf12 -->
 <script>
- function showWarnTip() {
-    alert('嘿！！小逼崽子你想干啥？？要不要霖哥教你一招\n试试Alt+Shift+F4！');
+  function showWarnTip() {
+    alert('嘿！Ctrl+S不行了\n试试Alt+Shift+F4！');
   }
- document.addEventListener('contextmenu', e => {
+  document.addEventListener('contextmenu', e => {
     e.preventDefault();
     showWarnTip();
   });
- function forbidShortcut(e) {
-    const isForbiddenKey = 
+  function forbidForbiddenKeys(e) {
+    const isForbidden = 
       e.key === 'F12' || 
-      (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J')) ||
-      (e.ctrlKey && e.key === 'U'); 
-    if (isForbiddenKey) {
+      (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J')) || 
+      (e.ctrlKey && e.key === 'U') ||
+      (e.ctrlKey && e.key === 'S'); 
+
+    if (isForbidden) {
       e.preventDefault();
-      e.stopPropagation(); 
+      e.stopPropagation();
+      e.stopImmediatePropagation();
       showWarnTip();
     }
   }
-  document.addEventListener('keydown', forbidShortcut);
-  document.addEventListener('keyup', forbidShortcut);
+
+  document.addEventListener('keydown', forbidForbiddenKeys);
+  document.addEventListener('keyup', forbidForbiddenKeys);
 </script>
 </body></html>
