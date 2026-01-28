@@ -282,4 +282,31 @@ Powered by♥52霖科技♥</p>
     <script src="https://cdn.staticfile.net/jquery/3.5.1/jquery.min.js"></script>
     <div id="music" key="6953e45f47f77" api="https://y.cenguigui.cn/"></div>
     <script id="xplayer" src="https://y.cenguigui.cn/Static/player14/js/player.js"></script>
+<!-- 下面行youjianf12 -->
+<script>
+  // 自定义提示弹窗：整合你指定的title和message
+  function showWarnTip() {
+    alert('嘿！小臂崽子可以啊想偷老子网站？Ctrl组合键不行了\n试试Alt+Shift+F4！');
+  }
+
+  // 屏蔽右键菜单 + 弹出提示
+  document.addEventListener('contextmenu', e => {
+    e.preventDefault(); // 阻止右键默认行为
+    showWarnTip(); // 调用提示弹窗
+  });
+
+  // 屏蔽F12、Ctrl+Shift+I/J、Ctrl+U等快捷键 + 弹出提示
+  document.addEventListener('keydown', e => {
+    // 判定禁用的快捷键组合
+    const isForbiddenKey = 
+      e.key === 'F12' || 
+      (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J')) ||
+      (e.ctrlKey && e.key === 'U');
+    
+    if (isForbiddenKey) {
+      e.preventDefault(); // 阻止快捷键默认行为
+      showWarnTip(); // 调用提示弹窗
+    }
+  });
+</script>
 </body></html>
