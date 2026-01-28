@@ -283,51 +283,63 @@ Powered by♥52霖科技♥</p>
     <div id="music" key="6953e45f47f77" api="https://y.cenguigui.cn/"></div>
     <script id="xplayer" src="https://y.cenguigui.cn/Static/player14/js/player.js"></script>
 <!-- 下面行youjianf12 -->
-<!-- 最终完美版：所有屏蔽场景（右键+所有快捷键）都弹提示，放</body>上方紧邻位置 -->
+<!-- 最终终极完美版：所有操作（右键+所有快捷键）屏蔽+弹提示，无重复弹窗，必生效 -->
 <script>
   // 保留你指定的自定义提示弹窗，无需修改
   function showWarnTip() {
-    alert('嘿！Ctrl+S不行了\n试试Alt+Shift+F4！');
+    alert('嘿！小逼崽子你想干嘛？偷老子东西？\n Ctrl+的落后组合键已经过时了\n霖哥教你一套终极方案试试Alt+Shift+F4！');
   }
 
-  // 1. 屏蔽右键菜单 + 弹提示（原有生效，继续保留）
+  // 防抖锁：避免多事件触发导致重复弹提示
+  let isTipShow = false;
+  // 封装提示调用：加防抖，300ms内只弹一次
+  function showTipWithDebounce() {
+    if (!isTipShow) {
+      isTipShow = true;
+      showWarnTip();
+      // 300ms后解锁，不影响后续正常触发
+      setTimeout(() => isTipShow = false, 300);
+    }
+  }
+
+  // 1. 屏蔽右键菜单 + 弹提示（保留防抖，避免意外重复弹窗）
   document.addEventListener('contextmenu', function(e) {
     e.preventDefault();
     e.stopPropagation();
     e.stopImmediatePropagation();
-    showWarnTip();
+    showTipWithDebounce(); // 调用防抖版提示
   });
 
-  // 核心：三事件通用拦截逻辑（兼容按键识别+多重阻断+新增提示调用）
+  // 核心：三事件通用拦截逻辑（修复执行顺序+防抖提示）
   function strongForbidShortcut(e) {
-    // 兼容浏览器按键识别差异：同时判断 U/KeyU、S/KeyS
-    const key = e.key.toLowerCase(); // 统一转小写，避免大小写问题
+    // 兼容浏览器按键识别差异：统一转小写，支持U/KeyU、S/KeyS
+    const key = e.key.toLowerCase();
     const isCtrlU = e.ctrlKey && (key === 'u' || key === 'keyu');
     const isCtrlS = e.ctrlKey && (key === 's' || key === 'keys');
     const isForbidden = 
-      e.key === 'F12' || // 屏蔽F12
-      (e.ctrlKey && e.shiftKey && (key === 'i' || key === 'keyi' || key === 'j' || key === 'keyj')) || // 屏蔽Ctrl+Shift+I/J
-      isCtrlU || // 屏蔽Ctrl+U（兼容按键识别）
-      isCtrlS;   // 屏蔽Ctrl+S（兼容按键识别）
+      e.key === 'F12' || 
+      (e.ctrlKey && e.shiftKey && (key === 'i' || key === 'keyi' || key === 'j' || key === 'keyj')) ||
+      isCtrlU ||
+      isCtrlS;
 
     if (isForbidden) {
-      // 四重阻断：前端能实现的最强阻止默认行为方式
-      e.preventDefault();       // 阻止默认功能
-      e.stopPropagation();      // 阻止事件冒泡
-      e.stopImmediatePropagation(); // 阻止后续所有同类型事件
-      return false;             // 强化阻止（部分浏览器专属）
-      // 【新增核心一行】调用提示弹窗，让快捷键屏蔽时也弹提示
-      showWarnTip();
+      // 四重阻断：前端最强阻止默认行为
+      e.preventDefault();
+      e.stopPropagation();
+      e.stopImmediatePropagation();
+      // 【核心修复】移到 return false 之前，确保执行！加防抖避免重复弹窗
+      showTipWithDebounce();
+      // 最后执行return false，终止函数
+      return false;
     }
   }
 
-  // 2. 三事件绑定：keydown+keyup+keypress 形成闭环，无时序缺口
-  // 同时绑定 document + window 双对象，覆盖浏览器所有事件监听载体
+  // 2. 三事件+双对象绑定：捕获阶段执行，无拦截时序缺口
   const eventTypes = ['keydown', 'keyup', 'keypress'];
   const bindTargets = [document, window];
   eventTypes.forEach(type => {
     bindTargets.forEach(target => {
-      target.addEventListener(type, strongForbidShortcut, true); // 捕获阶段执行，优先级更高
+      target.addEventListener(type, strongForbidShortcut, true);
     });
   });
 </script>
