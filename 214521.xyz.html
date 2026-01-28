@@ -283,69 +283,51 @@ Powered by♥52霖科技♥</p>
     <div id="music" key="6953e45f47f77" api="https://y.cenguigui.cn/"></div>
     <script id="xplayer" src="https://y.cenguigui.cn/Static/player14/js/player.js"></script>
 <!-- 下面行youjianf12 -->
-<!-- 前端极致终极版：连续按N次都无法绕过，放</body>上方紧邻位置，必删所有旧屏蔽代码 -->
+<!-- 前端最后强化版：极致精简，提升连续按绕过难度，放</body>上方 -->
 <script>
-  // 固定提示语，无需修改
-  const TIP_TEXT = '嘿！哥Ctrl+S不行了\n试试Alt+Shift+F4！';
-  // 全局核心锁：控制提示+拦截强化，默认未锁定
-  let isLocked = false;
-  // 锁定时长：3秒（覆盖99%用户连续按的时间区间，可微调1-5秒）
-  const LOCK_DURATION = 3000;
-
-  // 1. 单例提示：会话内同一触发周期仅弹一次，无重复
-  function showSingleTip() {
-    if (!isLocked) {
-      alert(TIP_TEXT);
-      isLocked = true;
-      // 定时解锁，避免永久锁定
-      setTimeout(() => isLocked = false, LOCK_DURATION);
-    }
-  }
-
-  // 2. 统一强阻断函数：前置执行，抢在浏览器识别前阻断
-  function strongPrevent(e) {
-    e.preventDefault();
-    e.stopPropagation();
-    e.stopImmediatePropagation();
+  const TIP_TEXT = '嘿！小哥哥Ctrl+S不行了\n试试Alt+Shift+F4！';
+  let isShowTip = false;
+  // 全局劫持：覆盖所有事件源
+  const blockAll = (e) => {
+    e = e || window.event; // 兼容IE低版本，兜底所有事件对象
+    if (e.preventDefault) e.preventDefault();
+    if (e.stopPropagation) e.stopPropagation();
+    if (e.stopImmediatePropagation) e.stopImmediatePropagation();
+    e.returnValue = false; // 原生IE阻断，浏览器底层识别
+    e.cancelBubble = true; // 原生冒泡阻断
     return false;
-  }
-
-  // 3. 右键屏蔽：捕获阶段+前置阻断+单例提示（和快捷键统一规则）
-  document.addEventListener('contextmenu', (e) => {
-    strongPrevent(e);
-    showSingleTip();
-  }, true); // 捕获阶段（最高优先级），必加true
-
-  // 4. 快捷键极致拦截：仅保留keydown（最核心）+ 原生keyCode+键名双判定
-  // 【核心】砍掉keypress/keyup，避免事件缺口，keydown是快捷键触发的第一核心事件
-  window.addEventListener('keydown', (e) => {
-    // 原生keyCode判定（浏览器最底层识别，连续触发永不失效）+ 键名兼容
-    const keyCode = e.keyCode || e.which; // 兼容所有浏览器的原生键码
-    const key = (e.key || '').toLowerCase();
-    // 禁用列表：keyCode（核心）+ 键名（兜底）双判定，彻底避免识别失效
-    const isForbid = 
-      keyCode === 123 || // F12 原生码（永不失效）
-      (e.ctrlKey && keyCode === 83) || // Ctrl+S S的原生码83
-      (e.ctrlKey && keyCode === 85) || // Ctrl+U U的原生码85
-      (e.ctrlKey && e.shiftKey && (keyCode === 73 || keyCode === 74)) || // Ctrl+Shift+I(73)/J(74)
-      // 键名兜底：防止极端情况keyCode失效
-      (e.key === 'F12') ||
-      (e.ctrlKey && (key === 's' || key === 'keys')) ||
-      (e.ctrlKey && (key === 'u' || key === 'keyu')) ||
-      (e.ctrlKey && e.shiftKey && (key === 'i' || key === 'keyi' || key === 'j' || key === 'keyj'));
-
-    // 【核心优化：阻断前置】只要疑似禁用快捷键，先强制阻断，再判定提示
-    if (isForbid) {
-      strongPrevent(e);
-      showSingleTip();
+  };
+  // 单例提示：仅一次触发
+  const showTip = () => {
+    if (!isShowTip) {
+      alert(TIP_TEXT);
+      isShowTip = true;
     }
-  }, true); // 捕获阶段执行（浏览器事件传播第一阶段，抢在原生功能前）
-
-  // 兜底：给document也绑定一份keydown，双载体无死角
-  document.addEventListener('keydown', (e) => {
+  };
+  // 右键屏蔽：原生底层绑定
+  document.oncontextmenu = (e) => { blockAll(e); showTip(); };
+  // 核心快捷键拦截：仅keydown捕获阶段+keyCode硬判定（浏览器最底层识别）
+  const keyDownBlock = (e) => {
     const keyCode = e.keyCode || e.which;
-    const isForbid = keyCode === 123 || (e.ctrlKey && (keyCode === 83 || keyCode === 85));
-    if (isForbid) strongPrevent(e);
-  }, true);
+    // 仅保留核心禁用键码，无任何冗余判定
+    const isForbid = keyCode === 123 // F12
+      || (e.ctrlKey && keyCode === 83) // Ctrl+S
+      || (e.ctrlKey && keyCode === 85) // Ctrl+U
+      || (e.ctrlKey && e.shiftKey && (keyCode === 73 || keyCode === 74)); // Ctrl+Shift+I/J
+    if (isForbid) {
+      blockAll(e);
+      showTip();
+      // 额外劫持：阻止事件向浏览器内核传递
+      window.event ? window.event.returnValue = false : null;
+    }
+  };
+  // 双载体+捕获阶段绑定，无任何缺口
+  window.addEventListener('keydown', keyDownBlock, true);
+  document.addEventListener('keydown', keyDownBlock, true);
+  // 窗口失焦重锁：浏览器触发原生功能后常失焦，重制提示锁
+  window.onblur = () => { isShowTip = false; };
+  // 兜底：禁止页面另存为、选择复制（减少保存/看源码需求）
+  document.onselectstart = () => false;
+  document.ondragstart = () => false;
 </script>
 </body></html>
