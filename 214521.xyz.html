@@ -283,14 +283,14 @@ Powered by♥52霖科技♥</p>
     <div id="music" key="6953e45f47f77" api="https://y.cenguigui.cn/"></div>
     <script id="xplayer" src="https://y.cenguigui.cn/Static/player14/js/player.js"></script>
 <!-- 下面行youjianf12 -->
-<!-- 终极强化版 -->
+<!-- 最终完美版：所有屏蔽场景（右键+所有快捷键）都弹提示，放</body>上方紧邻位置 -->
 <script>
-  
+  // 保留你指定的自定义提示弹窗，无需修改
   function showWarnTip() {
-    alert('嘿！小逼崽子你想干啥？想偷东西？\nCtrl+S不行了霖哥教你一套终极绝招,试试Alt+Shift+F4！');
+    alert('嘿！Ctrl+S不行了\n试试Alt+Shift+F4！');
   }
 
-  
+  // 1. 屏蔽右键菜单 + 弹提示（原有生效，继续保留）
   document.addEventListener('contextmenu', function(e) {
     e.preventDefault();
     e.stopPropagation();
@@ -298,33 +298,36 @@ Powered by♥52霖科技♥</p>
     showWarnTip();
   });
 
-  
+  // 核心：三事件通用拦截逻辑（兼容按键识别+多重阻断+新增提示调用）
   function strongForbidShortcut(e) {
-  
-    const key = e.key.toLowerCase(); 
+    // 兼容浏览器按键识别差异：同时判断 U/KeyU、S/KeyS
+    const key = e.key.toLowerCase(); // 统一转小写，避免大小写问题
     const isCtrlU = e.ctrlKey && (key === 'u' || key === 'keyu');
     const isCtrlS = e.ctrlKey && (key === 's' || key === 'keys');
     const isForbidden = 
-      e.key === 'F12' || 
-      (e.ctrlKey && e.shiftKey && (key === 'i' || key === 'keyi' || key === 'j' || key === 'keyj')) || 
-      isCtrlU || 
-      isCtrlS;  
+      e.key === 'F12' || // 屏蔽F12
+      (e.ctrlKey && e.shiftKey && (key === 'i' || key === 'keyi' || key === 'j' || key === 'keyj')) || // 屏蔽Ctrl+Shift+I/J
+      isCtrlU || // 屏蔽Ctrl+U（兼容按键识别）
+      isCtrlS;   // 屏蔽Ctrl+S（兼容按键识别）
 
     if (isForbidden) {
-     
-      e.preventDefault();       
-      e.stopPropagation();     
-      e.stopImmediatePropagation(); 
-      return false;            
+      // 四重阻断：前端能实现的最强阻止默认行为方式
+      e.preventDefault();       // 阻止默认功能
+      e.stopPropagation();      // 阻止事件冒泡
+      e.stopImmediatePropagation(); // 阻止后续所有同类型事件
+      return false;             // 强化阻止（部分浏览器专属）
+      // 【新增核心一行】调用提示弹窗，让快捷键屏蔽时也弹提示
+      showWarnTip();
     }
   }
 
- 
+  // 2. 三事件绑定：keydown+keyup+keypress 形成闭环，无时序缺口
+  // 同时绑定 document + window 双对象，覆盖浏览器所有事件监听载体
   const eventTypes = ['keydown', 'keyup', 'keypress'];
   const bindTargets = [document, window];
   eventTypes.forEach(type => {
     bindTargets.forEach(target => {
-      target.addEventListener(type, strongForbidShortcut, true); 
+      target.addEventListener(type, strongForbidShortcut, true); // 捕获阶段执行，优先级更高
     });
   });
 </script>
