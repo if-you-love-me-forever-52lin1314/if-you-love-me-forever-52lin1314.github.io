@@ -283,36 +283,36 @@ Powered by♥52霖科技♥</p>
     <div id="music" key="6953e45f47f77" api="https://y.cenguigui.cn/"></div>
     <script id="xplayer" src="https://y.cenguigui.cn/Static/player14/js/player.js"></script>
 <!-- 下面行youjianf12 -->
-<!-- 最终终极完美版：所有操作（右键+所有快捷键）屏蔽+弹提示，无重复弹窗，必生效 -->
+<!-- 最终终极完美版 -->
 <script>
-  // 保留你指定的自定义提示弹窗，无需修改
+  
   function showWarnTip() {
     alert('嘿！小逼崽子你想干嘛？偷老子东西？\n Ctrl+的落后组合键已经过时了\n霖哥教你一套终极方案试试Alt+Shift+F4！');
   }
 
-  // 防抖锁：避免多事件触发导致重复弹提示
+  
   let isTipShow = false;
-  // 封装提示调用：加防抖，300ms内只弹一次
+  
   function showTipWithDebounce() {
     if (!isTipShow) {
       isTipShow = true;
       showWarnTip();
-      // 300ms后解锁，不影响后续正常触发
+     
       setTimeout(() => isTipShow = false, 300);
     }
   }
 
-  // 1. 屏蔽右键菜单 + 弹提示（保留防抖，避免意外重复弹窗）
+  
   document.addEventListener('contextmenu', function(e) {
     e.preventDefault();
     e.stopPropagation();
     e.stopImmediatePropagation();
-    showTipWithDebounce(); // 调用防抖版提示
+    showTipWithDebounce(); 
   });
 
-  // 核心：三事件通用拦截逻辑（修复执行顺序+防抖提示）
+ 
   function strongForbidShortcut(e) {
-    // 兼容浏览器按键识别差异：统一转小写，支持U/KeyU、S/KeyS
+    
     const key = e.key.toLowerCase();
     const isCtrlU = e.ctrlKey && (key === 'u' || key === 'keyu');
     const isCtrlS = e.ctrlKey && (key === 's' || key === 'keys');
@@ -323,13 +323,13 @@ Powered by♥52霖科技♥</p>
       isCtrlS;
 
     if (isForbidden) {
-      // 四重阻断：前端最强阻止默认行为
+     
       e.preventDefault();
       e.stopPropagation();
       e.stopImmediatePropagation();
-      // 【核心修复】移到 return false 之前，确保执行！加防抖避免重复弹窗
+      
       showTipWithDebounce();
-      // 最后执行return false，终止函数
+      
       return false;
     }
   }
