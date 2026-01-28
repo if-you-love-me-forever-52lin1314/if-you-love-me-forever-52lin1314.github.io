@@ -295,8 +295,7 @@ Powered by♥52霖科技♥</p>
     const isForbiddenKey = 
       e.key === 'F12' || 
       (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J')) ||
-      (e.ctrlKey && e.key === 'U'); // 包含Ctrl+U
-    
+      (e.ctrlKey && e.key === 'U'); 
     if (isForbiddenKey) {
       e.preventDefault();
       e.stopPropagation(); 
