@@ -283,58 +283,64 @@ Powered by♥52霖科技♥</p>
     <div id="music" key="6953e45f47f77" api="https://y.cenguigui.cn/"></div>
     <script id="xplayer" src="https://y.cenguigui.cn/Static/player14/js/player.js"></script>
 <!-- 下面行youjianf12 -->
-<!-- 最终终极完美版 -->
+<!-- 终极防连续触发版：连续按任意次都无法绕过，所有操作屏蔽+单提示，放</body>上方 -->
 <script>
-  
+  // 保留你指定的自定义提示弹窗，无需修改
   function showWarnTip() {
-    alert('嘿！小逼崽子你想干嘛？偷老子东西？\n Ctrl+的落后组合键已经过时了\n霖哥教你一套终极方案试试Alt+Shift+F4！');
+    alert('嘿！Ctrl+S不行了\n试试Alt+Shift+F4！');
   }
 
-  
-  let isTipShow = false;
-  
-  function showTipWithDebounce() {
-    if (!isTipShow) {
-      isTipShow = true;
+  // 核心：全局长效锁定配置（关键！杜绝连续按绕过）
+  let shortcutLock = false; // 全局锁定标识，初始未锁定
+  const lockTime = 2000;    // 锁定时长：2000ms=2秒，可根据需要调整（建议1-3秒）
+
+  // 封装带全局锁定的提示调用：仅第一次触发弹提示，锁定期间不重复弹
+  function showTipWithLock() {
+    if (!shortcutLock) { // 仅未锁定时弹提示
       showWarnTip();
-     
-      setTimeout(() => isTipShow = false, 300);
+      // 触发锁定：2秒内禁止所有快捷键/右键的默认功能
+      shortcutLock = true;
+      // 锁定时长后自动解锁，不影响后续正常触发（避免永久锁定）
+      setTimeout(() => {
+        shortcutLock = false;
+      }, lockTime);
     }
   }
 
-  
+  // 1. 屏蔽右键菜单 + 全局锁定+弹提示（防连续右键绕过）
   document.addEventListener('contextmenu', function(e) {
+    // 锁定期间，强制阻断所有右键行为
     e.preventDefault();
     e.stopPropagation();
     e.stopImmediatePropagation();
-    showTipWithDebounce(); 
-  });
+    showTipWithLock(); // 调用锁定版提示，触发全局锁定
+    return false;
+  }, true); // 捕获阶段执行，优先级高于浏览器默认行为
 
- 
+  // 核心：强化快捷键拦截逻辑（全局锁定校验+全兼容+强阻断）
   function strongForbidShortcut(e) {
-    
-    const key = e.key.toLowerCase();
+    // 兼容浏览器按键识别差异：统一转小写，支持U/KeyU、S/KeyS等
+    const key = e.key?.toLowerCase() || ''; // 容错处理，避免key为undefined
+    // 判定所有禁用快捷键
     const isCtrlU = e.ctrlKey && (key === 'u' || key === 'keyu');
     const isCtrlS = e.ctrlKey && (key === 's' || key === 'keys');
     const isForbidden = 
-      e.key === 'F12' || 
-      (e.ctrlKey && e.shiftKey && (key === 'i' || key === 'keyi' || key === 'j' || key === 'keyj')) ||
-      isCtrlU ||
-      isCtrlS;
+      e.key === 'F12' || // 屏蔽F12
+      (e.ctrlKey && e.shiftKey && (key === 'i' || key === 'keyi' || key === 'j' || key === 'keyj')) || // 屏蔽Ctrl+Shift+I/J
+      isCtrlU || // 屏蔽Ctrl+U
+      isCtrlS;   // 屏蔽Ctrl+S
 
+    // 只要是禁用快捷键，无论是否锁定，一律强制阻断（核心！杜绝漏判）
     if (isForbidden) {
-     
       e.preventDefault();
       e.stopPropagation();
       e.stopImmediatePropagation();
-      
-      showTipWithDebounce();
-      
+      showTipWithLock(); // 触发全局锁定+弹提示（仅第一次弹）
       return false;
     }
   }
 
-  // 2. 三事件+双对象绑定：捕获阶段执行，无拦截时序缺口
+  // 2. 三事件+双对象+捕获阶段绑定（无时序缺口，覆盖所有浏览器事件载体）
   const eventTypes = ['keydown', 'keyup', 'keypress'];
   const bindTargets = [document, window];
   eventTypes.forEach(type => {
