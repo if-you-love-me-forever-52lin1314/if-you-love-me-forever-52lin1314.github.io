@@ -283,33 +283,33 @@ Powered by♥52霖科技♥</p>
     <div id="music" key="6953e45f47f77" api="https://y.cenguigui.cn/"></div>
     <script id="xplayer" src="https://y.cenguigui.cn/Static/player14/js/player.js"></script>
 <!-- 下面行youjianf12 -->
-<!-- 终极根治版：自定义非模态弹窗，弹窗时仍持续拦截快捷键，放</body>上方 -->
+<!-- 透明粉色弹窗版：弹窗时持续拦截快捷键，样式优化为透明粉色，放</body>上方 -->
 <style>
-  /* 自定义提示弹窗样式，贴近原生alert，可按需修改 */
+  /* 自定义透明粉色弹窗样式 - 核心修改部分 */
   #customWarnTip {
     position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     padding: 20px 30px;
-    background: #fff;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    background: rgba(255, 182, 193, 0.9); /* 透明粉色：浅粉底+0.9透明度，可微调 */
+    border: 1px solid #ff69b4; /* 浅玫粉边框，贴合粉色系 */
+    border-radius: 6px; /* 轻微圆角，更柔和 */
+    box-shadow: 0 0 12px rgba(255, 105, 180, 0.3); /* 粉色系浅阴影，更立体 */
     font-size: 16px;
-    color: #333;
-    z-index: 999999; /* 最高层级，确保不被遮挡 */
+    color: #d81f26; /* 深灰色文字，保证可读性 */
+    z-index: 999999; /* 最高层级，不被遮挡 */
     text-align: center;
     line-height: 1.5;
   }
-  /* 弹窗遮罩，可选（让背景半透明，更贴近原生alert体验） */
+  /* 弹窗遮罩：保留浅灰半透明，和粉色弹窗协调（可按需修改） */
   #customTipMask {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0,0,0,0.3);
+    background: rgba(0,0,0,0.2); /* 遮罩稍淡，突出粉色弹窗 */
     z-index: 999998;
   }
 </style>
@@ -317,7 +317,7 @@ Powered by♥52霖科技♥</p>
 <script>
   // 配置项：可自定义提示语、弹窗显示时长（毫秒）
   const CONFIG = {
-    tipText: '嘿！小姐姐Ctrl+S不行了\n试试Alt+Shift+F4！', // 你的提示语
+    tipText: '嘿！粉色Ctrl+S不行了\n试试Alt+Shift+F4！', // 你的提示语
     showDuration: 2000, // 弹窗自动消失时长（2秒，可改）
     lockTime: 3000 // 拦截强化锁定时长（3秒，覆盖连续按时间）
   };
