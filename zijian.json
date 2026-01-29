@@ -1313,7 +1313,7 @@
     },
 {"name":"-虾米-","type":0,"url":"https://jx.xmflv.com/?url=","ext":{"header":{"user-agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36 Edg/110.0.1587.57"}}},
 {"name":"霖daoz","type":"1","url":"https://kalbim.xatut.top/kalbim2025/781718/play/video_player.php?url=","ext":{"flag":["qq","腾讯","qiyi","爱奇艺","奇艺","youku","优酷","sohu","搜狐","letv","乐视","mgtv","芒果","tnmb","seven","bilibili","1905"],"header":{"User-Agent":"okhttp/4.9.1"}}},
-{"name":"依米解析","type":1,"url":"https://coffee.1ljx.com:32000/api/?key=36d3e7f8-f971-44a7-9063-5db4f218491d&url=","ext":{"header":{"User-Agent":"okhttp/4.9.1"}}}]}
+{"name":"依米解析","type":1,"url":"https://coffee.1ljx.com:32000/api/?key=36d3e7f8-f971-44a7-9063-5db4f218491d&url="},
  {
       "name": "芒果VIP4k",
       "url": "http://mg.itufm.top/mg.php?url=",
@@ -1325,8 +1325,8 @@
 {"name": "霖哥轮询","type": 0,"url": "https://down.nigx.cn/jx.zzong6599.workers.dev/?url=","ext": {"flag": [".*."],"header": {"User-Agent": "okhttp/4.9.1"}}},
 {"name": "霖哥自动","type": 0,"url": "https://down.nigx.cn/xjx.zzong6599.workers.dev/?url="},
 {"name": "智能云","type": 0,"url": "http://v9j.net/?url="},
-{"name":"极速解析","type":1,"url":"https://cachem3u8.2s0.cn:8899/Th_JsonApi.php?url="}
-{"name":"麒麟解析","type":0,"url":"https://www.cgdyw.net/jiexi/jiekou-2/?url="}
+{"name":"极速解析","type":1,"url":"https://cachem3u8.2s0.cn:8899/Th_JsonApi.php?url="},
+{"name":"麒麟解析","type":0,"url":"https://www.cgdyw.net/jiexi/jiekou-2/?url="},
 {"name":"巧技二","type":1,"url":"https://zy.qiaoji8.com/gouzi.php?url=","ext":{"flag":["qq","腾讯","qiyi","爱奇艺","奇艺","youku","优酷","sohu","搜狐","letv","乐视","mgtv","芒果","tnmb","seven","bilibili","1905","NetFilx"],"header":{"User-Agent":"okhttp/4.9.1"}}},
         {
             "name": "大厂",
