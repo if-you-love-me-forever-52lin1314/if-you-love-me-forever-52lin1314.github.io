@@ -987,7 +987,7 @@
       "分类url": "https://www.yihaohuwai.com/pg/{cateId}-{catePg}.html",
       "分类": "电影&电视剧&动漫&综艺&短剧&喜剧片&纪录片",
       "分类值": "1&2&3&4&5&16&15"
-      //"搜索url": "https://www.wushtv.com/so{wd}/page/{catePg}.html"
+     "搜索url": "https://www.wushtv.com/so{wd}/page/{catePg}.html"
       }
     },
     {
@@ -1011,7 +1011,7 @@
       "分类url": "http://www.kanxir.com/tags/{cateId}--------{catePg}---.html",
       "分类": "电影&电视剧&动漫&综艺&欧美剧",
       "分类值": "1&2&4&3&16"
-      //"搜索url": "https://www.wushtv.com/so{wd}/page/{catePg}.html"
+      "搜索url": "https://www.wushtv.com/so{wd}/page/{catePg}.html"
       }
     },
 {"key":"csp_XBPQ_游子视频","name":"♨️游子┃视频",
