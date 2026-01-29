@@ -88,7 +88,7 @@
     {"key":"T4_豆瓣zy","name":"豆瓣资源","type":4,"api":"https://dbzy.tv/api.php/provide/vod","searchable":1,"quickSearch":1,"filterable":0},
     {"key":"T4_茅台","name":"茅台资源","type":4,"api":"https://caiji.maotaizy.cc/api.php/provide/vod","searchable":1,"quickSearch":1,"filterable":0},
     {"key":"T4_天堂","name":"电影天堂资源","type":4,"api":"https://api.niuniuzy.me/api.php/provide/vod","searchable":1,"quickSearch":1,"filterable":0},
-    {"key":"T4_牛牛","name":"牛牛资源","type":4,"api":"https://api.niuniuzy.me/api.php/provide/vod","searchable":1,"quickSearch":1,"filterable":0},
+    {"key":"T4_牛牛1","name":"牛牛资源","type":4,"api":"https://api.niuniuzy.me/api.php/provide/vod","searchable":1,"quickSearch":1,"filterable":0},
     {"key":"T4_旺旺","name":"旺旺资源","type":4,"api":"https://api.wwzy.tv/api.php/provide/vod","searchable":1,"quickSearch":1,"filterable":0},
     {"key":"T4_天涯","name":"天涯资源","type":4,"api":"https://tyyszy.com/api.php/provide/vod","searchable":1,"quickSearch":1,"filterable":0},
     {"key":"T4_丫丫","name":"丫丫资源","type":4,"api":"https://cj.yayazy.net/api.php/provide/vod","searchable":1,"quickSearch":1,"filterable":0},
@@ -301,36 +301,9 @@
 {
   "name": "夕云解析测试",
   "type": 0,
-  "url": "https://jx.xyxy.live/player/?url=",
-  "ext": {
-    "flag": [
-      "seven",
-      "mgtv",
-      "qiyi",
-      "imgo",
-      "爱奇艺",
-      "奇艺",
-      "qq",
-      "腾讯",
-      "youku",
-      "优酷",
-      "pptv",
-      "PPTV",
-      "letv",
-      "乐视",
-      "leshi",
-      "bilibili",
-      "哔哩哔哩",
-      "哔哩",
-      "mgtv",
-      "芒果",
-      "芒果"
-    ],
-    "header": {
-      "User-Agent": "Lavf/58.12.100"
-    }
+  "url": "https://jx.xyxy.live/player/?url="
   },
-  "sources": [
+
     {
       "name": "再找来",
       "type": 1,
