@@ -1426,41 +1426,44 @@
                 }
             }
         },
-{"name":"夕云","type":0,"url":"https://jx.xyxy.live/player/?url="}
-{"name": "夕云解析测试",
-            "type": 0,
-            "url": "https://jx.xyxy.live/player/?url=",
-            "ext": {
-                "flag": [
-                    "seven",
-                    "mgtv",
-                    "qiyi",
-                    "imgo",
-                    "爱奇艺",
-                    "奇艺",
-                    "qq",
-                    "腾讯",
-                    "youku",
-                    "优酷",
-                    "pptv",
-                    "PPTV",
-                    "letv",
-                    "乐视",
-                    "leshi",
-                    "bilibili",
-                    "哔哩哔哩",
-                    "哔哩",
-                    "mgtv",
-                    "芒果",
-                    "芒果"
-                ],
-                "header": {
-                    "User-Agent": "Lavf/58.12.100"
-                }
-            }
-        },
-
-{"name":"再找来","type":1,"url":"http://xiaoxin.1080p.fun/home/api?type=ys&uid=91198&key=bhntuwyAJLMTUY1478&url=" }
+{
+  "name": "夕云解析测试",
+  "type": 0,
+  "url": "https://jx.xyxy.live/player/?url=",
+  "ext": {
+    "flag": [
+      "seven",
+      "mgtv",
+      "qiyi",
+      "imgo",
+      "爱奇艺",
+      "奇艺",
+      "qq",
+      "腾讯",
+      "youku",
+      "优酷",
+      "pptv",
+      "PPTV",
+      "letv",
+      "乐视",
+      "leshi",
+      "bilibili",
+      "哔哩哔哩",
+      "哔哩",
+      "mgtv",
+      "芒果",
+      "芒果"
+    ],
+    "header": {
+      "User-Agent": "Lavf/58.12.100"
+    }
+  },
+  "sources": [
+    {
+      "name": "再找来",
+      "type": 1,
+      "url": "http://xiaoxin.1080p.fun/home/api?type=ys&uid=91198&key=bhntuwyAJLMTUY1478&url="
+    }
   ],
 
 "flags":["youku","优酷","优 酷","优酷视频", "qq","腾讯","腾 讯","腾讯视频", "iqiyi", "qiyi","奇艺","爱奇艺","爱 奇 艺", "m1905", "xigua", "letv","leshi","乐视","乐 视", "sohu","搜狐","搜 狐","搜狐视频", "tudou","mgtv","芒果","imgo","芒果TV","芒 果 T V", "bilibili","哔 哩","哔 哩 哔 哩","SPA","YuMi-vip","pptv","PPTV","ltnb","rx","SLYS4k","tucheng","BYGA","luanzi","dxzy","QEYSS","aliyun","AliS","122","chuangying","CL4K","xfyun","wuduzy","wasu","renrenmi","ppayun","haiwaikan","cool","dbm3u8","xmm","funshion","ruyi1080","ruyib1080"],
