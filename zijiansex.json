@@ -115,10 +115,7 @@
                 "少女萝莉"
                ]
     },
-{"key": "湿乐园","name": "🔞湿乐园资源","type": 1,"api": "https://xxavs.com/api.php/provide/vod/","jar":"https://github.moeyy.xyz/https://raw.githubusercontent.com/350822/Xtv/main/laowang/jar/pg.jar"}, 
-{"key": "chujia.cc","name": "🔞精东资源","type": 1,"api": "http://chujia.cc/api.php/provide/vod/","jar":"https://github.moeyy.xyz/https://raw.githubusercontent.com/350822/Xtv/main/laowang/jar/pg.jar","playUrl": "json:http://127.0.0.1:10079/parse/?thread=0&proxy=&url=","recordable": 0,"style": {"type": "rect", "ratio": 1.33}},
 
-	{"key":"*玉兔资源🔞","name":"🔞玉兔资源B","type":1,"api":"https://yutuzy10.com/api.php/provide/vod/","jar":"https://github.moeyy.xyz/https://raw.githubusercontent.com/350822/Xtv/main/laowang/jar/pg.jar","searchable":1,"quickSearch":1},
 	{
       "key": "丝袜采集",
       "name": "丝袜采集(优)",
