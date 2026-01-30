@@ -1,7 +1,7 @@
 var rule = {
     title: '奇珍异兽[官]',
-    host: 'https://m.iqiyi.com',
-    homeUrl: '/dianshiju',
+    host: 'https://www.iqiyi.com',
+    homeUrl: '/',
     // detailUrl:'https://pcw-api.iqiyi.com/albums/album/avlistinfo?aid=fyid&size=2000&page=1',
     detailUrl: 'https://pcw-api.iqiyi.com/video/video/videoinfowithuser/fyid?agent_type=1&authcookie=&subkey=fyid&subscribe=1',
     searchUrl: 'https://search.video.iqiyi.com/o?if=html5&key=**&pageNum=fypage&pos=1&pageSize=24&site=iqiyi',
