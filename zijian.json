@@ -1,22 +1,22 @@
 {
   "spider": "./52lin.jar",
-  "wallpaper": "http://我不是.肥猫.live/ppic/feimao.php",
-  "logo": "https://",
+  "wallpaper": "",
+  "logo": "",
   "sites": [
     {"key":"豆豆","name":"52霖VIP影视","type": 3, "api": "csp_DouDou","searchable": 0,"quickSearch": 0,"filterable": 0},
-    {"jar": "./qiaoji.jar","key": "hipy_js_360影视[官]","name": "爱优腾芒聚合官","type": 3,"api": "./drpy_libs/drpy2.min.js","searchable": 1,"quickSearch": 1,"filterable": 1,"ext": "./drpy_js/三六零.js"},
-           {"jar": "./hu.jar",
+    {"jar": "qiaoji.jar","key": "hipy_js_360影视[官]","name": "爱优腾芒聚合官","type": 3,"api": "./drpy_libs/drpy2.min.js","searchable": 1,"quickSearch": 1,"filterable": 1,"ext": "./drpy_js/三六零.js"},
+       {"jar": "./hu.jar",
       "key": "设置",
       "name": "弹幕|设置",
       "type": 3,
       "api": "csp_Config"
     },
-    {"jar": "./qiaoji.jar","key":"hipy_js_腾云驾雾[官]","name": "腾讯视频[官]","type": 3,"api": "./drpy_libs/drpy2.min.js","searchable": 1,"quickSearch": 1,"filterable": 1,"ext": "./drpy_js/腾讯视频.js"},
-    {"jar": "./qiaoji.jar","key": "hipy_js_奇珍异兽[官]","name": "爱奇艺[官]","type": 3,"api": "./drpy_libs/drpy2.min.js","searchable": 1,"quickSearch": 1,"filterable": 1,"ext": "./drpy_js/爱奇艺.js"},
-    {"jar": "./qiaoji.jar","key": "hipy_js_百忙无果[官]","name": "芒果TV[官]","type": 3,"api": "./drpy_libs/drpy2.min.js","searchable": 1,"quickSearch": 1,"filterable": 1,"ext": "./drpy_js/芒果视频.js"},
-    {"jar": "./qiaoji.jar","key": "hipy_js_优酷[官]","name": "优酷视频[官]","type": 3,"api": "./drpy_libs/drpy2.min.js","searchable": 1,"quickSearch": 1,"filterable": 1,"ext": "./drpy_js/优酷视频.js"},
-    {"jar": "./qiaoji.jar","key": "hipy_js_哔哩影视[官]","name": "哔哩哔哩影视[官]","type": 3,"api": "./drpy_libs/drpy2.min.js","searchable": 1,"quickSearch": 1,"filterable": 1,"ext": "./drpy_js/哔哩影视[官].js"},
-    {"jar": "./qiaoji.jar","key": "hipy_js_菜狗[官]","name": "搜狗视频[官]","type": 3,"api": "./drpy_libs/drpy2.min.js","searchable": 1,"quickSearch": 1,"filterable": 1,"ext": "./drpy_js/菜狗[官].js"},
+    {"jar": "qiaoji.jar","key":"hipy_js_腾云驾雾[官]","name": "腾讯视频[官]","type": 3,"api": "./drpy_libs/drpy2.min.js","searchable": 1,"quickSearch": 1,"filterable": 1,"ext": "./drpy_js/腾讯视频.js"},
+    {"jar": "qiaoji.jar","key": "hipy_js_奇珍异兽[官]","name": "爱奇艺[官]","type": 3,"api": "./drpy_libs/drpy2.min.js","searchable": 1,"quickSearch": 1,"filterable": 1,"ext": "./drpy_js/爱奇艺.js"},
+    {"jar": "qiaoji.jar","key": "hipy_js_百忙无果[官]","name": "芒果TV[官]","type": 3,"api": "./drpy_libs/drpy2.min.js","searchable": 1,"quickSearch": 1,"filterable": 1,"ext": "./drpy_js/芒果视频.js"},
+    {"jar": "qiaoji.jar","key": "hipy_js_优酷[官]","name": "优酷视频[官]","type": 3,"api": "./drpy_libs/drpy2.min.js","searchable": 1,"quickSearch": 1,"filterable": 1,"ext": "./drpy_js/优酷视频.js"},
+    {"jar": "qiaoji.jar","key": "hipy_js_哔哩影视[官]","name": "哔哩哔哩影视[官]","type": 3,"api": "./drpy_libs/drpy2.min.js","searchable": 1,"quickSearch": 1,"filterable": 1,"ext": "./drpy_js/哔哩影视[官].js"},
+    {"jar": "qiaoji.jar","key": "hipy_js_菜狗[官]","name": "搜狗视频[官]","type": 3,"api": "./drpy_libs/drpy2.min.js","searchable": 1,"quickSearch": 1,"filterable": 1,"ext": "./drpy_js/菜狗[官].js"},
    // 弹幕官源+虎斑弹幕
     {"jar": "./hu.jar","api": "csp_HB360","key": "hipy_js_360影视[官]2","name": "爱优腾芒弹幕","type": 3,"api": "./drpy_libs/drpy2.min.js","searchable": 1,"quickSearch": 1,"filterable": 1,"ext": "./drpy_js/三六零.js"},
     {"jar": "./hu.jar","key":"hipy_js_腾云驾雾[官]2","name": "腾讯视频[弹幕]","type": 3,"api": "./drpy_libs/drpy2.min.js","searchable": 1,"quickSearch": 1,"filterable": 1,"ext": "./drpy_js/腾讯视频.js"},
@@ -25,7 +25,14 @@
     {"jar": "./hu.jar","key": "hipy_js_优酷[官]2","name": "优酷视频[弹幕]","type": 3,"api": "./drpy_libs/drpy2.min.js","searchable": 1,"quickSearch": 1,"filterable": 1,"ext": "./drpy_js/优酷视频.js"},
     {"jar": "./hu.jar","key": "hipy_js_哔哩影视[官]2","name": "哔哩哔哩影视[弹幕]","type": 3,"api": "./drpy_libs/drpy2.min.js","searchable": 1,"quickSearch": 1,"filterable": 1,"ext": "./drpy_js/哔哩影视[官].js"},
     {"jar": "./hu.jar","key": "hipy_js_菜狗[官]2","name": "搜狗视频[弹幕]","type": 3,"api": "./drpy_libs/drpy2.min.js","searchable": 1,"quickSearch": 1,"filterable": 1,"ext": "./drpy_js/菜狗[官].js"},
-    {
+    { "jar": "./hu.jar",
+      "key": "狐狸",
+      "name": "狐狸|4K弹幕",
+      "type": 3,
+      "api": "csp_HBAppfox",
+      "ext": "http://host1.sopython.top/host.json"
+    },   
+   {
       "jar": "./hu.jar",
       "key": "立春",
       "name": "立春|4K弹幕",
@@ -164,9 +171,8 @@
       }
     },
    //  猫大
-    {"key": "ikanbot","name": "泽霖机器人","type": 3,"playerType": "2","api": "https://tvbox.catvod.com/js/drpy2.min.js","ext": "https://tvbox.catvod.com/js/ik.js"},
-    {"key": "采集之王","name": "泽霖采集之王","type": 3,"api": "https://tvbox.catvod.com/js/drpy2.min.js","searchable": 1,"quickSearch": 1,"order_num": 142,"ext": "https://tvbox.catvod.com/js/采集之王.js?type=url&params=https://tvbox.catvod.com/js/采集静态.json$1$1"},
-    {"jar": "https://tvbox.catvod.com/catvod.jar","key": "小红影视","name": "小红影视","type": 3,"api": "csp_XBPQ","searchable": 1,"quickSearch": 1,"filterable": 1,"ext": "https://tvbox.catvod.com/js/xiaohys.json"},
+    {"key": "ikanbot","name": "泽霖机器人","type": 3,"playerType": "2","api": "./drpy_libs/drpy2.min.js","ext": "./drpy_js/爱看机器人.js"},
+    {"key": "采集之王","name": "泽霖采集之王","type": 3,"api": "./drpy_libs/drpy2.min.js","searchable": 1,"quickSearch": 1,"order_num": 142,"ext": "https://tvbox.catvod.com/js/采集之王.js?type=url&params=https://tvbox.catvod.com/js/采集静态.json$1$1"},
     {"jar": "https://tvbox.catvod.com/catvod.jar","key": "pianba","name": "片吧","type": 3,"api": "csp_XBPQ","searchable": 1,"quickSearch": 1,"filterable": 1,"ext": "https://tvbox.catvod.com/js/pianba.json"},
      //  猫大潇洒
     {"jar": "./xiaosha.jar","key": "随看","name": "随看｜APP","type": 3,"api": "csp_AppGet","ext": {"url": "https://suikan.tpmbt.cn","dataKey": "pHQsm6wjYaCuSPEz","dataIv": "pHQsm6wjYaCuSPEz"}},
