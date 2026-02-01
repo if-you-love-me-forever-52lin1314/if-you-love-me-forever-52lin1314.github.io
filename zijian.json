@@ -339,6 +339,195 @@
     {"key": "py_看客TV","name": "🍑┃看客TV[影][PY]","type": 3,"api": "./drpy_js/看客TV.py"},
     {"key": "py_即看影视","name": "🍑┃即看影视[影][PY]","type": 3,"api": "./drpy_js/skapp.py","ext": {"host": "https://skyappdata-1321528676.cos.accelerate.myqcloud.com/4kapp/appipr.txt","key": "ygcnbckhcuvygdyb","iv": "4023892775143708"}},
     {"key": "官解","name": "官解","type": 3,"api": "csp_AppYsV2","searchable": 1,"ext": "http://39.105.18.5:5565/api.php/app/","style": {"type": "rect","ratio": 1.5}},
+  //  suyuan github名lizaifu2026
+     {"jar": "./xiaosha.jar",
+      "key": "假段友get",
+      "name": "段友APP",
+      "type": 3,
+      "searchable": 1,
+      "changeable": 1,
+      "api": "csp_AppGet",
+      "ext": {
+        "url": "https://shangjihuoke.com",
+        "dataKey": "8E2DC386FD452D05",
+        "dataIv": "8E2DC386FD452D05"
+      }
+    },    
+    {
+      "name": "春天影视",
+      "key": "春天",
+      "type": 3,
+      "api": "csp_NewGrAmns",
+      "jar": "./xiaosha.jar",
+	  "searchable": 1,
+      "filterable": 1,
+      "quickSearch": 1,
+      "changeable": 1,
+      "ext": "aRzH1ANGAUTUF9FHBwAGAcJHV1GHwsdCgEaGEkRCgpWRFYKK0VXAEBYHQpQX1VHV1BJRR8NDUpOEWskXAQ4IwYzOSUxCjYzF1ERPTlKYipDeD8NPAsjIiUzBiETWywGEHR/QHYMUEhQDAFUXVAEIR8RPgYmfH9DAkMgDhEWLTMQQTU2SVVWRFZeVkdARQBGSEcwOCQWITUeKiAMEHxjBn1rNicKVhBCAiMSJERZPgIDYhBeEVACFC0ME1RdUBYPFQYQARVdQRpaQRsKUElVFQ8TCwkRBCsLG1dXUAkTAQABFSgFF0JURVhKBAkXWFMVVm4cBR8AVUxFEQoKWhEXHxhbSFxKSAEUUElVBR4BOhcYCQAOG0FfUAkTQEZeRwQPFAAACxEJBw1WCRBDAhNeRgQABQUOHQtFTkpAWkQDAlBO"
+    },
+  {
+            "name": "杜北影视",
+            "key": "杜北",
+            "type": 3,
+            "api": "csp_DubkAmns",
+            "jar": "./xiaosha.jar",
+			"searchable": 1,
+            "filterable": 1,
+            "quickSearch": 1,
+            "changeable": 1,
+            "ext": "./lib/dubk.json"
+        },   
+        {
+            "name": "伊外影视",
+            "key": "伊外",
+            "type": 3,
+            "api": "csp_YIysAmns",
+            "jar": "./xiaosha.jar",
+			"searchable": 1,
+            "filterable": 1,
+            "quickSearch": 1,
+            "changeable": 1
+        },
+    {
+      "key": "久久影视",
+      "name": "久久影视",
+      "type": 3,
+      "api": "csp_AppYsV2",
+      "playerType": 2,
+      "ext": "http://99cms.jj99.icu:8199/api.php/app/"
+    },	
+      {"jar": "./xiaosha.jar",
+            "key": "至臻",
+            "name": "至臻APP",
+            "type": 3,
+            "api": "csp_AppQi",
+            "changeable": "1",
+            "quickSearch": 1,
+            "filterable": 1,
+            "ext": {
+                "site": "https://dtqj.ggtvb.cc/dtjp.txt",
+                "dataKey": "eecbio48dsq131ee",
+                "dataIv": "eecbio48dsq131ee",
+                "search": "searchList4",
+                "version": "302",
+                "init": "initV122",
+                "ua": "okhttp/3.10.0"
+            }
+        },	
+    {
+      "key": "T4-xingzhige",
+      "name": "星之海短剧(T4)",
+      "type": 4,
+      "api": "https://catbox.n13.club/t9/xingzhige.php"
+    },        
+   {
+      "key": "T4-jumeng",
+      "name": "影视聚梦(T4)",
+      "type": 4,
+      "api": "https://catbox.n13.club/t9/jumeng.php"
+    },
+    {
+      "key": "T4-jinpai111",
+      "name": "影视金牌(T4)",
+      "type": 4,
+      "api": "https://catbox.n13.club/t9/jinpai.php"
+    },
+    {
+      "key": "T4-huaxiaozhu111",
+      "name": "影视花小猪(T4)",
+      "type": 4,
+      "api": "https://catbox.n13.club/t9/huaxiaozhu.php"
+    },
+    {
+      "key": "T4-jimi",
+      "name": "影视吉米(T4)",
+      "type": 4,
+      "api": "https://catbox.n13.club/t9/jimi.php"
+    },
+    {
+      "key": "T4-batian",
+      "name": "影视八天(T4)",
+      "type": 4,
+      "api": "https://catbox.n13.club/t9/batian.php"
+    },
+    {
+      "key": "T4-fangzhou",
+      "name": "影视方舟(T4)",
+      "type": 4,
+      "api": "https://catbox.n13.club/t9/fangzhou.php"
+    },
+    {
+      "key": "T4-fanshu",
+      "name": "影视番薯(T4)",
+      "type": 4,
+      "api": "https://catbox.n13.club/t9/fanshu.php"
+    },
+    {
+      "key": "T4-tianfeng",
+      "name": "影视天峰(T4)",
+      "type": 4,
+      "api": "https://catbox.n13.club/t9/tianfeng.php"
+    },
+    {
+      "key": "T4-mifun",
+      "name": "影视米饭(T4)",
+      "type": 4,
+      "api": "https://catbox.n13.club/t9/mifun.php"
+    },
+    {"jar": "./xiaosha.jar",
+      "key": "QD4K",
+      "name": "猪猪APP",
+      "type": 3,
+      "searchable": 1,
+      "quickSearch": 0,
+      "api": "https://13826.kstore.vip/AppV2.py",
+      "playerType": 2,
+      "ext": {
+        "api": "http://dmmax.kuailezhuiju2.com/icciu_api.php/v1.vod",
+        "datasignkey": "6QQNUsP3PkD2ajJCPCY8",
+        "apisignkey": "lvdoutv-1.0.0"
+      }
+    },      
+ {         "jar": "./xiaosha.jar",
+           "key": "玲珑",
+           "name": "玲珑APP",
+           "type": 3,
+           "quickSearch": 1,
+           "api": "csp_AppGet",
+           "ext": {
+               "url": "https://mac.555618.xyz",
+               "dataKey": "#getapp@TMD@2025",
+               "dataIv": "#getapp@TMD@2025",
+               "deviceId": "2112fc5eac600314ba95c4d65da9286b3",
+               "version": "201"
+           }
+       },
+   {	  
+      "key": "夕云",
+      "name": "夕云影视",
+      "type": 3,
+      "api": "csp_XBPQ",
+      "ext": {
+        "首页": "电视剧$21",
+        "分类": "电影$20#电视剧$39#动漫$46#综艺$47",
+        "分类url": "https://www.xyxy.live/index.php/vod/show/area/{area}/by/{by}/id/{cateId}/page/{catePg}/year/{year}.html[]"
+      }
+    },  
+        {  "jar": "./xiaosha.jar",
+            "key": "木兮影视",
+            "name": "木兮影视",
+            "type": 3,
+            "api": "csp_Symx",
+            "ext": "https://film.symx.club"
+        },    
+{ "key": "孜然影视", "name": "孜然影视", "type":3,"api":"csp_XBPQ", "ext": {"请求头":"手机","简介":"剧情介绍:+<p>&&</p>","分类url":"https://www.zrys.pw/index.php/vod/show/area/{area}/class/{class}/id/{cateId}/page/{catePg}/year/{year}.html","分类":"短剧$47#电视剧$2#电影$1#动漫$4#综艺$3"}},	  
+    { "jar": "./xiaosha.jar",
+      "key": "厂长APP",
+      "name": "厂长影音",
+      "type": 3,
+      "api": "./drpy_js/厂长.js"
+    },   	 
+
     {"key": "push_agent","name": "52霖科技Q群897294629","type": 3,"api": "csp_Push","playerType": "1","searchable": 0,"ext": "http://127.0.0.9978/file/fatcat/token.txt"}
   ],
   "parses": [
