@@ -1,9 +1,15 @@
 {
-  "spider": "./qiaoji.jar",
+  "spider": "./猫jar.png",
   "wallpaper":"http://127.0.0.1:9978/proxy?do=wall",
   "logo":"https://storage.7x24cc.com/storage-server/presigned/ss1/a6-online-fileupload/newMediaImage/ACB34B_773_photo_2022-09-14_00-00-57_20251204145106336newMediaImage.jpg",
   "sites": [
-    {"key":"豆瓣","name":"52霖科技官网8888888.best)","type":3,"api":"csp_DouDou","searchable":0,"changeable":1, "ext": {"sp": "Douban"}},
+         {
+            "key": "豆瓣",
+            "name": "52霖科技官网8888888.best",
+            "type": 3,
+            "api": "csp_Douban",
+            "searchable": 0
+        },
     {"key":"hipy_js_腾云驾雾[官]","name": "腾讯视频[官]","type": 3,"api": "./drpy_libs/drpy2.min.js","searchable": 1,"quickSearch": 1,"filterable": 1,"ext": "./drpy_js/腾讯视频.js"},
     {"key": "hipy_js_奇珍异兽[官]","name": "爱奇艺[官]","type": 3,"api": "./drpy_libs/drpy2.min.js","searchable": 1,"quickSearch": 1,"filterable": 1,"ext": "./drpy_js/爱奇艺.js"},
     {"key": "hipy_js_百忙无果[官]","name": "芒果TV[官]","type": 3,"api": "./drpy_libs/drpy2.min.js","searchable": 1,"quickSearch": 1,"filterable": 1,"ext": "./drpy_js/芒果视频.js"},
@@ -11,6 +17,68 @@
     {"key": "hipy_js_哔哩影视[官]","name": "哔哩哔哩影视[官]","type": 3,"api": "./drpy_libs/drpy2.min.js","searchable": 1,"quickSearch": 1,"filterable": 1,"ext": "./drpy_js/哔哩影视[官].js"},
     {"key": "hipy_js_菜狗[官]","name": "搜狗视频[官]","type": 3,"api": "./drpy_libs/drpy2.min.js","searchable": 1,"quickSearch": 1,"filterable": 1,"ext": "./drpy_js/菜狗[官].js"},
     {"key": "ikanbot","name": "泽霖机器人","type": 3,"playerType": "2","api": "./drpy_libs/drpy2.min.js","ext": "./drpy_js/爱看机器人.js"},
+//f猫
+        {
+            "key": "行动",
+            "name": "😌┃行动┃APP",
+            "type": 3,
+            "api": "csp_AppGet",
+            "ext": "http://165.99.42.137:5432|1234567890987654"
+        },
+        {
+            "key": "csp_Jpys",
+            "name": "🥇️┃金牌┃影视",
+            "type": 3,
+            "api": "csp_Jpys"
+        },
+        {
+            "key": "csp_Gz360",
+            "name": "🍉┃瓜子┃影视",
+            "type": 3,
+            "api": "csp_Gz360",
+            "playerType": 2
+        },
+        {
+            "key": "潮流",
+            "name": "🏜┃潮流┃APP",
+            "type": 3,
+            "api": "csp_AppRJ",
+            "ext": "http://v.rbotv.cn"
+        },
+        {
+            "key": "猫抓",
+            "name": "🐱┃猫抓┃APP",
+            "type": 3,
+            "api": "csp_AppGet",
+            "ext": "https://app.95112475.xyz|5a9w6x58dsq6z3a6"
+        },
+        {
+            "key": "黑猫",
+            "name": "🐼┃黑猫┃APP",
+            "type": 3,
+            "api": "csp_AppGet",
+            "ext": "https://uutu.efjhl.cn|uXVVRRuaPnjEfsX5"
+        },
+        {
+            "key": "csp_SaoHuo",
+            "name": "🔥┃火火┃影视",
+            "type": 3,
+            "api": "csp_SaoHuo",
+            "playerType": 2,
+            "ext": "https://shdy5.us"
+        },
+{"key":"QD4K","name":"🐷┃猪猪┃影视","type":3,"searchable":1,"quickSearch":0,"api":"https://13826.kstore.vip/AppV2.py","playerType":2,"ext":{"api":"http://dmmax.kuailezhuiju2.com/icciu_api.php/v1.vod","datasignkey":"6QQNUsP3PkD2ajJCPCY8","apisignkey":"lvdoutv-1.0.0"}},
+//欧克
+    {"jar":"http://oss4liview.moji.com/thd_file/2026/01/26/0e8629c873fea38d04bc58cbeb28c3c5.jpg","key":"盘他","name":"🎸盘他┃4K","type":3,"api":"csp_AweSomeGuard","searchable":1,"quickSearch":1, "changeable":1, "filterable":1, "ext": {"sp": "Panta"},"timeout": 25},
+    {"jar":"http://oss4liview.moji.com/thd_file/2026/01/26/0e8629c873fea38d04bc58cbeb28c3c5.jpg""key":"糯米","name":"🍓糯米┃弹幕","type": 3,"api":"csp_AweSomeGuard","searchable":1,"quickSearch":1,"changeable":1,"filterable":1,"ext": {"sp": "Nmys", "danmu": true}, "timeout": 10},
+       {"jar":"http://oss4liview.moji.com/thd_file/2026/01/26/0e8629c873fea38d04bc58cbeb28c3c5.jpg""key":"热播弹幕版","name":"📺热播┃弹幕","type": 3,"api":"csp_AweSomeGuard","searchable":1,"quickSearch":1,"changeable":1,"filterable":1,"ext": {"sp": "TianTian", "danmu": true, "site": 0}, "timeout": 10},
+    {"jar":"http://oss4liview.moji.com/thd_file/2026/01/26/0e8629c873fea38d04bc58cbeb28c3c5.jpg""key":"一起弹幕版","name":"📺一起┃弹幕","type": 3,"api":"csp_AweSomeGuard","searchable":1,"quickSearch":1,"changeable":1,"filterable":1,"ext": {"sp": "Yqs", "danmu": true}, "timeout": 10},
+    {"jar":"http://oss4liview.moji.com/thd_file/2026/01/26/0e8629c873fea38d04bc58cbeb28c3c5.jpg""key":"小白弹幕版","name":"🍼小白┃弹幕","type": 3,"api":"csp_AweSomeGuard","searchable":1,"quickSearch":1,"changeable":0,"filterable":1,"ext": {"sp": "XiaoBai", "danmu": true}, "timeout": 10},
+    {"jar":"http://oss4liview.moji.com/thd_file/2026/01/26/0e8629c873fea38d04bc58cbeb28c3c5.jpg""key":"csp_Btt","name":"🌞比特┃弹幕","type":3,"api":"csp_AweSomeGuard","searchable":1,"quickSearch":1,"changeable":1, "ext": {"sp": "Btt", "danmu": true}, "timeout": 10},
+    {"jar":"http://oss4liview.moji.com/thd_file/2026/01/26/0e8629c873fea38d04bc58cbeb28c3c5.jpg""key":"️爱看Bot弹幕版","name":"⛅️爱看┃弹幕","type": 3,"api":"csp_AweSomeGuard","searchable":1,"quickSearch":1,"changeable":1,"filterable":1,"ext": {"sp": "Ikanbot", "danmu": true}, "timeout": 10},
+ {"jar":"http://oss4liview.moji.com/thd_file/2026/01/26/0e8629c873fea38d04bc58cbeb28c3c5.jpg""key":"紫金弹幕版","name":"🍇紫金┃弹幕","type": 3,"api":"csp_AweSomeGuard","searchable":1,"quickSearch":1,"changeable":0,"filterable":1,"ext": {"sp": "AppFox", "danmu": true, "siteUrl": "https://www.zjcvod.com"}, "timeout": 10},
+    {"jar":"http://oss4liview.moji.com/thd_file/2026/01/26/0e8629c873fea38d04bc58cbeb28c3c5.jpg""key":"厂长弹幕版","name":"📔厂长┃弹幕","type": 3,"api":"csp_AweSomeGuard","searchable":1,"quickSearch":1,"changeable":0,"filterable":1,"ext": {"sp": "Czzy", "danmu": true}, "timeout": 10},
+    {"jar":"http://oss4liview.moji.com/thd_file/2026/01/26/0e8629c873fea38d04bc58cbeb28c3c5.jpg""key":"雄鹰弹幕版","name":"🦅雄鹰┃弹幕","type": 3,"api":"csp_AweSomeGuard","searchable":1,"quickSearch":1,"changeable":0,"filterable":1,"ext": {"sp": "XiongYing", "danmu": true}, "timeout": 10},
 //采集
 {"key": "采集之王","name": "泽霖采集之王","type": 3,"api": "./drpy_libs/drpy2.min.js","searchable": 1,"quickSearch": 1,"order_num": 142,"ext": "https://tvbox.catvod.com/js/采集之王.js?type=url&params=https://tvbox.catvod.com/js/采集静态.json$1$1"},
 {"key":"圆涂影视","name":"⭕️圆涂影视","type":3,"api":"csp_AppYs","searchable":1,"quickSearch":1,"filterable":1,"ext":"http://m51.gotto.top/api.php/v1.vod"},
@@ -68,18 +136,18 @@
     {"key": "还行","name": "🌀还行｜4K测试","type": 3,"api": "csp_AppYs","searchable": 1,"quickSearch": 1,"ext": "http://m51.gotto.top/api.php/v1.vod"},
     {"key": "数字","name": "🌀数字｜1920","type": 3,"quickSearch": 1,"api": "csp_AppGet","ext": {"url": "http://app1-0-0.87333.cc","dataKey": "VwsHxkCViDXEExWa","dataIv": "VwsHxkCViDXEExWa"}},
     // 巧记
-    {"key":"巧技二","name":"泽霖┃搜索","type":3,"api":"csp_qiao2","playerType":2,"ext":"7lj763gg402i7942412h849jg1558j9jl8g19213il86316k465719lik158491h179312h4934183ig2l05g9"},
-    {"key":"巧技五","name":"泽霖五┃搜索","type":3,"api":"csp_qiao2","playerType":2,"ext":"7lj763gg402i7942412h849jg1558j9jl8g19213il86316k465719lik158491h179312hk935886ig2l05g9"},
-    {"key":"柠檬","name":"柠檬┃App","type":3,"api":"csp_Nmvod","playerType":1,"ext":"7lj763gg402i7942503g839jg74h8h88highi40799jh6i6k454419l0l5184k0g549h0kg2i01i838i2h42g891lgg1"},
-    {"key":"AI3","name":"AI3┃BBA","type":3,"api":"csp_AI","searchable":1,"quickSearch":1,"filterable":0,"playerType":2,"ext":"7lj763gg0939795i037ki481k20ki2i3g3lk840883843k6k5l4354k0k10k48411g8654l9885g83ih2h0lh295lll81jg8k66l7011l8hji0l432912jhi3hk3140kghkhj3ghl7782871"},
-    {"key":"天天","name":"天天┃高峰期用不了","type":3,"api":"csp_TTian","playerType":2,"ext":"7lj763gg0939791h1l3888jig44gi291li"},
-    {"key":"剧评","name":"剧评┃App","type":3,"api":"csp_Jpys","playerType":1,"ext":"7lj763gg402i7942463j9j9jh8579590k3hjii5gi4i73l2k5l"},
-    {"key":"yizys","name":"驿站┃无搜索","type":3,"api":"csp_Xdai","playerType":2,"ext":"7lj763gg0939795i007gi48hk112jji7g1k69j079jj06g721j461kk7h703431g079j0g9hi15lg2j6232lk993i1g416hlg87i7l09i8khi6ij749j0lg77l9g154kg2gljkl1g625"},
-{"key":"lanyingys","name":"橘子4K┃APP","type":3,"api":"csp_Xdai","playerType":2,"ext":"7lj763gg402i794256239kj6h5128l9jllk7jj50i18630285h4j17hikk1k560954845ig0j75l92972l18gliilll11lg8l26h3h07ggg6j3k83gjj65g537l41h16gjl3i1g7g026752gig5k640ji4gl113024k6lk6j22h09llhj7jk35l2384j"},
-{"key":"永夜","name":"永夜┃App","type":3,"api":"csp_Xdai","playerType":2,"ext":"7lj763gg0939790i413gjh9kk011jijiggll990k9li73l224k770ik0j10l502j2j9l798lhj778hh33g018h94k5j400kij3567j7gji97kkk4118421g03lll"},
-{"key":"主角","name":"主角┃APP","type":3,"api":"csp_Xdai","playerType":2,"ext":"7lj763gg402i794246398hi3h9128893l4gji44ii5i7312k5l0k02k6l41k5509558245g38450hhj13634k58gjjgi0iiig761450hligki9j4738814gh66861j54j1g0i393g36l3k2hil10"},
-{"key":"huomaoys","name":"火猫┃App","type":3,"api":"csp_Qiji","playerType":2,"ext":"7lj763gg402i7942553k9hj9lk5h8h86k4gg845kili63835585155k7k103470h1k955lhk9706ih80280ikij0g7l91jlhl565775ikjhj9lg422962ig23ili4845k6g492l0"},
-{"key":"柚子","name":"柚子┃APP","type":3,"api":"csp_Xdai","playerType":2,"ext":"7lj763gg402i7942553393i9g44g8j82k2g9jg54ih863325555955g5g1595i1741i70lk1i00hji87320gh6j1gkkg0jh4g8697h06ghh3jhl5339731hj7hh5595ilkkkjhh8k261236896432i458hkk4i756kh5k3773jl2j8gj958228h178060g6h72j974g8k1"},    
+    {"jar":"./qiaoji.jar","key":"巧技二","name":"泽霖┃搜索","type":3,"api":"csp_qiao2","playerType":2,"ext":"7lj763gg402i7942412h849jg1558j9jl8g19213il86316k465719lik158491h179312h4934183ig2l05g9"},
+    {"jar":"./qiaoji.jar","key":"巧技五","name":"泽霖五┃搜索","type":3,"api":"csp_qiao2","playerType":2,"ext":"7lj763gg402i7942412h849jg1558j9jl8g19213il86316k465719lik158491h179312hk935886ig2l05g9"},
+    {"jar":"./qiaoji.jar","key":"柠檬","name":"柠檬┃App","type":3,"api":"csp_Nmvod","playerType":1,"ext":"7lj763gg402i7942503g839jg74h8h88highi40799jh6i6k454419l0l5184k0g549h0kg2i01i838i2h42g891lgg1"},
+    {"jar":"./qiaoji.jar","key":"AI3","name":"AI3┃BBA","type":3,"api":"csp_AI","searchable":1,"quickSearch":1,"filterable":0,"playerType":2,"ext":"7lj763gg0939795i037ki481k20ki2i3g3lk840883843k6k5l4354k0k10k48411g8654l9885g83ih2h0lh295lll81jg8k66l7011l8hji0l432912jhi3hk3140kghkhj3ghl7782871"},
+    {"jar":"./qiaoji.jar","key":"天天","name":"天天┃高峰期用不了","type":3,"api":"csp_TTian","playerType":2,"ext":"7lj763gg0939791h1l3888jig44gi291li"},
+    {"jar":"./qiaoji.jar","key":"剧评","name":"剧评┃App","type":3,"api":"csp_Jpys","playerType":1,"ext":"7lj763gg402i7942463j9j9jh8579590k3hjii5gi4i73l2k5l"},
+    {"jar":"./qiaoji.jar","key":"yizys","name":"驿站┃无搜索","type":3,"api":"csp_Xdai","playerType":2,"ext":"7lj763gg0939795i007gi48hk112jji7g1k69j079jj06g721j461kk7h703431g079j0g9hi15lg2j6232lk993i1g416hlg87i7l09i8khi6ij749j0lg77l9g154kg2gljkl1g625"},
+{"jar":"./qiaoji.jar","key":"lanyingys","name":"橘子4K┃APP","type":3,"api":"csp_Xdai","playerType":2,"ext":"7lj763gg402i794256239kj6h5128l9jllk7jj50i18630285h4j17hikk1k560954845ig0j75l92972l18gliilll11lg8l26h3h07ggg6j3k83gjj65g537l41h16gjl3i1g7g026752gig5k640ji4gl113024k6lk6j22h09llhj7jk35l2384j"},
+{"jar":"./qiaoji.jar","key":"永夜","name":"永夜┃App","type":3,"api":"csp_Xdai","playerType":2,"ext":"7lj763gg0939790i413gjh9kk011jijiggll990k9li73l224k770ik0j10l502j2j9l798lhj778hh33g018h94k5j400kij3567j7gji97kkk4118421g03lll"},
+{"jar":"./qiaoji.jar","key":"主角","name":"主角┃APP","type":3,"api":"csp_Xdai","playerType":2,"ext":"7lj763gg402i794246398hi3h9128893l4gji44ii5i7312k5l0k02k6l41k5509558245g38450hhj13634k58gjjgi0iiig761450hligki9j4738814gh66861j54j1g0i393g36l3k2hil10"},
+{"jar":"./qiaoji.jar","key":"huomaoys","name":"火猫┃App","type":3,"api":"csp_Qiji","playerType":2,"ext":"7lj763gg402i7942553k9hj9lk5h8h86k4gg845kili63835585155k7k103470h1k955lhk9706ih80280ikij0g7l91jlhl565775ikjhj9lg422962ig23ili4845k6g492l0"},
+{"jar":"./qiaoji.jar","key":"柚子","name":"柚子┃APP","type":3,"api":"csp_Xdai","playerType":2,"ext":"7lj763gg402i7942553393i9g44g8j82k2g9jg54ih863325555955g5g1595i1741i70lk1i00hji87320gh6j1gkkg0jh4g8697h06ghh3jhl5339731hj7hh5595ilkkkjhh8k261236896432i458hkk4i756kh5k3773jl2j8gj958228h178060g6h72j974g8k1"},    
 // 林中小屋
     {"key": "闪影","name": "🎇闪影视频✨蓝光秒播","type": 3,"api": "csp_AppYs","searchable": 1,"quickSearch": 1,"filterable": 1,"ext": "http://38.47.213.61:41271/mogai_api.php/v1.vod","categories": ["电影","剧集","短剧","综艺","动漫"]},
     {"key": "古魔","name": "📦古妖贝罗✨蓝光秒播","type": 3,"changeable": 0,"api": "https://8815.kstore.vip/tvbox/py/AppGet3.py","ext": {"host": "https://www.mfsp4k.top","key": "1234567887654321","sort": "123456789321654"}},
