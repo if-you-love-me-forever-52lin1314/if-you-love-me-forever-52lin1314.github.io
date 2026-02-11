@@ -15,13 +15,14 @@
 <link rel="apple-touch-icon-precomposed" href="/Bt/ico.png"/>
 <link rel="dns-prefetch" href="//cfyy.cc"/>
 <link rel="dns-prefetch" href="//cfss.cc"/>
-<link rel="stylesheet" href="https://cfss.cc/Bt/cf.css"/>
+<link rel="stylesheet" href="/Bt/cf.css"/>
 </head>
 <body>
 <div class="nav">
 <ul class="menu">
 
 <li id="mv"><a href="https://cfss.cc/mv/">音视</a></li>
+<li id="mk"><a href="https://cfss.cc/mk/">电视</a></li>
 
 </ul>
 </div>
@@ -366,24 +367,24 @@ var Dp = new DPlayer({
     autoplay: true,
     live: false,//直播true
     theme: '#FFF',//颜色
-    logo: '/Bt/img/cf.png',
+    logo: 'https://cfss.cc/Bt/img/cf.png',
     video:{//视频源 
     url: Url,
     type: 'auto',
     }
 });
 Dp.on('ended',function(){
-post('/https://cfss.cc/mv/',{ss:'邓丽君',p:'1'});
+post('/mv/',{ss:'邓丽君',p:'1'});
 });//结束时触发
 Dp.on('error',function(){
-post('/https://cfss.cc/mv/',{ss:'邓丽君',p:'1'});
+post('/mv/',{ss:'邓丽君',p:'1'});
 });//错误时触发
 }
 function gd(){
-post('/https://cfss.cc/mv/',{ss:'4484'});
+post('/mv/',{ss:'4484'});
 }
 function gs(id){
-$(".LBn").load("https://cfss.cc/mv/gs.php?id="+id); 
+$(".LBn").load("gs.php?id="+id); 
 }
 Cf("3551891");
 $("title").text("✨邓丽君 - 我只在乎你 - MusicV..");
@@ -398,7 +399,7 @@ $(".LBn").animate({scrollTop:$("#3551891").offset().top-88 + "px"},588);//跳转
 <script src="https://cfss.cc/Bt/wz.js" type="text/javascript"></script>
 <footer>
 <div class="bottom">
-<p>Copyright @ 2018-2026 <a href="/Cx" title="cfss.cc" data-i="泽霖网络">cfss.cc</a> 版权所有✦<a href="//beian.miit.gov.cn/" target="_Ban" title="蜀ICP备19012115号-3" data-i="52霖科技">蜀ICP备19012115号-3</a>✦在线💃:49876</p> 
+<p>Copyright @ 2018-2026 <a href="/Cx" title="cfss.cc" data-i="初心网络">cfss.cc</a> 版权所有✦<a href="//beian.miit.gov.cn/" target="_Ban" title="蜀ICP备19012115号-3" data-i="长风网络">蜀ICP备19012115号-3</a>✦在线💃:49876</p> 
 <p>初心网络:为非盈利网站,本站內容出自原创和互联网, 如有侵权请及时联系删除！本站不承担任何争议和法律责任！</p>
 </div>
 </footer>
