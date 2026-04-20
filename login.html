@@ -64,6 +64,7 @@ const client = new Appwrite.Client();
 client
     .setEndpoint("https://sgp.cloud.appwrite.io/v1")
     .setProject("69e604b100164e6fb8dc");
+
 const account = new Appwrite.Account(client);
 
 // 登录
@@ -76,10 +77,10 @@ async function userLogin(){
     }
     layer.load(1);
     try{
-        await account.createEmailPasswordSession(user + "@temp.local", pwd);
+        await account.createEmailPasswordSession(user + "@temp.com", pwd);
         layer.closeAll();
         layer.msg("✅ 登录成功！",{icon:1,time:1500},()=>{
-            location.href="https://8888888/index.html";
+            location.href="https://8888888.best/index.html";
         })
     }catch(e){
         layer.closeAll();
@@ -99,7 +100,7 @@ async function userRegister(){
     try{
         await account.create(
             Appwrite.ID.unique(),
-            username+"@temp.local",
+            username+"@temp.com",
             pwd,
             username
         );
@@ -111,7 +112,7 @@ async function userRegister(){
         if(e.type == "user_already_exists"){
             layer.msg("⚠️ 该账号已经被注册",{icon:2});
         }else{
-            layer.msg("❌ 注册失败，请稍后重试",{icon:2});
+            layer.msg("❌ 注册失败：" + e.message,{icon:2});
         }
     }
 }
