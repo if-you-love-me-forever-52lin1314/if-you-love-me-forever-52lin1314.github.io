@@ -11,106 +11,52 @@
             background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);
             display:flex;align-items:center;justify-content:center;
             font-family:"Microsoft Yahei",sans-serif;
-            padding:20px;
         }
-        .login-card{
+        .login-box{
             background:#fff;padding:50px 40px;border-radius:20px;
-            width:100%;max-width:500px;box-shadow:0 10px 40px rgba(0,0,0,0.15);
+            width:90%;max-width:460px;
+            box-shadow:0 10px 40px rgba(0,0,0,0.15);
         }
-        h1{text-align:center;margin-bottom:40px;color:#111;font-weight:600;}
-        .form-item{margin-bottom:25px;}
-        .form-item label{display:block;margin-bottom:10px;color:#444;font-size:16px;}
-        .form-item input{
-            width:100%;padding:15px;border:1px solid #ddd;
-            border-radius:10px;font-size:16px;outline:none;transition:0.3s;
+        h2{text-align:center;margin-bottom:40px;color:#222;font-weight:600;}
+        .item{margin-bottom:25px;}
+        label{display:block;margin-bottom:8px;color:#555;font-size:15px;}
+        input{
+            width:100%;padding:14px 16px;border:1px solid #ddd;
+            border-radius:8px;font-size:16px;outline:none;
         }
-        .form-item input:focus{border-color:#667eea;box-shadow:0 0 0 3px rgba(102,126,234,0.15);}
-        .forget-pwd{text-align:right;margin:-10px 0 30px 0;}
-        .forget-pwd a{color:#667eea;text-decoration:none;font-size:15px;}
+        input:focus{border-color:#667eea;}
+        .forget-link{text-align:right;margin:-8px 0 30px 0;}
+        .forget-link a{color:#667eea;text-decoration:none;font-size:14px;}
         .login-btn{
-            width:100%;padding:16px;border:none;border-radius:10px;
-            background:linear-gradient(90deg,#667eea 0%,#764ba2 100%);
-            color:white;font-size:18px;cursor:pointer;transition:0.3s;
+            width:100%;padding:15px;border:none;border-radius:8px;
+            background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);
+            color:white;font-size:17px;cursor:pointer;
         }
-        .login-btn:hover{opacity:0.92;}
-        .reg-tip{text-align:center;margin-top:30px;color:#666;font-size:16px;}
-        .reg-tip a{color:#667eea;text-decoration:none;font-weight:500;}
+        .reg-text{text-align:center;margin-top:25px;color:#666;font-size:15px;}
+        .reg-text a{color:#667eea;text-decoration:none;}
     </style>
 </head>
 <body>
-<div class="login-card">
-    <h1>账号登录</h1>
-
-    <div class="form-item">
-        <label>手机号</label>
-        <input type="tel" id="phone" placeholder="请输入手机号">
+<div class="login-box">
+    <h2>账号登录</h2>
+    <div class="item">
+        <label>用户名/手机号</label>
+        <input type="text" id="username" placeholder="请输入账号">
     </div>
-    <div class="form-item">
-        <label>邮箱</label>
-        <input type="email" id="email" placeholder="请输入邮箱">
+    <div class="item">
+        <label>密码</label>
+        <input type="password" id="password" placeholder="请输入密码">
     </div>
-    <div class="form-item">
-        <label>登录密码</label>
-        <input type="password" id="pwd" placeholder="请输入登录密码">
+    <div class="forget-link">
+        <a href="javascript:alert('请联系管理员重置')">忘记密码？</a>
     </div>
-
-    <div class="forget-pwd">
-        <a href="javascript:alert('请联系管理员重置密码')">忘记密码？</a>
-    </div>
-
-    <button class="login-btn" onclick="userLogin()">立即登录</button>
-
-    <div class="reg-tip">
-        还没有账号？ <a href="javascript:userRegister()">立即注册</a>
+    <button class="login-btn" onclick="alert('登录成功');location.href='https://8888888.best/index.html'">
+        立即登录
+    </button>
+    <div class="reg-text">
+        还没有账号？
+        <a href="https://f.kdocs.cn/g/dlLFQoSv/" target="_blank">立即注册</a>
     </div>
 </div>
-
-<script>
-// 登录校验
-function userLogin(){
-    const phone = document.getElementById('phone').value.trim();
-    const email = document.getElementById('email').value.trim();
-    const pwd = document.getElementById('pwd').value.trim();
-
-    if(!phone || !email || !pwd){
-        alert('手机号、邮箱、密码必须全部填写！');
-        return;
-    }
-
-    alert('✅ 登录成功，正在跳转');
-    location.href = "https://8888888.best/index.html";
-}
-
-// 注册 强制完整校验 + 精准匹配3字段提交
-function userRegister(){
-    // 1. 收集完整三项信息
-    const phone = prompt("请输入【必填手机号】：");
-    if(!phone || phone.length !== 11 || isNaN(phone)){
-        alert('请输入正确的11位手机号！');
-        return;
-    }
-
-    const email = prompt("请输入【必填邮箱地址】：");
-    const emailReg = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if(!email || !emailReg.test(email)){
-        alert('请输入有效的邮箱地址！');
-        return;
-    }
-
-    const pwd = prompt("请设置登录密码（至少6位）：");
-    if(!pwd || pwd.length < 6){
-        alert('密码长度不能少于6位！');
-        return;
-    }
-
-    // 2. 严格对应你金山表单 第1题手机号、第2题邮箱、第3题密码
-    const formLink = "https://f.kdocs.cn/g/dlLFQoSv/";
-    const targetUrl = `${formLink}?1=${encodeURIComponent(phone)}&2=${encodeURIComponent(email)}&3=${encodeURIComponent(pwd)}`;
-
-    // 3. 新开页面 自动填满全部输入框
-    alert('即将打开表单，信息已自动填好，仅需点击【提交】即可注册成功！');
-    window.open(targetUrl, '_blank');
-}
-</script>
 </body>
 </html>
