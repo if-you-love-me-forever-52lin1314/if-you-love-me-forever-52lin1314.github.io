@@ -10,29 +10,32 @@
             min-height:100vh;
             background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);
             display:flex;align-items:center;justify-content:center;
-            font-family:sans-serif;
+            font-family:"Microsoft Yahei",sans-serif;
         }
         .login-box{
             background:#fff;padding:50px 40px;border-radius:20px;
-            width:90%;max-width:420px;box-shadow:0 10px 40px #0003;
+            width:90%;max-width:460px;box-shadow:0 10px 40px rgba(0,0,0,0.15);
         }
-        h2{text-align:center;margin-bottom:40px;color:#333;}
+        h2{text-align:center;margin-bottom:40px;color:#222;font-weight:600;}
         .item{margin-bottom:25px;}
-        label{display:block;margin-bottom:8px;color:#555;}
+        label{display:block;margin-bottom:8px;color:#555;font-size:15px;}
         input{
-            width:100%;padding:12px 15px;border:1px solid #ddd;
-            border-radius:8px;font-size:16px;outline:none;
+            width:100%;padding:14px 16px;border:1px solid #ddd;
+            border-radius:8px;font-size:16px;outline:none;transition:0.3s;
         }
-        input:focus{border-color:#667eea;}
-        .link-box{text-align:right;margin:-10px 0 30px 0;}
-        a{color:#667eea;text-decoration:none;}
+        input:focus{border-color:#667eea;box-shadow:0 0 0 3px rgba(102,126,234,0.15);}
+        .forget-link{text-align:right;margin:-8px 0 30px 0;}
+        .forget-link a{color:#667eea;text-decoration:none;font-size:14px;}
         .login-btn{
-            width:100%;padding:14px;border:none;border-radius:8px;
+            width:100%;padding:15px;border:none;border-radius:8px;
             background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);
-            color:white;font-size:17px;cursor:pointer;
+            color:white;font-size:17px;cursor:pointer;transition:0.3s;
         }
-        .reg-text{text-align:center;margin-top:20px;color:#666;}
+        .login-btn:hover{opacity:0.9;}
+        .reg-text{text-align:center;margin-top:25px;color:#666;font-size:15px;}
+        .reg-text a{color:#667eea;text-decoration:none;}
     </style>
+    <!-- 依赖CDN -->
     <script src="https://cdn.bytedance.com/cdn/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/layer@3.5.1/dist/layer.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/appwrite@15/dist/iife/index.min.js"></script>
@@ -48,57 +51,89 @@
         <label>密码</label>
         <input type="password" id="password" placeholder="请输入密码">
     </div>
-    <div class="link-box">
+    <div class="forget-link">
         <a href="javascript:findPwd()">忘记密码？</a>
     </div>
-    <button class="login-btn" onclick="login()">立即登录</button>
+    <button class="login-btn" onclick="userLogin()">立即登录</button>
     <div class="reg-text">
-        还没有账号？ <a href="javascript:reg()">立即注册</a>
+        还没有账号？ <a href="javascript:userRegister()">立即注册</a>
     </div>
 </div>
 
 <script>
-// Appwrite 配置
+// ========= 你的Appwrite专属配置 不用改 =========
 const client = new Appwrite.Client();
 client
     .setEndpoint("https://sgp.cloud.appwrite.io/v1")
     .setProject("69e604b100164e6fb8dc");
 const account = new Appwrite.Account(client);
 
-// 登录
-async function login(){
+
+// ========= 登录功能 =========
+async function userLogin(){
     let user = $("#username").val().trim();
     let pwd = $("#password").val().trim();
-    if(!user||!pwd){layer.msg("请填写账号密码");return;}
-    layer.load(1);
+
+    if(!user || !pwd){
+        layer.msg("请填写完整账号和密码", {icon:2});
+        return;
+    }
+
+    layer.load(1, {shade:0.3});
     try{
-        await account.createEmailPasswordSession(user+"@temp.user",pwd);
+        // 自定义账号伪装成邮箱，绕过Appwrite邮箱限制
+        await account.createEmailPasswordSession(user + "@local.user", pwd);
         layer.closeAll();
-        layer.msg("登录成功！",{icon:1,time:1500},()=>{
-            // 这里改成你要跳转的主页地址
-            location.href="https://8888888.best/index.html";
+        layer.msg("登录成功！正在跳转", {icon:1, time:1800}, function(){
+            // 登录成功后跳转你的网站主页
+            location.href = "https://8888888/index.html";
         })
     }catch(e){
         layer.closeAll();
-        layer.msg("账号或密码错误！",{icon:2});
+        console.log(e);
+        layer.msg("账号不存在或密码错误", {icon:2});
     }
 }
 
-// 注册
-async function reg(){
-    let user = prompt("设置你的账号：");
-    let pwd = prompt("设置你的密码：");
-    if(!user||!pwd)return;
+
+// ========= 修复后的注册功能 现在可以正常点击了 =========
+async function userRegister(){
+    let username = prompt("请设置你的登录账号：");
+    if(!username || username.trim() === ""){
+        layer.msg("账号不能为空");
+        return;
+    }
+
+    let password = prompt("请设置你的登录密码：");
+    if(!password || password.length < 6){
+        layer.msg("密码至少6位", {icon:2});
+        return;
+    }
+
+    layer.load(1, {shade:0.3});
     try{
-        await account.create(Appwrite.ID.unique(),user+"@temp.user",pwd,user);
-        layer.msg("注册成功，请登录！",{icon:1});
+        await account.create(
+            Appwrite.ID.unique(),
+            username.trim() + "@local.user",
+            password,
+            username.trim()
+        );
+        layer.closeAll();
+        layer.msg("🎉 注册成功！现在可以登录了", {icon:1});
     }catch(e){
-        layer.msg("用户名已被占用！",{icon:2});
+        layer.closeAll();
+        console.log(e);
+        if(e.type === "user_already_exists"){
+            layer.msg("该账号已经被注册了！", {icon:2});
+        }else{
+            layer.msg("注册失败，请重试", {icon:2});
+        }
     }
 }
 
+// 忘记密码
 function findPwd(){
-    layer.msg("请联系管理员重置密码");
+    layer.msg("请联系管理员找回密码");
 }
 </script>
 </body>
