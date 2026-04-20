@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>用户登录</title>
+    <title>账号登录</title>
     <style>
         *{margin:0;padding:0;box-sizing:border-box;}
         body{
@@ -35,10 +35,9 @@
         .reg-text{text-align:center;margin-top:25px;color:#666;font-size:15px;}
         .reg-text a{color:#667eea;text-decoration:none;}
     </style>
-    <!-- 依赖CDN -->
-    <script src="https://cdn.bytedance.com/cdn/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/layer@3.5.1/dist/layer.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/appwrite@15/dist/iife/index.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/appwrite@16.0.2/dist/iife/index.min.js"></script>
 </head>
 <body>
 <div class="login-box">
@@ -61,79 +60,64 @@
 </div>
 
 <script>
-// ========= 你的Appwrite专属配置 不用改 =========
 const client = new Appwrite.Client();
 client
     .setEndpoint("https://sgp.cloud.appwrite.io/v1")
     .setProject("69e604b100164e6fb8dc");
 const account = new Appwrite.Account(client);
 
-
-// ========= 登录功能 =========
+// 登录
 async function userLogin(){
     let user = $("#username").val().trim();
     let pwd = $("#password").val().trim();
-
     if(!user || !pwd){
-        layer.msg("请填写完整账号和密码", {icon:2});
+        layer.msg("请填写账号和密码");
         return;
     }
-
-    layer.load(1, {shade:0.3});
+    layer.load(1);
     try{
-        // 自定义账号伪装成邮箱，绕过Appwrite邮箱限制
-        await account.createEmailPasswordSession(user + "@local.user", pwd);
+        await account.createEmailPasswordSession(user + "@temp.local", pwd);
         layer.closeAll();
-        layer.msg("登录成功！正在跳转", {icon:1, time:1800}, function(){
-            // 登录成功后跳转你的网站主页
-            location.href = "https://8888888/index.html";
+        layer.msg("✅ 登录成功！",{icon:1,time:1500},()=>{
+            location.href="https://8888888/index.html";
         })
     }catch(e){
         layer.closeAll();
         console.log(e);
-        layer.msg("账号不存在或密码错误", {icon:2});
+        layer.msg("❌ 登录失败：账号或密码错误",{icon:2});
     }
 }
 
-
-// ========= 修复后的注册功能 现在可以正常点击了 =========
+// 注册
 async function userRegister(){
-    let username = prompt("请设置你的登录账号：");
-    if(!username || username.trim() === ""){
-        layer.msg("账号不能为空");
-        return;
-    }
+    let username = prompt("请输入注册账号：");
+    if(!username) return layer.msg("账号不能为空");
+    let pwd = prompt("请输入登录密码：");
+    if(!pwd || pwd.length < 4) return layer.msg("密码至少4位");
 
-    let password = prompt("请设置你的登录密码：");
-    if(!password || password.length < 6){
-        layer.msg("密码至少6位", {icon:2});
-        return;
-    }
-
-    layer.load(1, {shade:0.3});
+    layer.load(1);
     try{
         await account.create(
             Appwrite.ID.unique(),
-            username.trim() + "@local.user",
-            password,
-            username.trim()
+            username+"@temp.local",
+            pwd,
+            username
         );
         layer.closeAll();
-        layer.msg("🎉 注册成功！现在可以登录了", {icon:1});
+        layer.msg("🎉 注册成功！可以直接登录了",{icon:1});
     }catch(e){
         layer.closeAll();
         console.log(e);
-        if(e.type === "user_already_exists"){
-            layer.msg("该账号已经被注册了！", {icon:2});
+        if(e.type == "user_already_exists"){
+            layer.msg("⚠️ 该账号已经被注册",{icon:2});
         }else{
-            layer.msg("注册失败，请重试", {icon:2});
+            layer.msg("❌ 注册失败，请稍后重试",{icon:2});
         }
     }
 }
 
-// 忘记密码
 function findPwd(){
-    layer.msg("请联系管理员找回密码");
+    layer.msg("请联系管理员重置密码");
 }
 </script>
 </body>
