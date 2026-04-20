@@ -35,9 +35,6 @@
         .reg-text{text-align:center;margin-top:25px;color:#666;font-size:15px;}
         .reg-text a{color:#667eea;text-decoration:none;}
     </style>
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/layer@3.5.1/dist/layer.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/appwrite@16.0.2/dist/iife/index.min.js"></script>
 </head>
 <body>
 <div class="login-box">
@@ -59,6 +56,11 @@
     </div>
 </div>
 
+<!-- 严格保证加载顺序：先加载依赖，再写业务代码 -->
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/layer@3.5.1/dist/layer.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/appwrite@16.0.2"></script>
+
 <script>
 const client = new Appwrite.Client();
 client
@@ -72,31 +74,26 @@ async function userLogin(){
     let user = $("#username").val().trim();
     let pwd = $("#password").val().trim();
     if(!user || !pwd){
-        layer.msg("请填写账号和密码");
+        alert("请填写账号和密码");
         return;
     }
-    layer.load(1);
     try{
         await account.createEmailPasswordSession(user + "@temp.com", pwd);
-        layer.closeAll();
-        layer.msg("✅ 登录成功！",{icon:1,time:1500},()=>{
-            location.href="https://8888888.best/index.html";
-        })
+        alert("✅ 登录成功！");
+        location.href="https://8888888.best/index.html";
     }catch(e){
-        layer.closeAll();
-        console.log("登录错误详情：", e);
-        layer.msg("❌ 登录失败：" + e.message,{icon:2,time:3000});
+        console.log(e);
+        alert("❌ 登录失败：" + e.message);
     }
 }
 
 // 注册
 async function userRegister(){
     let username = prompt("请输入注册账号：");
-    if(!username) {layer.msg("账号不能为空");return;}
+    if(!username) {alert("账号不能为空");return;}
     let pwd = prompt("请输入登录密码（至少4位）：");
-    if(!pwd || pwd.length <4) {layer.msg("密码长度不足4位");return;}
+    if(!pwd || pwd.length <4) {alert("密码长度不足4位");return;}
 
-    layer.load(1);
     try{
         await account.create(
             Appwrite.ID.unique(),
@@ -104,22 +101,19 @@ async function userRegister(){
             pwd,
             username.trim()
         );
-        layer.closeAll();
-        layer.msg("🎉 注册成功！现在可以直接登录",{icon:1,time:3000});
+        alert("🎉 注册成功！现在可以直接登录");
     }catch(e){
-        layer.closeAll();
-        console.log("注册错误详情：", e);
-        // 精准错误提示
+        console.log(e);
         if(e.type == "user_already_exists"){
-            layer.msg("⚠️ 该账号已经被注册，请换一个",{icon:2,time:3000});
+            alert("⚠️ 该账号已经被注册，请换一个");
         }else{
-            layer.msg("❌ 注册失败：" + e.message,{icon:2,time:5000});
+            alert("❌ 注册失败：" + e.message);
         }
     }
 }
 
 function findPwd(){
-    layer.msg("请联系管理员重置密码");
+    alert("请联系管理员重置密码");
 }
 </script>
 </body>
