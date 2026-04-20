@@ -13,50 +13,74 @@
             font-family:"Microsoft Yahei",sans-serif;
         }
         .login-box{
-            background:#fff;padding:50px 40px;border-radius:20px;
-            width:90%;max-width:460px;
-            box-shadow:0 10px 40px rgba(0,0,0,0.15);
+            background:#fff;padding:40px;border-radius:20px;
+            width:90%;max-width:460px;box-shadow:0 10px 40px rgba(0,0,0,0.15);
         }
-        h2{text-align:center;margin-bottom:40px;color:#222;font-weight:600;}
-        .item{margin-bottom:25px;}
+        h2{text-align:center;margin-bottom:30px;color:#222;font-weight:600;}
+        .item{margin-bottom:20px;}
         label{display:block;margin-bottom:8px;color:#555;font-size:15px;}
         input{
             width:100%;padding:14px 16px;border:1px solid #ddd;
             border-radius:8px;font-size:16px;outline:none;
         }
         input:focus{border-color:#667eea;}
-        .forget-link{text-align:right;margin:-8px 0 30px 0;}
-        .forget-link a{color:#667eea;text-decoration:none;font-size:14px;}
         .login-btn{
             width:100%;padding:15px;border:none;border-radius:8px;
             background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);
             color:white;font-size:17px;cursor:pointer;
         }
-        .reg-text{text-align:center;margin-top:25px;color:#666;font-size:15px;}
-        .reg-text a{color:#667eea;text-decoration:none;}
+
+        /* 注册面板默认隐藏 */
+        .reg-layer{
+            display:none;
+            margin-top:20px;
+        }
+        /* 内嵌表单，去掉所有金山标识 */
+        .reg-iframe{
+            width:100%;
+            height:420px;
+            border:none;
+            border-radius:10px;
+        }
+        .toggle{
+            text-align:center;margin-top:20px;
+            font-size:15px;color:#666;
+        }
+        .toggle a{color:#667eea;text-decoration:none;cursor:pointer;}
     </style>
 </head>
+
 <body>
 <div class="login-box">
     <h2>账号登录</h2>
+
     <div class="item">
-        <label>用户名/手机号</label>
-        <input type="text" id="username" placeholder="请输入账号">
+        <label>账号</label>
+        <input type="text" placeholder="手机号/用户名">
     </div>
     <div class="item">
         <label>密码</label>
-        <input type="password" id="password" placeholder="请输入密码">
+        <input type="password" placeholder="请输入密码">
     </div>
-    <div class="forget-link">
-        <a href="javascript:alert('请联系管理员重置')">忘记密码？</a>
-    </div>
+
     <button class="login-btn" onclick="alert('登录成功');location.href='https://8888888.best/index.html'">
         立即登录
     </button>
-    <div class="reg-text">
-        还没有账号？
-        <a href="https://f.kdocs.cn/g/dlLFQoSv/" target="_blank">立即注册</a>
+
+    <div class="toggle">
+        <a onclick="showReg()">还没有账号？立即注册</a>
+    </div>
+
+    <!-- 内嵌注册表单（用户看不出是金山） -->
+    <div class="reg-layer" id="regBox">
+        <iframe class="reg-iframe" src="https://f.kdocs.cn/g/dlLFQoSv/"></iframe>
     </div>
 </div>
+
+<script>
+function showReg(){
+    document.getElementById('regBox').style.display = 'block';
+}
+</script>
 </body>
 </html>
