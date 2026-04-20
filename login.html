@@ -2,90 +2,104 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
-    <meta name="format-detection" content="telephone=no">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <title>笒鬼鬼音乐播放器 - 登录</title>
-    <link rel="stylesheet" href="/Static/login/newUi2023/css/style.css">
-    <script src="https://cdn.bytedance.com/cdn/font-awesome/6.0.0/js/all.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>用户登录</title>
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box;}
+        body{
+            min-height:100vh;
+            background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);
+            display:flex;align-items:center;justify-content:center;
+            font-family:sans-serif;
+        }
+        .login-box{
+            background:#fff;padding:50px 40px;border-radius:20px;
+            width:90%;max-width:420px;box-shadow:0 10px 40px #0003;
+        }
+        h2{text-align:center;margin-bottom:40px;color:#333;}
+        .item{margin-bottom:25px;}
+        label{display:block;margin-bottom:8px;color:#555;}
+        input{
+            width:100%;padding:12px 15px;border:1px solid #ddd;
+            border-radius:8px;font-size:16px;outline:none;
+        }
+        input:focus{border-color:#667eea;}
+        .link-box{text-align:right;margin:-10px 0 30px 0;}
+        a{color:#667eea;text-decoration:none;}
+        .login-btn{
+            width:100%;padding:14px;border:none;border-radius:8px;
+            background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);
+            color:white;font-size:17px;cursor:pointer;
+        }
+        .reg-text{text-align:center;margin-top:20px;color:#666;}
+    </style>
+    <script src="https://cdn.bytedance.com/cdn/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/layer@3.5.1/dist/layer.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/appwrite@15/dist/iife/index.min.js"></script>
 </head>
 <body>
-    <img src="/Static/login/newUi2023/img/wave.svg" class="wave">
-    <div class="container">
-        <div class="img">
-            <img src="/Static/login/newUi2023/img/music-picture.svg">
-        </div>
-        <div class="login-content">
-            <form id="login">
-                <img src="/Static/login/newUi2023/img/avatar.svg" alt="头像">
-                <h2 class="title">登 录</h2>
-                <div class="input-div one">
-                    <div class="i"><i class="fas fa-user"></i></div>
-                    <div class="div">
-                        <h5>用户名</h5>
-                        <input class="input" type="text" name="username" autocomplete="off">
-                    </div>
-                </div>
-                <div class="input-div pass">
-                    <div class="i"><i class="fas fa-lock"></i></div>
-                    <div class="div">
-                        <h5>密码</h5>
-                        <input class="input" type="password" name="password" autocomplete="off">
-                    </div>
-                </div>
-                <div class="btn-account">
-                    <a href="javascript:register()">注册账号</a>
-                    <a href="javascript:alert('联系管理员重置')">忘记密码?</a>
-                </div>
-                <div class="btn" onclick="login()">登 录</div>
-            </form>
-        </div>
+<div class="login-box">
+    <h2>账号登录</h2>
+    <div class="item">
+        <label>用户名</label>
+        <input type="text" id="username" placeholder="请输入自定义账号">
     </div>
+    <div class="item">
+        <label>密码</label>
+        <input type="password" id="password" placeholder="请输入密码">
+    </div>
+    <div class="link-box">
+        <a href="javascript:findPwd()">忘记密码？</a>
+    </div>
+    <button class="login-btn" onclick="login()">立即登录</button>
+    <div class="reg-text">
+        还没有账号？ <a href="javascript:reg()">立即注册</a>
+    </div>
+</div>
 
-    <script src="https://cdn.bytedance.com/cdn/jquery/3.5.1/jquery.min.js"></script>
-    <script src="/Static/layer/layer.js"></script>
+<script>
+// Appwrite 配置
+const client = new Appwrite.Client();
+client
+    .setEndpoint("https://sgp.cloud.appwrite.io/v1")
+    .setProject("69e604b100164e6fb8dc");
+const account = new Appwrite.Account(client);
 
-    <!-- Appwrite -->
-    <script src="https://cdn.jsdelivr.net/npm/appwrite@15/dist/iife/index.min.js"></script>
-    <script>
-        const client = new Appwrite.Client();
-        client
-            .setEndpoint("https://sgp.cloud.appwrite.io/v1")
-            .setProject("69e604b100164e6fb8dc");
+// 登录
+async function login(){
+    let user = $("#username").val().trim();
+    let pwd = $("#password").val().trim();
+    if(!user||!pwd){layer.msg("请填写账号密码");return;}
+    layer.load(1);
+    try{
+        await account.createEmailPasswordSession(user+"@temp.user",pwd);
+        layer.closeAll();
+        layer.msg("登录成功！",{icon:1,time:1500},()=>{
+            // 这里改成你要跳转的主页地址
+            location.href="https://8888888.best/index.html";
+        })
+    }catch(e){
+        layer.closeAll();
+        layer.msg("账号或密码错误！",{icon:2});
+    }
+}
 
-        const account = new Appwrite.Account(client);
+// 注册
+async function reg(){
+    let user = prompt("设置你的账号：");
+    let pwd = prompt("设置你的密码：");
+    if(!user||!pwd)return;
+    try{
+        await account.create(Appwrite.ID.unique(),user+"@temp.user",pwd,user);
+        layer.msg("注册成功，请登录！",{icon:1});
+    }catch(e){
+        layer.msg("用户名已被占用！",{icon:2});
+    }
+}
 
-        // 登录
-        async function login() {
-            let u = $("input[name=username]").val().trim();
-            let p = $("input[name=password]").val().trim();
-            if (!u || !p) return layer.msg("请输入账号密码", { icon: 5 });
-
-            layer.msg("登录中…", { icon: 16 });
-            try {
-                await account.createEmailPasswordSession(u + "@app.com", p);
-                layer.msg("登录成功", { icon: 6 }, () => {
-                    location.href = "/index/home/index.html";
-                });
-            } catch (e) {
-                layer.msg("账号或密码错误", { icon: 5 });
-            }
-        }
-
-        // 注册
-        async function register() {
-            let u = prompt("输入用户名：");
-            let p = prompt("输入密码：");
-            if (!u || !p) return;
-
-            try {
-                await account.create(Appwrite.ID.unique(), u + "@app.com", p, u);
-                layer.msg("注册成功！请登录", { icon: 6 });
-            } catch (e) {
-                layer.msg("用户名已存在", { icon: 5 });
-            }
-        }
-    </script>
+function findPwd(){
+    layer.msg("请联系管理员重置密码");
+}
+</script>
 </body>
 </html>
