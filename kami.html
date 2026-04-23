@@ -53,7 +53,7 @@
 <body>
   <!-- ===================== 【小白仅需修改这里】你的Worker地址 ===================== -->
   <script>
-    const API_BASE_URL = "https://kami.8888888.best"; // 确认是你的Worker地址，末尾不加/
+    const API_BASE_URL = "https://kami.8888888.best"; // 替换为你的Worker地址，末尾不加/
     // ==========================================================================
     
     let adminKey = localStorage.getItem("adminKey") || "";
@@ -128,9 +128,11 @@
           </div>
         </div>
         <div class="form-group">
-          <label>授权分组筛选</label>
-          <select id="searchGroupId">
-            <option value="all">全部分组</option>
+          <label>授权模式筛选</label>
+          <select id="searchAuthMode">
+            <option value="all">全部模式</option>
+            <option value="group">分组授权</option>
+            <option value="app">单APP授权</option>
           </select>
         </div>
         <div class="btn-group">
@@ -143,7 +145,8 @@
             <tr>
               <th>卡密内容</th>
               <th>卡密名称</th>
-              <th>授权分组</th>
+              <th>授权模式</th>
+              <th>授权范围</th>
               <th>创建时间</th>
               <th>到期时间</th>
               <th>激活APP列表</th>
@@ -162,7 +165,7 @@
       </div>
     </div>
 
-    <!-- 生成卡密标签页 -->
+    <!-- 生成卡密标签页（双授权模式版） -->
     <div id="cardGenerate" class="tab-content">
       <div class="card">
         <h3>🎫 生成卡密</h3>
@@ -177,10 +180,27 @@
           </div>
         </div>
         <div class="form-group">
-          <label>授权APP分组（必填）</label>
-          <select id="cardGroupId">
-            <option value="">请先创建APP分组</option>
+          <label>授权模式</label>
+          <select id="authMode" onchange="changeAuthMode()">
+            <option value="group">分组授权（适合多APP批量授权）</option>
+            <option value="app">单APP授权（直接选APP，不用建分组）</option>
           </select>
+        </div>
+        <!-- 分组授权模式 -->
+        <div id="groupAuthBox">
+          <div class="form-group">
+            <label>授权APP分组（必填）</label>
+            <select id="cardGroupId">
+              <option value="">请先创建APP分组</option>
+            </select>
+          </div>
+        </div>
+        <!-- 单APP授权模式 -->
+        <div id="appAuthBox" class="hide">
+          <div class="form-group">
+            <label>选择授权APP（按住Ctrl多选，至少选1个）</label>
+            <select id="authAppIds" multiple style="height: 150px;"></select>
+          </div>
         </div>
         <div class="form-group">
           <label>生成方式</label>
@@ -219,7 +239,7 @@
     <div id="groupManage" class="tab-content">
       <div class="card">
         <h3>📱 APP分组管理</h3>
-        <p style="margin-bottom: 15px; color: var(--text-light);">先在这里配置你的8款APP和分组，生成卡密时选择分组即可，APP列表会自动保存，不用每次刷新重新填</p>
+        <p style="margin-bottom: 15px; color: var(--text-light);">先在这里配置你的8款APP和分组，分组授权模式用，单APP授权模式不用建分组</p>
         <div class="form-group">
           <label>所有APP列表（一行一个APP ID）</label>
           <textarea id="allAppIds" rows="8" onchange="saveAppIds()"></textarea>
@@ -246,6 +266,12 @@
       document.getElementById("autoMode").classList.toggle("hide", mode !== "auto");
       document.getElementById("customMode").classList.toggle("hide", mode !== "custom");
     }
+    // 授权模式切换
+    function changeAuthMode() {
+      const mode = document.getElementById("authMode").value;
+      document.getElementById("groupAuthBox").classList.toggle("hide", mode !== "group");
+      document.getElementById("appAuthBox").classList.toggle("hide", mode !== "app");
+    }
     function logout() {
       localStorage.removeItem("adminKey");
       adminKey = "";
@@ -257,6 +283,13 @@
       allAppIds = document.getElementById("allAppIds").value.trim();
       localStorage.setItem("allAppIds", allAppIds);
       renderGroupList();
+      renderAppAuthSelect();
+    }
+    // 渲染单APP授权的多选框
+    function renderAppAuthSelect() {
+      const appSelect = document.getElementById("authAppIds");
+      const appList = allAppIds.split("\n").map(id => id.trim()).filter(id => id);
+      appSelect.innerHTML = appList.map(appId => `<option value="${appId}">${appId}</option>`).join("");
     }
 
     // ===================== 登录 =====================
@@ -275,12 +308,13 @@
         localStorage.setItem("adminKey", key);
         document.getElementById("loginPage").style.display = "none";
         document.getElementById("mainPage").style.display = "block";
-        // 先加载分组数据，再加载卡密列表，解决数据不同步
+        // 先加载分组数据，再加载卡密列表
         await loadAppGroups();
         await loadCardList();
         // 初始化APP列表
         document.getElementById("allAppIds").value = allAppIds;
         renderGroupList();
+        renderAppAuthSelect();
       } catch (e) { alert("登录失败：" + e.message); }
     }
 
@@ -331,19 +365,14 @@
     }
     function updateGroupSelects() {
       const cardGroupSelect = document.getElementById("cardGroupId");
-      const searchGroupSelect = document.getElementById("searchGroupId");
-      
       const options = Object.entries(appGroups).map(([groupId, group]) => 
         `<option value="${groupId}">${group.name}</option>`
       ).join("");
-      
-      // 修复空白选项问题
       if (options) {
         cardGroupSelect.innerHTML = options;
       } else {
         cardGroupSelect.innerHTML = '<option value="">请先创建APP分组</option>';
       }
-      searchGroupSelect.innerHTML = '<option value="all">全部分组</option>' + options;
     }
     function addAppGroup() {
       const groupId = "group_" + Date.now();
@@ -375,7 +404,7 @@
         const data = await res.json();
         if (data.code !== 200) { alert(data.msg); return; }
         alert(data.msg);
-        // 重新加载数据，确保同步
+        // 重新加载数据
         await loadAppGroups();
         await loadCardList();
       } catch (e) { alert("保存失败：" + e.message); }
@@ -385,12 +414,12 @@
     async function loadCardList() {
       const keyword = document.getElementById("searchKeyword").value.trim();
       const status = document.getElementById("searchStatus").value;
-      const groupId = document.getElementById("searchGroupId")?.value || "all";
+      const authMode = document.getElementById("searchAuthMode").value;
       try {
         const res = await fetch(`${API_BASE_URL}/admin/cards/list`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ adminKey, page: currentPage, pageSize, keyword, status, groupId })
+          body: JSON.stringify({ adminKey, page: currentPage, pageSize, keyword, status, authMode })
         });
         const data = await res.json();
         if (data.code !== 200) { alert(data.msg); return; }
@@ -409,7 +438,7 @@
           updateGroupSelects();
         }
 
-        // 渲染表格，修复未知分组问题
+        // 渲染表格
         const tbody = document.getElementById("cardTableBody");
         tbody.innerHTML = "";
         data.data.list.forEach(item => {
@@ -421,8 +450,15 @@
           else if (!item.appBindings || Object.keys(item.appBindings).length === 0) { statusText = "未激活"; statusClass = "status-inactive"; }
           else { statusText = "已激活"; statusClass = "status-active"; }
 
-          // 修复未知分组显示
-          const groupName = appGroups[item.appGroupId]?.name || "未分组";
+          // 授权模式和范围显示
+          const authMode = item.authMode || "group";
+          let authModeText = authMode === "group" ? "分组授权" : "单APP授权";
+          let authRangeText = "";
+          if (authMode === "group") {
+            authRangeText = appGroups[item.appGroupId]?.name || "未知分组";
+          } else {
+            authRangeText = (item.authAppIds || []).join("、");
+          }
           
           let activatedAppsText = "-";
           if (item.appBindings && Object.keys(item.appBindings).length > 0) {
@@ -437,7 +473,8 @@
           tr.innerHTML = `
             <td>${item.card}</td>
             <td>${item.name}</td>
-            <td>${groupName}</td>
+            <td>${authModeText}</td>
+            <td>${authRangeText}</td>
             <td>${item.createTimeText}</td>
             <td>${item.expireTimeText}</td>
             <td>${activatedAppsText}</td>
@@ -465,13 +502,26 @@
     }
     function prevPage() { if (currentPage > 1) { currentPage--; loadCardList(); } }
     function nextPage() { currentPage++; loadCardList(); }
+    // 生成卡密（双授权模式）
     async function generateCards() {
       const cardName = document.getElementById("cardName").value.trim();
       const days = parseInt(document.getElementById("cardDays").value);
+      const authMode = document.getElementById("authMode").value;
       const mode = document.getElementById("generateMode").value;
-      const appGroupId = document.getElementById("cardGroupId").value;
-      if (!cardName || !days || !appGroupId) { alert("请填写卡密名称、有效期并选择授权分组"); return; }
-      const body = { adminKey, cardName, days, appGroupId };
+      
+      const body = { adminKey, cardName, days, authMode };
+      
+      // 分组模式
+      if (authMode === "group") {
+        body.appGroupId = document.getElementById("cardGroupId").value;
+      } 
+      // 单APP模式
+      else if (authMode === "app") {
+        const appSelect = document.getElementById("authAppIds");
+        body.authAppIds = Array.from(appSelect.selectedOptions).map(opt => opt.value);
+      }
+
+      // 生成方式
       if (mode === "auto") {
         body.count = parseInt(document.getElementById("generateCount").value);
         body.prefix = document.getElementById("cardPrefix").value.trim();
@@ -479,6 +529,7 @@
       } else {
         body.customCards = document.getElementById("customCards").value.trim();
       }
+
       try {
         const res = await fetch(`${API_BASE_URL}/admin/cards/add`, {
           method: "POST",
