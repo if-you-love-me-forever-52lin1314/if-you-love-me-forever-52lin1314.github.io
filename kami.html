@@ -46,20 +46,29 @@
     .status-inactive { background: var(--warning); }
     .status-expired { background: var(--danger); }
     .status-banned { background: #666; }
-    .ad-item { padding: 15px; border: 1px solid var(--border); border-radius: 8px; margin-bottom: 10px; }
+    .group-item { padding: 15px; border: 1px solid var(--border); border-radius: 8px; margin-bottom: 10px; }
     .hide { display: none; }
   </style>
 </head>
 <body>
   <!-- ===================== 【小白仅需修改这里】你的Worker地址 ===================== -->
   <script>
-    const API_BASE_URL = "https://kami.8888888.best"; // 替换为你的Worker地址
+    const API_BASE_URL = "https://kami.8888888.best"; // 确认是你的Worker地址，末尾不加/
     // ==========================================================================
     
     let adminKey = localStorage.getItem("adminKey") || "";
     let currentPage = 1;
     let pageSize = 50;
     let appGroups = {};
+    // 自动保存APP列表，不用每次重新填
+    let allAppIds = localStorage.getItem("allAppIds") || `52霖影视-APP1
+52霖漫画-APP2
+52霖小说-APP3
+52霖动漫-APP4
+52霖短剧-APP5
+52霖音乐-APP6
+52霖游戏-APP7
+52霖工具-APP8`;
   </script>
 
   <!-- 登录页面 -->
@@ -170,7 +179,7 @@
         <div class="form-group">
           <label>授权APP分组（必填）</label>
           <select id="cardGroupId">
-            <option value="default">请先创建分组</option>
+            <option value="">请先创建APP分组</option>
           </select>
         </div>
         <div class="form-group">
@@ -210,10 +219,10 @@
     <div id="groupManage" class="tab-content">
       <div class="card">
         <h3>📱 APP分组管理</h3>
-        <p style="margin-bottom: 15px; color: var(--text-light);">先在这里配置你的8款APP和分组，生成卡密时选择分组即可</p>
+        <p style="margin-bottom: 15px; color: var(--text-light);">先在这里配置你的8款APP和分组，生成卡密时选择分组即可，APP列表会自动保存，不用每次刷新重新填</p>
         <div class="form-group">
-          <label>所有APP列表（一行一个，直接复制下面的8个APP ID粘贴进去）</label>
-          <textarea id="allAppIds" rows="8" placeholder="52霖影视-APP1&#10;52霖漫画-APP2&#10;52霖小说-APP3&#10;52霖动漫-APP4&#10;52霖短剧-APP5&#10;52霖音乐-APP6&#10;52霖游戏-APP7&#10;52霖工具-APP8"></textarea>
+          <label>所有APP列表（一行一个APP ID）</label>
+          <textarea id="allAppIds" rows="8" onchange="saveAppIds()"></textarea>
         </div>
         <hr style="margin: 15px 0; border-color: var(--border);">
         <h4>分组列表</h4>
@@ -243,6 +252,12 @@
       document.getElementById("mainPage").style.display = "none";
       document.getElementById("loginPage").style.display = "block";
     }
+    // 自动保存APP列表
+    function saveAppIds() {
+      allAppIds = document.getElementById("allAppIds").value.trim();
+      localStorage.setItem("allAppIds", allAppIds);
+      renderGroupList();
+    }
 
     // ===================== 登录 =====================
     async function login() {
@@ -260,8 +275,12 @@
         localStorage.setItem("adminKey", key);
         document.getElementById("loginPage").style.display = "none";
         document.getElementById("mainPage").style.display = "block";
-        loadAppGroups();
-        loadCardList();
+        // 先加载分组数据，再加载卡密列表，解决数据不同步
+        await loadAppGroups();
+        await loadCardList();
+        // 初始化APP列表
+        document.getElementById("allAppIds").value = allAppIds;
+        renderGroupList();
       } catch (e) { alert("登录失败：" + e.message); }
     }
 
@@ -276,7 +295,7 @@
         const data = await res.json();
         if (data.code !== 200) { alert(data.msg); return; }
         appGroups = data.data;
-        renderGroupList();
+        // 更新所有分组下拉框
         updateGroupSelects();
       } catch (e) { alert("加载APP分组失败：" + e.message); }
     }
@@ -285,7 +304,7 @@
       groupList.innerHTML = "";
       Object.entries(appGroups).forEach(([groupId, group]) => {
         const groupItem = document.createElement("div");
-        groupItem.className = "ad-item";
+        groupItem.className = "group-item";
         groupItem.innerHTML = `
           <div class="grid-2">
             <div class="form-group">
@@ -305,20 +324,26 @@
       });
     }
     function getAllAppIdsOptions(selectedApps = []) {
-      const allAppIdsText = document.getElementById("allAppIds").value.trim();
-      const allAppIds = allAppIdsText ? allAppIdsText.split("\n").map(id => id.trim()).filter(id => id) : [];
-      return allAppIds.map(appId => 
+      const appList = allAppIds.split("\n").map(id => id.trim()).filter(id => id);
+      return appList.map(appId => 
         `<option value="${appId}" ${selectedApps.includes(appId) ? "selected" : ""}>${appId}</option>`
       ).join("");
     }
     function updateGroupSelects() {
-      const groupSelect = document.getElementById("cardGroupId");
+      const cardGroupSelect = document.getElementById("cardGroupId");
       const searchGroupSelect = document.getElementById("searchGroupId");
+      
       const options = Object.entries(appGroups).map(([groupId, group]) => 
         `<option value="${groupId}">${group.name}</option>`
       ).join("");
-      if (groupSelect) groupSelect.innerHTML = options || '<option value="default">请先创建分组</option>';
-      if (searchGroupSelect) searchGroupSelect.innerHTML = '<option value="all">全部分组</option>' + options;
+      
+      // 修复空白选项问题
+      if (options) {
+        cardGroupSelect.innerHTML = options;
+      } else {
+        cardGroupSelect.innerHTML = '<option value="">请先创建APP分组</option>';
+      }
+      searchGroupSelect.innerHTML = '<option value="all">全部分组</option>' + options;
     }
     function addAppGroup() {
       const groupId = "group_" + Date.now();
@@ -331,7 +356,8 @@
       renderGroupList();
     }
     async function saveAllGroups() {
-      const groupItems = document.querySelectorAll("#groupList .ad-item");
+      // 读取所有分组数据
+      const groupItems = document.querySelectorAll("#groupList .group-item");
       const groupIds = Object.keys(appGroups);
       groupItems.forEach((item, index) => {
         const groupId = groupIds[index];
@@ -349,8 +375,9 @@
         const data = await res.json();
         if (data.code !== 200) { alert(data.msg); return; }
         alert(data.msg);
-        updateGroupSelects();
-        loadCardList();
+        // 重新加载数据，确保同步
+        await loadAppGroups();
+        await loadCardList();
       } catch (e) { alert("保存失败：" + e.message); }
     }
 
@@ -368,6 +395,7 @@
         const data = await res.json();
         if (data.code !== 200) { alert(data.msg); return; }
 
+        // 更新统计数据
         const stats = data.data.stats;
         document.getElementById("totalCards").textContent = stats.totalCards;
         document.getElementById("activeCards").textContent = stats.activeCards;
@@ -375,11 +403,13 @@
         document.getElementById("expiredCards").textContent = stats.expiredCards;
         document.getElementById("bannedCards").textContent = stats.bannedCards;
 
+        // 同步最新分组数据
         if (data.data.appGroups) {
           appGroups = data.data.appGroups;
           updateGroupSelects();
         }
 
+        // 渲染表格，修复未知分组问题
         const tbody = document.getElementById("cardTableBody");
         tbody.innerHTML = "";
         data.data.list.forEach(item => {
@@ -391,6 +421,9 @@
           else if (!item.appBindings || Object.keys(item.appBindings).length === 0) { statusText = "未激活"; statusClass = "status-inactive"; }
           else { statusText = "已激活"; statusClass = "status-active"; }
 
+          // 修复未知分组显示
+          const groupName = appGroups[item.appGroupId]?.name || "未分组";
+          
           let activatedAppsText = "-";
           if (item.appBindings && Object.keys(item.appBindings).length > 0) {
             activatedAppsText = Object.keys(item.appBindings).map(appId => {
@@ -400,7 +433,6 @@
             }).join("<br><br>");
           }
 
-          const groupName = appGroups[item.appGroupId]?.name || "未知分组";
           const tr = document.createElement("tr");
           tr.innerHTML = `
             <td>${item.card}</td>
@@ -423,6 +455,7 @@
           tbody.appendChild(tr);
         });
 
+        // 分页更新
         const totalPage = Math.ceil(data.data.total / pageSize);
         document.getElementById("currentPageText").textContent = currentPage;
         document.getElementById("totalPageText").textContent = totalPage;
