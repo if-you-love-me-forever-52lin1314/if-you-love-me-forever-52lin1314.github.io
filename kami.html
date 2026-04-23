@@ -165,7 +165,7 @@
       </div>
     </div>
 
-    <!-- 生成卡密标签页（双授权模式版） -->
+    <!-- 生成卡密标签页（双授权模式修复版） -->
     <div id="cardGenerate" class="tab-content">
       <div class="card">
         <h3>🎫 生成卡密</h3>
@@ -266,11 +266,17 @@
       document.getElementById("autoMode").classList.toggle("hide", mode !== "auto");
       document.getElementById("customMode").classList.toggle("hide", mode !== "custom");
     }
-    // 授权模式切换
+    // 授权模式切换（修复：切换时清空参数）
     function changeAuthMode() {
       const mode = document.getElementById("authMode").value;
       document.getElementById("groupAuthBox").classList.toggle("hide", mode !== "group");
       document.getElementById("appAuthBox").classList.toggle("hide", mode !== "app");
+      // 切换模式时清空另一个模式的参数，避免提交错误
+      if (mode === "app") {
+        document.getElementById("cardGroupId").value = "";
+      } else {
+        document.getElementById("authAppIds").selectedIndex = -1;
+      }
     }
     function logout() {
       localStorage.removeItem("adminKey");
@@ -502,7 +508,7 @@
     }
     function prevPage() { if (currentPage > 1) { currentPage--; loadCardList(); } }
     function nextPage() { currentPage++; loadCardList(); }
-    // 生成卡密（双授权模式）
+    // 生成卡密（修复：严格按模式提交参数）
     async function generateCards() {
       const cardName = document.getElementById("cardName").value.trim();
       const days = parseInt(document.getElementById("cardDays").value);
@@ -511,12 +517,10 @@
       
       const body = { adminKey, cardName, days, authMode };
       
-      // 分组模式
+      // 【修复】只提交当前模式的参数，不会带多余的分组ID
       if (authMode === "group") {
         body.appGroupId = document.getElementById("cardGroupId").value;
-      } 
-      // 单APP模式
-      else if (authMode === "app") {
+      } else if (authMode === "app") {
         const appSelect = document.getElementById("authAppIds");
         body.authAppIds = Array.from(appSelect.selectedOptions).map(opt => opt.value);
       }
