@@ -1,389 +1,204 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>52霖科技 - 旗舰版卡密管理系统</title>
+    <title>52霖科技 - 旗舰版卡密系统</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap');
-        body { font-family: 'Noto Sans SC', sans-serif; background-color: #f0f2f5; }
-        .pink-gradient { background: linear-gradient(135deg, #ec4899 0%, #be185d 100%); }
-        .glass-card { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); border-radius: 1rem; border: 1px solid rgba(236, 72, 153, 0.1); }
-        .tab-active { color: #ec4899; border-bottom: 3px solid #ec4899; }
+        body { background: #fff5f7; font-family: system-ui; overflow-x: hidden; }
+        .glass { background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(12px); border: 1px solid rgba(255,192,203,0.3); border-radius: 20px; }
+        .pink-btn { background: linear-gradient(135deg, #ff75c3 0%, #ffa647 100%); transition: all 0.3s; }
+        .pink-btn:hover { transform: scale(1.02); opacity: 0.9; }
+        /* 爱心特效 */
+        .heart { position: fixed; pointer-events: none; z-index: -1; animation: float 4s linear infinite; color: #ff85a2; }
+        @keyframes float { 0% { transform: translateY(100vh) scale(0); opacity: 1; } 100% { transform: translateY(-10vh) scale(1.5); opacity: 0; } }
     </style>
 </head>
-<body class="min-h-screen text-slate-800">
-    <div id="loginView" class="fixed inset-0 z-50 flex items-center justify-center pink-gradient px-4">
-        <div class="glass-card p-8 w-full max-w-md shadow-2xl">
-            <div class="text-center mb-8">
-                <div class="w-20 h-20 pink-gradient rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
-                    <i class="fas fa-shield-alt text-3xl text-white"></i>
-                </div>
-                <h1 class="text-2xl font-bold text-slate-800">管理后台登录</h1>
-                <p class="text-slate-500 mt-2">52霖科技 - 旗舰版系统</p>
+<body class="min-h-screen">
+    <div id="loginBox" class="flex h-screen items-center justify-center p-4">
+        <div class="glass p-8 w-full max-w-sm shadow-2xl text-center">
+            <div class="w-20 h-20 bg-pink-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <i class="fas fa-heart text-pink-500 text-3xl"></i>
             </div>
-            <div class="space-y-4">
-                <div class="relative">
-                    <i class="fas fa-key absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"></i>
-                    <input type="password" id="adminKey" class="w-full pl-10 pr-4 py-3 border rounded-lg focus:ring-2 focus:ring-pink-500 outline-none" placeholder="输入管理员密钥">
-                </div>
-                <button onclick="login()" id="loginBtn" class="w-full pink-gradient text-white py-3 rounded-lg font-bold shadow-lg hover:opacity-90 transition-all">确认登录</button>
-            </div>
+            <h1 class="text-2xl font-bold text-gray-800 mb-6">后台管理登录</h1>
+            <input type="password" id="adminKey" class="w-full p-3 rounded-xl border-2 border-pink-100 focus:border-pink-400 outline-none mb-4" placeholder="请输入管理员密钥">
+            <button onclick="login()" class="w-full pink-btn text-white py-3 rounded-xl font-bold shadow-lg">验证并进入</button>
         </div>
     </div>
 
-    <div id="mainView" class="hidden">
-        <nav class="bg-white shadow-sm border-b sticky top-0 z-40">
-            <div class="max-w-7xl mx-auto px-4 flex justify-between items-center h-16">
-                <div class="flex items-center space-x-2">
-                    <span class="text-pink-600 font-bold text-xl">52霖科技</span>
-                    <span class="bg-pink-100 text-pink-600 text-xs px-2 py-1 rounded">V3.0</span>
-                </div>
-                <div class="flex space-x-6">
-                    <button onclick="switchTab('list')" class="tab-btn py-5 px-2 text-sm font-medium transition-all" id="tab-list">卡密管理</button>
-                    <button onclick="switchTab('add')" class="tab-btn py-5 px-2 text-sm font-medium transition-all" id="tab-add">生成卡密</button>
-                    <button onclick="switchTab('group')" class="tab-btn py-5 px-2 text-sm font-medium transition-all" id="tab-group">应用/分组设置</button>
-                </div>
-                <button onclick="location.reload()" class="text-slate-400 hover:text-red-500"><i class="fas fa-power-off"></i></button>
-            </div>
+    <div id="mainUI" class="hidden container mx-auto p-4 lg:p-8">
+        <nav class="flex space-x-2 mb-8 overflow-x-auto pb-2">
+            <button onclick="showT('list')" class="px-6 py-2 glass font-bold text-pink-600 whitespace-nowrap">卡密管理</button>
+            <button onclick="showT('add')" class="px-6 py-2 glass font-bold text-pink-600 whitespace-nowrap">开卡中心</button>
+            <button onclick="showT('group')" class="px-6 py-2 glass font-bold text-pink-600 whitespace-nowrap">分组/APP设置</button>
         </nav>
 
-        <main class="max-w-7xl mx-auto p-4 lg:p-8">
-            <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-                <div class="glass-card p-4 flex items-center space-x-4">
-                    <div class="p-3 rounded-lg bg-blue-100 text-blue-600"><i class="fas fa-ticket-alt"></i></div>
-                    <div><p class="text-xs text-slate-500">总卡密</p><p class="text-xl font-bold" id="totalCards">0</p></div>
-                </div>
-                <div class="glass-card p-4 flex items-center space-x-4">
-                    <div class="p-3 rounded-lg bg-green-100 text-green-600"><i class="fas fa-check-circle"></i></div>
-                    <div><p class="text-xs text-slate-500">已激活</p><p class="text-xl font-bold" id="activeCards">0</p></div>
-                </div>
-                <div class="glass-card p-4 flex items-center space-x-4">
-                    <div class="p-3 rounded-lg bg-yellow-100 text-yellow-600"><i class="fas fa-clock"></i></div>
-                    <div><p class="text-xs text-slate-500">已到期</p><p class="text-xl font-bold" id="expiredCards">0</p></div>
-                </div>
-                <div class="glass-card p-4 flex items-center space-x-4">
-                    <div class="p-3 rounded-lg bg-red-100 text-red-600"><i class="fas fa-ban"></i></div>
-                    <div><p class="text-xs text-slate-500">封禁中</p><p class="text-xl font-bold" id="bannedCards">0</p></div>
+        <div id="t-list" class="tab-c glass p-6 shadow-xl">
+            <div class="overflow-x-auto">
+                <table class="w-full text-left">
+                    <thead>
+                        <tr class="text-pink-500 border-b-2 border-pink-50">
+                            <th class="p-3">卡密信息</th>
+                            <th class="p-3">授权目标</th>
+                            <th class="p-3">时间进度</th>
+                            <th class="p-3">绑定机器</th>
+                            <th class="p-3">操作</th>
+                        </tr>
+                    </thead>
+                    <tbody id="listBody" class="text-sm"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="t-add" class="tab-c hidden grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="glass p-8">
+                <h2 class="text-xl font-bold text-pink-600 mb-6">生成新卡密</h2>
+                <div class="space-y-4">
+                    <input id="a_name" class="w-full p-3 border-b-2 outline-none" placeholder="卡密备注 (如: 月卡用户)">
+                    <div class="flex items-center space-x-2">
+                        <input id="a_min" type="number" class="flex-1 p-3 border-b-2 outline-none" placeholder="授权时长">
+                        <select id="a_unit" class="p-3 bg-transparent font-bold">
+                            <option value="1">分钟</option>
+                            <option value="60">小时</option>
+                            <option value="1440">天</option>
+                            <option value="525600">年</option>
+                        </select>
+                    </div>
+                    <input id="a_count" type="number" value="1" class="w-full p-3 border-b-2 outline-none" placeholder="生成数量">
+                    <button onclick="addCards()" class="w-full pink-btn text-white py-4 rounded-2xl font-bold text-lg shadow-xl mt-4">立即批量生成</button>
                 </div>
             </div>
-
-            <section id="listSection" class="tab-content glass-card overflow-hidden shadow-sm">
-                <div class="p-4 border-b bg-slate-50 flex justify-between items-center">
-                    <h3 class="font-bold">卡密列表</h3>
-                    <button onclick="refreshData()" class="text-pink-600 text-sm hover:underline"><i class="fas fa-sync mr-1"></i>刷新</button>
+            <div class="glass p-8">
+                <h2 class="text-xl font-bold text-pink-600 mb-4">选择授权范围</h2>
+                <div class="mb-4">
+                    <p class="text-xs text-gray-400 mb-2 font-bold">优先使用分组授权:</p>
+                    <select id="a_gid" class="w-full p-3 border rounded-xl bg-pink-50 focus:ring-2 ring-pink-200 outline-none">
+                        <option value="">-- 不使用分组，采用下方单选 --</option>
+                    </select>
                 </div>
-                <div class="overflow-x-auto">
-                    <table class="w-full text-left">
-                        <thead class="bg-slate-50 text-slate-500 text-xs uppercase">
-                            <tr>
-                                <th class="px-6 py-4">卡密信息</th>
-                                <th class="px-6 py-4">授权目标</th>
-                                <th class="px-6 py-4">有效期</th>
-                                <th class="px-6 py-4">激活状态</th>
-                                <th class="px-6 py-4">操作</th>
-                            </tr>
-                        </thead>
-                        <tbody id="cardsList" class="divide-y">
-                            </tbody>
-                    </table>
-                </div>
-            </section>
+                <p class="text-xs text-gray-400 mb-2 font-bold">手动单选 APP ID:</p>
+                <div id="appBox" class="grid grid-cols-2 gap-2"></div>
+            </div>
+        </div>
 
-            <section id="addSection" class="tab-content hidden grid grid-cols-1 lg:grid-cols-3 gap-8">
-                <div class="lg:col-span-2 space-y-6">
-                    <div class="glass-card p-6 shadow-sm">
-                        <h3 class="text-lg font-bold mb-6 flex items-center"><i class="fas fa-plus-circle text-pink-500 mr-2"></i>生成/导入卡密</h3>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div>
-                                <label class="block text-sm font-medium mb-2">卡密备注名</label>
-                                <input type="text" id="add_cardName" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-pink-500" placeholder="例如：月卡 / 永久卡">
-                            </div>
-                            <div>
-                                <label class="block text-sm font-medium mb-2">授权天数 (0为永久)</label>
-                                <input type="number" id="add_days" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-pink-500" value="30">
-                            </div>
-                            <div>
-                                <label class="block text-sm font-medium mb-2">授权模式</label>
-                                <select id="add_authMode" onchange="toggleAuthFields()" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-pink-500">
-                                    <option value="group">App 分组授权 (推荐)</option>
-                                    <option value="single">单款 App 独立授权</option>
-                                </select>
-                            </div>
-                            <div id="groupField">
-                                <label class="block text-sm font-medium mb-2">选择应用分组</label>
-                                <select id="add_appGroupId" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-pink-500">
-                                    </select>
-                            </div>
-                            <div id="singleField" class="hidden">
-                                <label class="block text-sm font-medium mb-2">输入 App ID</label>
-                                <input type="text" id="add_singleAppId" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-pink-500" placeholder="多个请用逗号隔开">
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="glass-card p-6 shadow-sm">
-                        <div class="flex justify-between items-center mb-6">
-                            <h3 class="text-lg font-bold">生成配置</h3>
-                            <div class="flex bg-slate-100 p-1 rounded-lg">
-                                <button onclick="toggleGenType('auto')" id="btn-auto" class="px-4 py-1 rounded-md text-sm font-medium bg-white shadow-sm">系统自动</button>
-                                <button onclick="toggleGenType('manual')" id="btn-manual" class="px-4 py-1 rounded-md text-sm font-medium">手动输入</button>
-                            </div>
-                        </div>
-                        
-                        <div id="autoGenFields" class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                            <div>
-                                <label class="text-xs text-slate-500 mb-1 block">数量</label>
-                                <input type="number" id="add_count" class="w-full p-2 border rounded-md" value="10">
-                            </div>
-                            <div>
-                                <label class="text-xs text-slate-500 mb-1 block">前缀</label>
-                                <input type="text" id="add_prefix" class="w-full p-2 border rounded-md" placeholder="例如: LL">
-                            </div>
-                            <div>
-                                <label class="text-xs text-slate-500 mb-1 block">长度</label>
-                                <input type="number" id="add_length" class="w-full p-2 border rounded-md" value="8">
-                            </div>
-                        </div>
-
-                        <div id="manualGenFields" class="hidden">
-                            <label class="text-xs text-slate-500 mb-1 block">粘贴卡密 (每行一个)</label>
-                            <textarea id="add_customCards" class="w-full p-3 border rounded-md h-32 focus:ring-2 focus:ring-pink-500" placeholder="8888-8888-8888"></textarea>
-                        </div>
-
-                        <div class="mt-8 border-t pt-6">
-                            <button onclick="submitAdd()" class="w-full pink-gradient text-white py-4 rounded-xl font-bold text-lg hover:scale-[1.01] transition-transform">立即生成卡密</button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="space-y-6">
-                    <div class="glass-card p-6 border-l-4 border-pink-500">
-                        <h4 class="font-bold mb-2">💡 对接提示</h4>
-                        <p class="text-sm text-slate-500 leading-relaxed">
-                            1. <b>分组 ID</b> 是你 App 接入时的核心暗号。<br>
-                            2. 建议将 8 款 App 按照功能或价格分类，建立不同的 ID 分组。<br>
-                            3. 单个 App 的授权适合做特殊定制或买断。
-                        </p>
-                    </div>
-                </div>
-            </section>
-
-            <section id="groupSection" class="tab-content hidden">
-                <div class="flex justify-between items-center mb-6">
-                    <h2 class="text-2xl font-bold text-slate-800">分组与应用管理</h2>
-                    <button onclick="addGroupRow()" class="bg-pink-100 text-pink-600 px-4 py-2 rounded-lg font-bold text-sm hover:bg-pink-200">+ 新增分组 ID</button>
-                </div>
-                <div id="groupContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    </div>
-                <div class="mt-8 flex justify-center">
-                    <button onclick="saveGroups()" class="pink-gradient text-white px-12 py-3 rounded-xl font-bold shadow-lg">同步保存所有分组配置</button>
-                </div>
-            </section>
-        </main>
+        <div id="t-group" class="tab-c hidden glass p-8">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-xl font-bold text-pink-600">APP 与分组管理</h2>
+                <button onclick="addG()" class="bg-pink-100 text-pink-600 px-4 py-2 rounded-lg font-bold">+ 新增分组</button>
+            </div>
+            <div id="gList" class="space-y-4"></div>
+            <button onclick="saveG()" class="w-full pink-btn text-white py-3 rounded-xl mt-8 font-bold">保存并同步配置</button>
+        </div>
     </div>
 
     <script>
-        // ======= 重要：修改这里 =======
-        const API_BASE_URL = "https://kami.8888888.best"; 
-        // =============================
+        const API = "https://kami.8888888.best"; // 换成你的
+        let pass = "";
+        let apps = ["App_01", "App_02", "App_03", "App_04", "App_05", "App_06", "App_07", "App_08"];
+        let groups = [];
 
-        let currentAdminKey = "";
-        let globalGroups = [];
-        let genType = 'auto';
+        // 初始化 APP 勾选框
+        document.getElementById('appBox').innerHTML = apps.map(a => `
+            <label class="flex items-center p-2 bg-white rounded-lg border hover:border-pink-300 cursor-pointer transition-all">
+                <input type="checkbox" name="apps" value="${a}" class="w-4 h-4 accent-pink-500 mr-2">
+                <span class="text-sm text-gray-600">${a}</span>
+            </label>
+        `).join('');
 
-        // 登录
         async function login() {
-            const key = document.getElementById('adminKey').value;
-            const btn = document.getElementById('loginBtn');
-            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> 验证中...';
-            
-            try {
-                const res = await fetch(`${API_BASE_URL}/admin/cards/list`, {
-                    method: 'POST',
-                    body: JSON.stringify({ adminKey: key })
-                });
-                const d = await res.json();
-                if (d.code === 200) {
-                    currentAdminKey = key;
-                    document.getElementById('loginView').style.display = 'none';
-                    document.getElementById('mainView').classList.remove('hidden');
-                    updateUI(d.data);
-                    switchTab('list');
-                } else {
-                    alert(d.msg || "登录失败");
-                }
-            } catch (e) {
-                alert("连接服务器失败，请检查 API 地址或跨域设置");
-            } finally {
-                btn.innerText = '确认登录';
-            }
+            pass = document.getElementById('adminKey').value;
+            load();
         }
 
-        function updateUI(data) {
-            // 更新统计
-            document.getElementById('totalCards').innerText = data.stats.totalCards;
-            document.getElementById('activeCards').innerText = data.stats.activeCards;
-            document.getElementById('expiredCards').innerText = data.stats.expiredCards;
-            document.getElementById('bannedCards').innerText = data.stats.bannedCards;
+        async function load() {
+            const r = await fetch(`${API}/admin/cards/list`, { method:'POST', body:JSON.stringify({adminKey:pass})});
+            const d = await r.json();
+            if(d.code !== 200) return alert("验证失败");
+            document.getElementById('loginBox').classList.add('hidden');
+            document.getElementById('mainUI').classList.remove('hidden');
+            render(d.data);
+        }
 
-            // 更新列表
-            const listBody = document.getElementById('cardsList');
-            listBody.innerHTML = data.list.map(c => `
-                <tr class="hover:bg-slate-50">
-                    <td class="px-6 py-4">
-                        <div class="font-mono font-bold text-pink-600 select-all">${c.card_key}</div>
-                        <div class="text-xs text-slate-400">${c.name || '默认卡密'}</div>
-                    </td>
-                    <td class="px-6 py-4">
-                        <span class="px-2 py-1 bg-slate-100 rounded text-xs text-slate-600">${c.auth_mode === 'group' ? '分组:' + c.app_group_id : '单APP:' + c.auth_app_ids}</span>
-                    </td>
-                    <td class="px-6 py-4">
-                        <div class="text-sm">${c.days > 0 ? c.days + '天' : '永久'}</div>
-                        <div class="text-[10px] text-slate-400">过期: ${c.expire_time ? new Date(c.expire_time).toLocaleDateString() : '未激活'}</div>
-                    </td>
-                    <td class="px-6 py-4">
-                        ${c.app_bindings && c.app_bindings !== '{}' ? 
-                            '<span class="text-green-500 text-xs font-bold"><i class="fas fa-check"></i> 已激活</span>' : 
-                            '<span class="text-slate-300 text-xs">未使用</span>'}
-                    </td>
-                    <td class="px-6 py-4">
-                        <button onclick="deleteCard('${c.card_key}')" class="text-red-400 hover:text-red-600 transition-colors"><i class="fas fa-trash-alt"></i></button>
+        function render(data) {
+            groups = data.appGroups;
+            // 列表
+            document.getElementById('listBody').innerHTML = data.list.map(c => `
+                <tr class="border-b border-pink-50 hover:bg-pink-50/50">
+                    <td class="p-3"><b class="text-pink-600 font-mono select-all">${c.card_key}</b><br><span class="text-gray-400 text-xs">${c.name||'无备注'}</span></td>
+                    <td class="p-3 text-xs">${c.auth_mode==='group'?'<span class="bg-blue-100 p-1 rounded">组:'+c.app_group_id+'</span>':'单APP'}</td>
+                    <td class="p-3 text-xs text-gray-500">开：${new Date(c.create_time).toLocaleString()}<br>激：${c.activate_time?new Date(c.activate_time).toLocaleString():'<span class="text-pink-400">未激活</span>'}</td>
+                    <td class="p-3 font-mono text-xs text-gray-400">${c.device_id||'--'}</td>
+                    <td class="p-3">
+                        <span class="font-bold ${c.status==='normal'?'text-green-500':'text-red-500'}">${c.status==='normal'?'使用中':'已封禁'}</span>
+                        <div class="mt-1 space-x-2">
+                            <button onclick="act('${c.card_key}','${c.status==='normal'?'banned':'normal'}')" class="text-blue-400">切换</button>
+                            <button onclick="act('${c.card_key}','delete')" class="text-red-300">删除</button>
+                        </div>
                     </td>
                 </tr>
             `).join('');
 
-            // 更新分组缓存和下拉框
-            globalGroups = Object.values(data.appGroups || {});
-            renderGroups();
-            updateGroupDropdowns();
-        }
+            // 下拉
+            document.getElementById('a_gid').innerHTML = '<option value="">-- 不使用分组，采用下方单选 --</option>' + groups.map(g=>`<option value="${g.id}">${g.name}</option>`).join('');
 
-        function updateGroupDropdowns() {
-            const select = document.getElementById('add_appGroupId');
-            select.innerHTML = globalGroups.map(g => `<option value="${g.id}">${g.name} (ID: ${g.id})</option>`).join('');
-        }
-
-        // 切换标签
-        function switchTab(tab) {
-            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
-            document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('tab-active'));
-            document.getElementById(tab + 'Section').classList.remove('hidden');
-            document.getElementById('tab-' + tab).classList.add('tab-active');
-        }
-
-        // 添加卡密界面切换逻辑
-        function toggleAuthFields() {
-            const mode = document.getElementById('add_authMode').value;
-            document.getElementById('groupField').classList.toggle('hidden', mode !== 'group');
-            document.getElementById('singleField').classList.toggle('hidden', mode !== 'single');
-        }
-
-        function toggleGenType(type) {
-            genType = type;
-            document.getElementById('autoGenFields').classList.toggle('hidden', type !== 'auto');
-            document.getElementById('manualGenFields').classList.toggle('hidden', type !== 'manual');
-            document.getElementById('btn-auto').classList.toggle('bg-white', type === 'auto');
-            document.getElementById('btn-auto').classList.toggle('shadow-sm', type === 'auto');
-            document.getElementById('btn-manual').classList.toggle('bg-white', type === 'manual');
-            document.getElementById('btn-manual').classList.toggle('shadow-sm', type === 'manual');
-        }
-
-        async function submitAdd() {
-            const body = {
-                adminKey: currentAdminKey,
-                cardName: document.getElementById('add_cardName').value,
-                days: parseInt(document.getElementById('add_days').value),
-                authMode: document.getElementById('add_authMode').value,
-                appGroupId: document.getElementById('add_appGroupId').value,
-                authAppIds: document.getElementById('add_authMode').value === 'single' ? 
-                           document.getElementById('add_singleAppId').value.split(',') : [],
-                count: parseInt(document.getElementById('add_count').value),
-                prefix: document.getElementById('add_prefix').value,
-                customCards: genType === 'manual' ? document.getElementById('add_customCards').value : ""
-            };
-
-            const res = await fetch(`${API_BASE_URL}/admin/cards/add`, {
-                method: 'POST',
-                body: JSON.stringify(body)
-            });
-            const d = await res.json();
-            if (d.code === 200) {
-                alert(d.msg);
-                refreshData(); // 成功后刷新数据并跳转列表
-                switchTab('list');
-            }
-        }
-
-        async function deleteCard(key) {
-            if (!confirm('确定删除这张卡密吗？')) return;
-            const res = await fetch(`${API_BASE_URL}/admin/cards/delete`, {
-                method: 'POST',
-                body: JSON.stringify({ adminKey: currentAdminKey, card: key })
-            });
-            const d = await res.json();
-            if (d.code === 200) refreshData();
-        }
-
-        async function refreshData() {
-            const res = await fetch(`${API_BASE_URL}/admin/cards/list`, {
-                method: 'POST',
-                body: JSON.stringify({ adminKey: currentAdminKey })
-            });
-            const d = await res.json();
-            if (d.code === 200) updateUI(d.data);
-        }
-
-        // 分组管理逻辑
-        function renderGroups() {
-            const container = document.getElementById('groupContainer');
-            container.innerHTML = globalGroups.map((g, index) => `
-                <div class="glass-card p-6 shadow-sm border-t-4 border-pink-400">
-                    <div class="flex justify-between mb-4">
-                        <span class="text-xs bg-pink-100 text-pink-600 px-2 py-1 rounded">应用分组</span>
-                        <button onclick="removeGroup(${index})" class="text-slate-300 hover:text-red-500"><i class="fas fa-times"></i></button>
+            // 分组编辑
+            document.getElementById('gList').innerHTML = groups.map((g,i)=>`
+                <div class="glass p-4 border-l-4 border-pink-400">
+                    <div class="grid grid-cols-2 gap-4 mb-2">
+                        <input class="bg-transparent border-b font-bold" onchange="groups[${i}].id=this.value" value="${g.id}" placeholder="ID">
+                        <input class="bg-transparent border-b" onchange="groups[${i}].name=this.value" value="${g.name}" placeholder="组名">
                     </div>
-                    <div class="space-y-4">
-                        <div>
-                            <label class="text-xs text-slate-500">对接 ID (不可重复)</label>
-                            <input type="text" value="${g.id}" onchange="globalGroups[${index}].id=this.value" class="w-full border-b py-1 outline-none focus:border-pink-500 font-mono">
-                        </div>
-                        <div>
-                            <label class="text-xs text-slate-500">分组名称</label>
-                            <input type="text" value="${g.name}" onchange="globalGroups[${index}].name=this.value" class="w-full border-b py-1 outline-none focus:border-pink-500">
-                        </div>
-                        <div>
-                            <label class="text-xs text-slate-500">包含的 APP ID (英文逗号隔开)</label>
-                            <input type="text" value="${Array.isArray(g.app_ids) ? g.app_ids.join(',') : g.app_ids}" onchange="globalGroups[${index}].app_ids=this.value.split(',')" class="w-full border-b py-1 outline-none focus:border-pink-500 text-xs">
-                        </div>
-                    </div>
+                    <input class="w-full text-xs text-gray-400 bg-transparent" onchange="groups[${i}].app_ids=this.value.split(',')" value="${JSON.parse(g.app_ids).join(',')}" placeholder="APP ID 逗号隔开">
                 </div>
             `).join('');
         }
 
-        function addGroupRow() {
-            globalGroups.push({ id: "NEW_ID_" + Math.floor(Math.random()*1000), name: "新应用分组", app_ids: [] });
-            renderGroups();
+        async function addCards() {
+            const chk = Array.from(document.querySelectorAll('input[name="apps"]:checked')).map(e=>e.value);
+            const b = {
+                adminKey: pass,
+                cardName: document.getElementById('a_name').value,
+                minutes: document.getElementById('a_min').value * document.getElementById('a_unit').value,
+                count: document.getElementById('a_count').value,
+                authMode: document.getElementById('a_gid').value ? 'group' : 'single',
+                appGroupId: document.getElementById('a_gid').value,
+                authAppIds: chk
+            };
+            await fetch(`${API}/admin/cards/add`, {method:'POST', body:JSON.stringify(b)});
+            load();
+            alert("生成成功！");
         }
 
-        function removeGroup(index) {
-            globalGroups.splice(index, 1);
-            renderGroups();
+        async function act(k,a) {
+            if(a==='delete' && !confirm("确定删除?")) return;
+            await fetch(`${API}/admin/cards/action`, {method:'POST', body:JSON.stringify({adminKey:pass, card:k, action:a})});
+            load();
         }
 
-        async function saveGroups() {
-            const res = await fetch(`${API_BASE_URL}/admin/group-save`, {
-                method: 'POST',
-                body: JSON.stringify({ adminKey: currentAdminKey, groups: globalGroups })
-            });
-            const d = await res.json();
-            if (d.code === 200) {
-                alert("保存成功！已同步到发卡选项中。");
-                refreshData();
-            }
+        function addG() { groups.push({id:'NEW', name:'新分组', app_ids:[]}); render({list:[], appGroups:groups}); }
+        async function saveG() {
+            await fetch(`${API}/admin/group-save`, {method:'POST', body:JSON.stringify({adminKey:pass, groups:groups})});
+            alert("分组已同步");
+            load();
         }
+
+        function showT(t) {
+            document.querySelectorAll('.tab-c').forEach(e=>e.classList.add('hidden'));
+            document.getElementById('t-'+t).classList.remove('hidden');
+        }
+
+        // 浪漫爱心生成
+        setInterval(() => {
+            const h = document.createElement('div');
+            h.innerHTML = '❤️';
+            h.className = 'heart';
+            h.style.left = Math.random() * 100 + 'vw';
+            h.style.fontSize = (Math.random() * 20 + 10) + 'px';
+            document.body.appendChild(h);
+            setTimeout(() => h.remove(), 4000);
+        }, 400);
     </script>
 </body>
 </html>
