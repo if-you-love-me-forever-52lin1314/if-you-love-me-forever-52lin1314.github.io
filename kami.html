@@ -2,237 +2,200 @@
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
-  <title>52霖科技 - 顶级卡密管理系统</title>
+  <title>52霖科技 - 顶级管理后台</title>
   <style>
-    :root { --primary: #ff758c; --bg: #0f0c29; --card: rgba(255, 255, 255, 0.1); }
-    body { margin: 0; background: var(--bg); color: white; font-family: 'Segoe UI', sans-serif; overflow-x: hidden; }
+    :root { --primary: #ff758c; --bg: #0f0c29; }
+    body { margin: 0; background: var(--bg); color: white; font-family: sans-serif; overflow-x: hidden; }
     canvas { position: fixed; top: 0; left: 0; pointer-events: none; z-index: 0; }
-    .container { position: relative; z-index: 1; max-width: 1200px; margin: 30px auto; background: var(--card); backdrop-filter: blur(15px); padding: 30px; border-radius: 20px; box-shadow: 0 8px 32px rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.1); }
-    h1 { text-align: center; color: var(--primary); text-shadow: 0 0 10px var(--primary); margin-bottom: 30px; }
-    
-    /* 标签页样式 */
-    .tabs { display: flex; gap: 10px; margin-bottom: 25px; border-bottom: 1px solid rgba(255,255,255,0.2); padding-bottom: 10px; }
-    .tab { padding: 10px 25px; cursor: pointer; border-radius: 8px; transition: 0.3s; background: rgba(255,255,255,0.05); }
-    .tab.active { background: var(--primary); color: white; box-shadow: 0 0 15px var(--primary); }
-    .tab-content { display: none; }
+    .container { position: relative; z-index: 1; max-width: 1100px; margin: 20px auto; background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); padding: 25px; border-radius: 15px; }
+    h1 { text-align: center; color: var(--primary); text-shadow: 0 0 10px var(--primary); }
+    .tabs { display: flex; gap: 10px; margin: 20px 0; border-bottom: 1px solid #444; }
+    .tab { padding: 10px 20px; cursor: pointer; border-radius: 5px 5px 0 0; }
+    .tab.active { background: var(--primary); color: white; }
+    .tab-content { display: none; padding: 20px 0; }
     .tab-content.active { display: block; }
-
-    input, select, textarea { padding: 10px; border-radius: 8px; border: none; background: rgba(255,255,255,0.15); color: white; outline: none; margin-bottom: 10px; border: 1px solid rgba(255,255,255,0.1); }
-    .btn { padding: 10px 20px; border-radius: 8px; border: none; cursor: pointer; font-weight: bold; transition: 0.3s; margin: 5px; }
-    .btn-add { background: var(--primary); color: white; }
-    .btn-del { background: #ff4b2b; color: white; }
-    
-    table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 14px; }
-    th { background: rgba(255, 117, 140, 0.2); padding: 12px; text-align: left; color: var(--primary); }
-    td { padding: 12px; border-bottom: 1px solid rgba(255,255,255,0.05); }
-    .status-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 5px; }
-    .online { background: #00ff88; box-shadow: 0 0 8px #00ff88; }
-    .offline { background: #555; }
-    .days-edit { color: #ffeb3b; text-decoration: underline; cursor: pointer; }
-    .group-item { background: rgba(255,255,255,0.05); padding: 15px; border-radius: 10px; margin-bottom: 15px; border: 1px dashed rgba(255,255,255,0.2); }
+    input, select, textarea { background: rgba(255,255,255,0.1); border: 1px solid #555; color: white; padding: 8px; border-radius: 5px; margin-bottom: 10px; width: 100%; box-sizing: border-box; }
+    .btn { padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; }
+    .btn-pink { background: var(--primary); color: white; }
+    .btn-red { background: #ff4b2b; color: white; }
+    table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+    th { background: rgba(255,117,140,0.2); padding: 10px; text-align: left; }
+    td { padding: 10px; border-bottom: 1px solid #333; font-size: 14px; }
+    .online-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #00ff88; margin-right: 5px; box-shadow: 0 0 5px #00ff88; }
+    .offline-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #666; margin-right: 5px; }
+    .edit-link { color: #ffeb3b; cursor: pointer; text-decoration: underline; }
   </style>
 </head>
 <body>
   <canvas id="heartCanvas"></canvas>
-
   <div class="container">
-    <h1>💖 52霖科技卡密管理后台 💖</h1>
-    
-    <div id="loginSection" style="text-align: center; padding: 50px 0;">
-      <input type="password" id="adminKey" placeholder="输入管理员密钥..." style="width: 300px; font-size: 18px;">
-      <br>
-      <button class="btn btn-add" onclick="fetchData()">登录管理系统</button>
+    <h1>💖 52霖科技卡密系统 💖</h1>
+
+    <div id="loginBox" style="text-align:center;">
+      <input type="password" id="adminKey" placeholder="输入后台管理密钥" style="width:250px;">
+      <button class="btn btn-pink" onclick="init()">登录系统</button>
     </div>
 
-    <div id="adminSection" style="display:none;">
+    <div id="mainBox" style="display:none;">
       <div class="tabs">
-        <div class="tab active" onclick="switchTab(0)">卡密管理</div>
-        <div class="tab" onclick="switchTab(1)">生成卡密</div>
-        <div class="tab" onclick="switchTab(2)">APP分组</div>
+        <div class="tab active" onclick="showTab(0)">卡密管理</div>
+        <div class="tab" onclick="showTab(1)">添加卡密</div>
+        <div class="tab" onclick="showTab(2)">分组设置</div>
       </div>
 
-      <div id="tab-0" class="tab-content active">
-        <div style="margin-bottom: 15px; color: #ccc;">
-          总数：<span id="statTotal">0</span> | 今日活跃：<span id="statOnline">0</span>
-          <button class="btn btn-del" style="float: right;" onclick="batchDelete()">批量删除勾选</button>
+      <div id="tab0" class="tab-content active">
+        <div style="margin-bottom:10px;">
+          今日活跃: <span id="sOnline">0</span> | 总数: <span id="sTotal">0</span>
+          <button class="btn btn-red" style="float:right;" onclick="batchDel()">批量删除勾选</button>
         </div>
         <table>
           <thead>
             <tr>
-              <th><input type="checkbox" onclick="toggleAll(this)"></th>
-              <th>卡密内容</th>
+              <th><input type="checkbox" onchange="checkAll(this)"></th>
+              <th>卡密</th>
               <th>名称</th>
-              <th>时长(天)</th>
-              <th>状态</th>
-              <th>激活日期</th>
-              <th>今日状态</th>
+              <th>时长</th>
+              <th>激活状态</th>
+              <th>到期时间</th>
+              <th>在线</th>
             </tr>
           </thead>
-          <tbody id="listBody"></tbody>
+          <tbody id="list"></tbody>
         </table>
       </div>
 
-      <div id="tab-1" class="tab-content">
-        <div style="display: flex; flex-direction: column; max-width: 500px;">
-          <label>卡密名称：</label><input type="text" id="cardName" placeholder="如：超级会员月卡">
-          <label>设定天数：</label><input type="number" id="days" value="30">
-          <label>授权模式：</label>
-          <select id="authMode">
-            <option value="group">分组授权</option>
-            <option value="app">单APP授权</option>
+      <div id="tab1" class="tab-content">
+        <div style="max-width: 400px;">
+          <label>卡密名称:</label><input type="text" id="cName" placeholder="月卡">
+          <label>有效天数:</label><input type="number" id="cDays" value="30">
+          <label>生成方式:</label>
+          <select id="cType" onchange="toggleGen(this.value)">
+            <option value="auto">系统随机批量生成</option>
+            <option value="manual">手动粘贴自定义卡密</option>
           </select>
-          <label>关联分组ID（可选）：</label><input type="text" id="appGroupId" placeholder="输入分组ID">
-          
-          <hr style="width:100%; border:0.5px solid rgba(255,255,255,0.1); margin: 20px 0;">
-          
-          <label>生成方式：</label>
-          <select id="genType" onchange="document.getElementById('customBox').style.display = this.value=='auto'?'none':'block'; document.getElementById('autoBox').style.display = this.value=='auto'?'block':'none';">
-            <option value="auto">系统自动批量生成</option>
-            <option value="custom">手动输入自定义卡密</option>
-          </select>
-
-          <div id="autoBox">
-            <label>生成数量：</label><input type="number" id="count" value="10">
-            <label>前缀：</label><input type="text" id="prefix" placeholder="52LIN-">
+          <div id="autoPart">
+            数量: <input type="number" id="cCount" value="5">
+            前缀: <input type="text" id="cPrefix" placeholder="52LIN-">
           </div>
-
-          <div id="customBox" style="display:none;">
-            <label>每行一个卡密：</label>
-            <textarea id="customCards" rows="10" placeholder="KEY123&#10;KEY456"></textarea>
+          <div id="manualPart" style="display:none;">
+            输入卡密(一行一个):
+            <textarea id="cManual" rows="5"></textarea>
           </div>
-
-          <button class="btn btn-add" style="margin-top: 20px; padding: 15px;" onclick="addCards()">立即生成并保存</button>
+          <button class="btn btn-pink" onclick="add()">执行生成</button>
         </div>
       </div>
 
-      <div id="tab-2" class="tab-content">
-        <p style="color: #aaa; font-size: 13px;">分组授权模式下，卡密将授权给分组内的所有 APP ID。</p>
-        <div id="groupList"></div>
-        <button class="btn btn-add" onclick="addGroup()">+ 添加新分组</button>
-        <button class="btn btn-add" style="background: #00ff88; color: #000;" onclick="saveGroups()">同步并保存所有分组</button>
+      <div id="tab2" class="tab-content">
+        <div id="gList"></div>
+        <button class="btn btn-pink" onclick="newG()">+ 新增分组</button>
+        <button class="btn btn-pink" style="background:#00ff88; color:#000" onclick="saveG()">保存所有修改</button>
       </div>
-
     </div>
   </div>
 
   <script>
-    const API = "https://kami.8888888.best"; // [修改这里]
-    let allGroups = [];
+    const API = "https://kami.8888888.best"; // [重要] 改这里
+    let groups = [];
 
-    // 标签切换
-    function switchTab(index) {
-      document.querySelectorAll('.tab').forEach((t, i) => t.classList.toggle('active', i === index));
-      document.querySelectorAll('.tab-content').forEach((c, i) => c.classList.toggle('active', i === index));
+    function showTab(i) {
+      document.querySelectorAll('.tab').forEach((t,idx)=>t.classList.toggle('active',idx===i));
+      document.querySelectorAll('.tab-content').forEach((c,idx)=>c.classList.toggle('active',idx===i));
+    }
+    function toggleGen(v) {
+      document.getElementById('autoPart').style.display = v==='auto'?'block':'none';
+      document.getElementById('manualPart').style.display = v==='manual'?'block':'none';
     }
 
-    async function fetchData() {
+    async function init() {
       const adminKey = document.getElementById('adminKey').value;
-      try {
-        const res = await fetch(`${API}/admin/list`, { method: 'POST', body: JSON.stringify({ adminKey }) });
-        const data = await res.json();
-        if(data.code !== 200) return alert(data.msg);
-
-        document.getElementById('loginSection').style.display = 'none';
-        document.getElementById('adminSection').style.display = 'block';
-        
-        // 渲染统计
-        document.getElementById('statTotal').innerText = data.stats.total;
-        document.getElementById('statOnline').innerText = data.stats.onlineToday;
-        
-        // 渲染列表
-        const todayStart = new Date().setHours(0,0,0,0);
-        document.getElementById('listBody').innerHTML = data.data.map(item => `
-          <tr>
-            <td><input type="checkbox" class="row-check" value="${item.card_key}"></td>
-            <td>${item.card_key}</td>
-            <td>${item.name}</td>
-            <td class="days-edit" onclick="updateDays('${item.card_key}', ${item.days})">${item.days}天</td>
-            <td>${item.device_id ? '已激活' : '<span style="color:#666">未用</span>'}</td>
-            <td>${item.expire_time > 0 ? new Date(item.expire_time).toLocaleDateString() : '-'}</td>
-            <td><span class="status-dot ${item.last_online_time > todayStart ? 'online' : 'offline'}"></span>${item.last_online_time > todayStart ? '在线' : '离线'}</td>
-          </tr>
-        `).join('');
-
-        // 初始化分组
-        allGroups = data.groups || [];
-        renderGroups();
-      } catch(e) { alert("连接失败，请检查API地址"); }
+      const res = await fetch(`${API}/admin/list`, { method:'POST', body: JSON.stringify({adminKey}) });
+      const d = await res.json();
+      if(d.code!==200) return alert(d.msg);
+      
+      document.getElementById('loginBox').style.display='none';
+      document.getElementById('mainBox').style.display='block';
+      document.getElementById('sOnline').innerText = d.stats.onlineToday;
+      document.getElementById('sTotal').innerText = d.stats.total;
+      
+      const tStart = new Date().setHours(0,0,0,0);
+      document.getElementById('list').innerHTML = d.data.map(i => `
+        <tr>
+          <td><input type="checkbox" class="cb" value="${i.card_key}"></td>
+          <td>${i.card_key}</td>
+          <td>${i.name}</td>
+          <td><span class="edit-link" onclick="updateD('${i.card_key}',${i.days})">${i.days}天</span></td>
+          <td>${i.device_id?'已激活':'未激活'}</td>
+          <td>${i.expire_time>0?new Date(i.expire_time).toLocaleDateString():'-'}</td>
+          <td><span class="${i.last_online_time>tStart?'online-dot':'offline-dot'}"></span></td>
+        </tr>
+      `).join('');
+      groups = d.groups || [];
+      renderG();
     }
 
-    async function addCards() {
+    async function add() {
       const body = {
         adminKey: document.getElementById('adminKey').value,
-        cardName: document.getElementById('cardName').value,
-        days: parseInt(document.getElementById('days').value),
-        authMode: document.getElementById('authMode').value,
-        appGroupId: document.getElementById('appGroupId').value,
-        count: parseInt(document.getElementById('count').value),
-        prefix: document.getElementById('prefix').value,
-        customCards: document.getElementById('customCards').value
+        cardName: document.getElementById('cName').value,
+        days: parseInt(document.getElementById('cDays').value),
+        count: parseInt(document.getElementById('cCount').value),
+        prefix: document.getElementById('cPrefix').value,
+        customCards: document.getElementById('cManual').value
       };
-      const res = await fetch(`${API}/admin/add`, { method: 'POST', body: JSON.stringify(body) });
-      const data = await res.json();
-      alert(data.msg);
-      fetchData();
-      switchTab(0);
+      await fetch(`${API}/admin/add`, {method:'POST', body:JSON.stringify(body)});
+      alert("成功"); init(); showTab(0);
     }
 
-    function renderGroups() {
-      const container = document.getElementById('groupList');
-      container.innerHTML = allGroups.map((g, index) => `
-        <div class="group-item">
-          ID: <input type="text" value="${g.id}" onchange="allGroups[${index}].id=this.value" style="width:100px">
-          名称: <input type="text" value="${g.name}" onchange="allGroups[${index}].name=this.value">
-          APP IDs (英文逗号隔开): 
-          <input type="text" value="${JSON.parse(g.app_ids || '[]').join(',')}" onchange="allGroups[${index}].appIds=this.value.split(',')" style="width:300px">
-          <button class="btn btn-del" onclick="allGroups.splice(${index},1);renderGroups()">删除</button>
+    async function updateD(key, old) {
+      const n = prompt("输入新天数:", old);
+      if(!n) return;
+      await fetch(`${API}/admin/update-days`, {method:'POST', body:JSON.stringify({adminKey: document.getElementById('adminKey').value, key, newDays: parseInt(n)})});
+      init();
+    }
+
+    async function batchDel() {
+      const keys = Array.from(document.querySelectorAll('.cb:checked')).map(e=>e.value);
+      if(!keys.length || !confirm("确定删除?")) return;
+      await fetch(`${API}/admin/batch-delete`, {method:'POST', body:JSON.stringify({adminKey: document.getElementById('adminKey').value, keys})});
+      init();
+    }
+
+    function renderG() {
+      document.getElementById('gList').innerHTML = groups.map((g,i)=>`
+        <div style="background:rgba(255,255,255,0.05); padding:10px; margin-bottom:10px; border-radius:5px;">
+          ID: <input style="width:80px" value="${g.id}" onchange="groups[${i}].id=this.value">
+          名: <input style="width:100px" value="${g.name}" onchange="groups[${i}].name=this.value">
+          APP IDs (逗号隔开): <input style="width:200px" value="${JSON.parse(g.app_ids||'[]').join(',')}" onchange="groups[${i}].appIds=this.value.split(',')">
+          <button class="btn btn-red" onclick="groups.splice(${i},1);renderG()">删</button>
         </div>
       `).join('');
     }
-
-    function addGroup() {
-      allGroups.push({ id: 'group_' + Date.now(), name: '新分组', appIds: [] });
-      renderGroups();
+    function newG() { groups.push({id:'new_'+Date.now(), name:'新分组', appIds:[]}); renderG(); }
+    async function saveG() {
+      await fetch(`${API}/admin/group-save`, {method:'POST', body:JSON.stringify({adminKey: document.getElementById('adminKey').value, groups})});
+      alert("保存成功");
     }
+    function checkAll(s) { document.querySelectorAll('.cb').forEach(e=>e.checked=s.checked); }
 
-    async function saveGroups() {
-      const res = await fetch(`${API}/admin/group-save`, { 
-        method: 'POST', 
-        body: JSON.stringify({ adminKey: document.getElementById('adminKey').value, groups: allGroups }) 
-      });
-      const data = await res.json();
-      alert(data.msg);
-    }
-
-    async function updateDays(key, old) {
-      const newDays = prompt(`修改 [${key}] 的时长：`, old);
-      if(!newDays) return;
-      await fetch(`${API}/admin/update-days`, { method: 'POST', body: JSON.stringify({ adminKey: document.getElementById('adminKey').value, key, newDays: parseInt(newDays) }) });
-      fetchData();
-    }
-
-    async function batchDelete() {
-      const keys = Array.from(document.querySelectorAll('.row-check:checked')).map(el => el.value);
-      if(!keys.length || !confirm('确定删除吗？')) return;
-      await fetch(`${API}/admin/batch-delete`, { method: 'POST', body: JSON.stringify({ adminKey: document.getElementById('adminKey').value, keys }) });
-      fetchData();
-    }
-
-    function toggleAll(src) { document.querySelectorAll('.row-check').forEach(el => el.checked = src.checked); }
-
-    // --- 爱心特效代码 (保持不变) ---
+    // 爱心特效
     const canvas = document.getElementById('heartCanvas');
     const ctx = canvas.getContext('2d');
     canvas.width = window.innerWidth; canvas.height = window.innerHeight;
     const hearts = [];
     class Heart {
-      constructor() { this.x = Math.random() * canvas.width; this.y = -20; this.size = Math.random() * 15 + 10; this.speed = Math.random() * 2 + 1; this.opacity = Math.random() * 0.5 + 0.3; }
-      draw() { ctx.fillStyle = `rgba(255, 117, 140, ${this.opacity})`; ctx.beginPath(); ctx.moveTo(this.x, this.y); ctx.bezierCurveTo(this.x - this.size/2, this.y - this.size/2, this.x - this.size, this.y + this.size/3, this.x, this.y + this.size); ctx.bezierCurveTo(this.x + this.size, this.y + this.size/3, this.x + this.size/2, this.y - this.size/2, this.x, this.y); ctx.fill(); }
+      constructor() { this.x = Math.random()*canvas.width; this.y = -20; this.size = Math.random()*12+8; this.speed = Math.random()*2+1; this.opacity = Math.random()*0.5+0.2; }
+      draw() {
+        ctx.fillStyle = `rgba(255, 117, 140, ${this.opacity})`;
+        ctx.beginPath(); ctx.moveTo(this.x, this.y);
+        ctx.bezierCurveTo(this.x-this.size/2, this.y-this.size/2, this.x-this.size, this.y+this.size/3, this.x, this.y+this.size);
+        ctx.bezierCurveTo(this.x+this.size, this.y+this.size/3, this.x+this.size/2, this.y-this.size/2, this.x, this.y);
+        ctx.fill();
+      }
       update() { this.y += this.speed; if(this.y > canvas.height) this.y = -20; }
     }
-    for(let i=0; i<50; i++) hearts.push(new Heart());
-    function animate() { ctx.clearRect(0,0,canvas.width, canvas.height); hearts.forEach(h => { h.update(); h.draw(); }); requestAnimationFrame(animate); }
-    animate();
+    for(let i=0; i<40; i++) hearts.push(new Heart());
+    function anim() { ctx.clearRect(0,0,canvas.width, canvas.height); hearts.forEach(h=>{h.update(); h.draw();}); requestAnimationFrame(anim); }
+    anim();
   </script>
 </body>
 </html>
