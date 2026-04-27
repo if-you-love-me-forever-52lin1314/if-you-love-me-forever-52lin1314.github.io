@@ -1,204 +1,590 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>52霖科技 - 旗舰版卡密系统</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <style>
-        body { background: #fff5f7; font-family: system-ui; overflow-x: hidden; }
-        .glass { background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(12px); border: 1px solid rgba(255,192,203,0.3); border-radius: 20px; }
-        .pink-btn { background: linear-gradient(135deg, #ff75c3 0%, #ffa647 100%); transition: all 0.3s; }
-        .pink-btn:hover { transform: scale(1.02); opacity: 0.9; }
-        /* 爱心特效 */
-        .heart { position: fixed; pointer-events: none; z-index: -1; animation: float 4s linear infinite; color: #ff85a2; }
-        @keyframes float { 0% { transform: translateY(100vh) scale(0); opacity: 1; } 100% { transform: translateY(-10vh) scale(1.5); opacity: 0; } }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>52霖科技 - 卡密管理后台</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: "Microsoft YaHei", sans-serif; }
+    :root { --primary: #ff69b4; --primary-dark: #ff1493; --bg: #fdf2f8; --card-bg: rgba(255,255,255,0.95); --text: #333; --text-light: #666; --success: #10b981; --danger: #ef4444; --warning: #f59e0b; --border: rgba(255,105,180,0.3); }
+    body { background: linear-gradient(135deg, #fdf2f8 0%, #e9d5ff 100%); min-height: 100vh; padding: 20px; color: var(--text); }
+    .container { max-width: 1400px; margin: 0 auto; }
+    .header { text-align: center; margin-bottom: 30px; padding: 20px; background: var(--card-bg); border-radius: 16px; border: 1px solid var(--border); box-shadow: 0 4px 20px rgba(255,105,180,0.2); }
+    .header h1 { color: var(--primary-dark); font-size: 28px; margin-bottom: 10px; }
+    .login-box { max-width: 400px; margin: 100px auto; padding: 30px; background: var(--card-bg); border-radius: 16px; border: 1px solid var(--border); box-shadow: 0 4px 20px rgba(255,105,180,0.2); }
+    .login-box h2 { text-align: center; color: var(--primary-dark); margin-bottom: 20px; }
+    .form-group { margin-bottom: 15px; }
+    label { display: block; margin-bottom: 6px; font-weight: 500; color: var(--text); }
+    input, textarea, select { width: 100%; padding: 10px 12px; border: 1px solid var(--border); border-radius: 8px; font-size: 14px; background: rgba(255,255,255,0.8); transition: all 0.3s; }
+    input:focus, textarea:focus, select:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(255,105,180,0.1); }
+    .btn { padding: 10px 20px; border: none; border-radius: 8px; font-size: 14px; font-weight: 500; cursor: pointer; transition: all 0.3s; }
+    .btn-primary { background: linear-gradient(90deg, var(--primary), var(--primary-dark)); color: white; }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(255,20,147,0.4); }
+    .btn-success { background: var(--success); color: white; }
+    .btn-danger { background: var(--danger); color: white; }
+    .btn-warning { background: var(--warning); color: white; }
+    .btn-group { display: flex; gap: 10px; flex-wrap: wrap; }
+    .card { background: var(--card-bg); border-radius: 16px; border: 1px solid var(--border); padding: 20px; margin-bottom: 20px; box-shadow: 0 4px 20px rgba(255,105,180,0.1); }
+    .card h3 { color: var(--primary-dark); margin-bottom: 15px; padding-bottom: 10px; border-bottom: 1px solid var(--border); }
+    .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 20px; }
+    .stat-item { padding: 15px; background: linear-gradient(135deg, rgba(255,105,180,0.1), rgba(233,213,255,0.2)); border-radius: 12px; text-align: center; }
+    .stat-item .num { font-size: 28px; font-weight: bold; color: var(--primary-dark); margin-bottom: 5px; }
+    .stat-item .label { font-size: 14px; color: var(--text-light); }
+    .tabs { display: flex; gap: 2px; background: rgba(255,105,180,0.1); border-radius: 8px; padding: 4px; margin-bottom: 20px; }
+    .tab-item { flex: 1; padding: 10px; text-align: center; border-radius: 6px; cursor: pointer; transition: all 0.3s; }
+    .tab-item.active { background: var(--primary); color: white; }
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+    table { width: 100%; border-collapse: collapse; margin-top: 15px; overflow-x: auto; display: block; }
+    thead { background: rgba(255,105,180,0.1); }
+    th, td { padding: 12px 10px; text-align: left; border-bottom: 1px solid var(--border); font-size: 13px; white-space: nowrap; }
+    th { color: var(--primary-dark); font-weight: 600; }
+    .pagination { display: flex; justify-content: center; gap: 10px; margin-top: 15px; align-items: center; }
+    .status-tag { padding: 3px 8px; border-radius: 4px; font-size: 12px; color: white; }
+    .status-active { background: var(--success); }
+    .status-inactive { background: var(--warning); }
+    .status-expired { background: var(--danger); }
+    .status-banned { background: #666; }
+    .group-item { padding: 15px; border: 1px solid var(--border); border-radius: 8px; margin-bottom: 10px; }
+    .hide { display: none; }
+  </style>
 </head>
-<body class="min-h-screen">
-    <div id="loginBox" class="flex h-screen items-center justify-center p-4">
-        <div class="glass p-8 w-full max-w-sm shadow-2xl text-center">
-            <div class="w-20 h-20 bg-pink-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <i class="fas fa-heart text-pink-500 text-3xl"></i>
-            </div>
-            <h1 class="text-2xl font-bold text-gray-800 mb-6">后台管理登录</h1>
-            <input type="password" id="adminKey" class="w-full p-3 rounded-xl border-2 border-pink-100 focus:border-pink-400 outline-none mb-4" placeholder="请输入管理员密钥">
-            <button onclick="login()" class="w-full pink-btn text-white py-3 rounded-xl font-bold shadow-lg">验证并进入</button>
-        </div>
+<body>
+  <!-- ===================== 【小白仅需修改这里】你的Worker地址 ===================== -->
+  <script>
+    const API_BASE_URL = "https://kami.8888888.best"; // 替换为你的Worker地址，末尾不加/
+    // ==========================================================================
+    
+    let adminKey = localStorage.getItem("adminKey") || "";
+    let currentPage = 1;
+    let pageSize = 50;
+    let appGroups = {};
+    // 自动保存APP列表，不用每次重新填
+    let allAppIds = localStorage.getItem("allAppIds") || `52霖影视-APP1
+52霖漫画-APP2
+52霖小说-APP3
+52霖动漫-APP4
+52霖短剧-APP5
+52霖音乐-APP6
+52霖游戏-APP7
+52霖工具-APP8`;
+  </script>
+  <!-- 登录页面 -->
+  <div id="loginPage" class="login-box">
+    <h2>💖 52霖科技管理后台登录 💖</h2>
+    <div class="form-group">
+      <label>管理员密钥</label>
+      <input type="password" id="adminKeyInput" placeholder="请输入管理员密钥">
     </div>
-
-    <div id="mainUI" class="hidden container mx-auto p-4 lg:p-8">
-        <nav class="flex space-x-2 mb-8 overflow-x-auto pb-2">
-            <button onclick="showT('list')" class="px-6 py-2 glass font-bold text-pink-600 whitespace-nowrap">卡密管理</button>
-            <button onclick="showT('add')" class="px-6 py-2 glass font-bold text-pink-600 whitespace-nowrap">开卡中心</button>
-            <button onclick="showT('group')" class="px-6 py-2 glass font-bold text-pink-600 whitespace-nowrap">分组/APP设置</button>
-        </nav>
-
-        <div id="t-list" class="tab-c glass p-6 shadow-xl">
-            <div class="overflow-x-auto">
-                <table class="w-full text-left">
-                    <thead>
-                        <tr class="text-pink-500 border-b-2 border-pink-50">
-                            <th class="p-3">卡密信息</th>
-                            <th class="p-3">授权目标</th>
-                            <th class="p-3">时间进度</th>
-                            <th class="p-3">绑定机器</th>
-                            <th class="p-3">操作</th>
-                        </tr>
-                    </thead>
-                    <tbody id="listBody" class="text-sm"></tbody>
-                </table>
-            </div>
-        </div>
-
-        <div id="t-add" class="tab-c hidden grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div class="glass p-8">
-                <h2 class="text-xl font-bold text-pink-600 mb-6">生成新卡密</h2>
-                <div class="space-y-4">
-                    <input id="a_name" class="w-full p-3 border-b-2 outline-none" placeholder="卡密备注 (如: 月卡用户)">
-                    <div class="flex items-center space-x-2">
-                        <input id="a_min" type="number" class="flex-1 p-3 border-b-2 outline-none" placeholder="授权时长">
-                        <select id="a_unit" class="p-3 bg-transparent font-bold">
-                            <option value="1">分钟</option>
-                            <option value="60">小时</option>
-                            <option value="1440">天</option>
-                            <option value="525600">年</option>
-                        </select>
-                    </div>
-                    <input id="a_count" type="number" value="1" class="w-full p-3 border-b-2 outline-none" placeholder="生成数量">
-                    <button onclick="addCards()" class="w-full pink-btn text-white py-4 rounded-2xl font-bold text-lg shadow-xl mt-4">立即批量生成</button>
-                </div>
-            </div>
-            <div class="glass p-8">
-                <h2 class="text-xl font-bold text-pink-600 mb-4">选择授权范围</h2>
-                <div class="mb-4">
-                    <p class="text-xs text-gray-400 mb-2 font-bold">优先使用分组授权:</p>
-                    <select id="a_gid" class="w-full p-3 border rounded-xl bg-pink-50 focus:ring-2 ring-pink-200 outline-none">
-                        <option value="">-- 不使用分组，采用下方单选 --</option>
-                    </select>
-                </div>
-                <p class="text-xs text-gray-400 mb-2 font-bold">手动单选 APP ID:</p>
-                <div id="appBox" class="grid grid-cols-2 gap-2"></div>
-            </div>
-        </div>
-
-        <div id="t-group" class="tab-c hidden glass p-8">
-            <div class="flex justify-between items-center mb-6">
-                <h2 class="text-xl font-bold text-pink-600">APP 与分组管理</h2>
-                <button onclick="addG()" class="bg-pink-100 text-pink-600 px-4 py-2 rounded-lg font-bold">+ 新增分组</button>
-            </div>
-            <div id="gList" class="space-y-4"></div>
-            <button onclick="saveG()" class="w-full pink-btn text-white py-3 rounded-xl mt-8 font-bold">保存并同步配置</button>
-        </div>
+    <button class="btn btn-primary" style="width: 100%;" onclick="login()">登录</button>
+  </div>
+  <!-- 主管理页面 -->
+  <div id="mainPage" class="container" style="display: none;">
+    <div class="header">
+      <h1>💖 52霖科技 - 卡密验证管理系统 💖</h1>
+      <button class="btn btn-danger" onclick="logout()">退出登录</button>
     </div>
+    <!-- 数据统计看板 -->
+    <div class="card">
+      <h3>📊 数据统计</h3>
+      <div class="stats-grid" id="statsGrid">
+        <div class="stat-item"><div class="num" id="totalCards">0</div><div class="label">总卡密数</div></div>
+        <div class="stat-item"><div class="num" id="activeCards">0</div><div class="label">已激活用户</div></div>
+        <div class="stat-item"><div class="num" id="inactiveCards">0</div><div class="label">未激活卡密</div></div>
+        <div class="stat-item"><div class="num" id="expiredCards">0</div><div class="label">已过期卡密</div></div>
+        <div class="stat-item"><div class="num" id="bannedCards">0</div><div class="label">已封禁卡密</div></div>
+      </div>
+    </div>
+    <!-- 功能标签页 -->
+    <div class="tabs">
+      <div class="tab-item active" onclick="switchTab('cardManage')">卡密管理</div>
+      <div class="tab-item" onclick="switchTab('cardGenerate')">生成卡密</div>
+      <div class="tab-item" onclick="switchTab('groupManage')">APP分组管理</div>
+    </div>
+    <!-- 卡密管理标签页 -->
+    <div id="cardManage" class="tab-content active">
+      <div class="card">
+        <h3>🔍 卡密筛选</h3>
+        <div class="grid-2">
+          <div class="form-group">
+            <label>关键词搜索（卡密/名称）</label>
+            <input type="text" id="searchKeyword" placeholder="请输入关键词">
+          </div>
+          <div class="form-group">
+            <label>卡密状态</label>
+            <select id="searchStatus">
+              <option value="all">全部</option>
+              <option value="active">已激活</option>
+              <option value="inactive">未激活</option>
+              <option value="expired">已过期</option>
+              <option value="banned">已封禁</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>授权模式筛选</label>
+          <select id="searchAuthMode">
+            <option value="all">全部模式</option>
+            <option value="group">分组授权</option>
+            <option value="app">单APP授权</option>
+          </select>
+        </div>
+        <div class="btn-group">
+          <button class="btn btn-primary" onclick="loadCardList()">搜索</button>
+          <button class="btn btn-warning" onclick="cleanExpired()">清理过期卡密</button>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>卡密内容</th>
+              <th>卡密名称</th>
+              <th>授权模式</th>
+              <th>授权范围</th>
+              <th>创建时间</th>
+              <th>到期时间</th>
+              <th>激活APP列表</th>
+              <th>状态</th>
+              <th>操作</th>
+            </tr>
+          </thead>
+          <tbody id="cardTableBody"></tbody>
+        </table>
+        <div class="pagination">
+          <button class="btn btn-primary" onclick="prevPage()" id="prevBtn">上一页</button>
+          <span>第 <span id="currentPageText">1</span> 页 / 共 <span id="totalPageText">0</span> 页</span>
+          <button class="btn btn-primary" onclick="nextPage()" id="nextBtn">下一页</button>
+        </div>
+      </div>
+    </div>
+    <!-- 生成卡密标签页（双授权模式修复版） -->
+    <div id="cardGenerate" class="tab-content">
+      <div class="card">
+        <h3>🎫 生成卡密</h3>
+        <div class="grid-2">
+          <div class="form-group">
+            <label>卡密名称（必填，如：月卡-普通用户）</label>
+            <input type="text" id="cardName" placeholder="月卡">
+          </div>
+          <div class="form-group">
+            <label>有效期（天，必填）</label>
+            <input type="number" id="cardDays" value="30" placeholder="30">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>授权模式</label>
+          <select id="authMode" onchange="changeAuthMode()">
+            <option value="group">分组授权（适合多APP批量授权）</option>
+            <option value="app">单APP授权（直接选APP，不用建分组）</option>
+          </select>
+        </div>
+        <!-- 分组授权模式 -->
+        <div id="groupAuthBox">
+          <div class="form-group">
+            <label>授权APP分组（必填）</label>
+            <select id="cardGroupId">
+              <option value="">请先创建APP分组</option>
+            </select>
+          </div>
+        </div>
+        <!-- 单APP授权模式 -->
+        <div id="appAuthBox" class="hide">
+          <div class="form-group">
+            <label>选择授权APP（按住Ctrl多选，至少选1个）</label>
+            <select id="authAppIds" multiple style="height: 150px;"></select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>生成方式</label>
+          <select id="generateMode" onchange="toggleGenerateMode()">
+            <option value="auto">自动批量生成</option>
+            <option value="custom">自定义卡密</option>
+          </select>
+        </div>
+        <div id="autoMode">
+          <div class="grid-2">
+            <div class="form-group">
+              <label>生成数量</label>
+              <input type="number" id="generateCount" value="1" placeholder="1">
+            </div>
+            <div class="form-group">
+              <label>卡密前缀（可选）</label>
+              <input type="text" id="cardPrefix" placeholder="VIP-">
+            </div>
+          </div>
+          <div class="form-group">
+            <label>卡密后缀（可选）</label>
+            <input type="text" id="cardSuffix" placeholder="-2026">
+          </div>
+        </div>
+        <div id="customMode" class="hide">
+          <div class="form-group">
+            <label>自定义卡密（一行一个，如：123456、abc123456）</label>
+            <textarea id="customCards" rows="8" placeholder="123456&#10;abc123456&#10;52lin-vip-001"></textarea>
+          </div>
+        </div>
+        <button class="btn btn-primary" style="width: 100%; font-size: 16px; padding: 12px;" onclick="generateCards()">生成卡密</button>
+      </div>
+    </div>
+    <!-- APP分组管理标签页 -->
+    <div id="groupManage" class="tab-content">
+      <div class="card">
+        <h3>📱 APP分组管理</h3>
+        <p style="margin-bottom: 15px; color: var(--text-light);">先在这里配置你的8款APP和分组，分组授权模式用，单APP授权模式不用建分组</p>
+        <div class="form-group">
+          <label>所有APP列表（一行一个APP ID）</label>
+          <textarea id="allAppIds" rows="8" onchange="saveAppIds()"></textarea>
+        </div>
+        <hr style="margin: 15px 0; border-color: var(--border);">
+        <h4>分组列表</h4>
+        <div id="groupList"></div>
+        <button class="btn btn-primary" style="margin-top: 10px;" onclick="addAppGroup()">+ 添加分组</button>
+        <button class="btn btn-success" style="margin-top: 10px; margin-left: 10px;" onclick="saveAllGroups()">保存所有配置</button>
+      </div>
+    </div>
+  </div>
+  <script>
+    // ===================== 通用函数 =====================
+    function switchTab(tabId) {
+      document.querySelectorAll(".tab-item").forEach(item => item.classList.remove("active"));
+      document.querySelectorAll(".tab-content").forEach(item => item.classList.remove("active"));
+      event.target.classList.add("active");
+      document.getElementById(tabId).classList.add("active");
+    }
+    function toggleGenerateMode() {
+      const mode = document.getElementById("generateMode").value;
+      document.getElementById("autoMode").classList.toggle("hide", mode !== "auto");
+      document.getElementById("customMode").classList.toggle("hide", mode !== "custom");
+    }
+    // 授权模式切换（修复：切换时清空参数）
+    function changeAuthMode() {
+      const mode = document.getElementById("authMode").value;
+      document.getElementById("groupAuthBox").classList.toggle("hide", mode !== "group");
+      document.getElementById("appAuthBox").classList.toggle("hide", mode !== "app");
+      // 切换模式时清空另一个模式的参数，避免提交错误
+      if (mode === "app") {
+        document.getElementById("cardGroupId").value = "";
+      } else {
+        document.getElementById("authAppIds").selectedIndex = -1;
+      }
+    }
+    function logout() {
+      localStorage.removeItem("adminKey");
+      adminKey = "";
+      document.getElementById("mainPage").style.display = "none";
+      document.getElementById("loginPage").style.display = "block";
+    }
+    // 自动保存APP列表
+    function saveAppIds() {
+      allAppIds = document.getElementById("allAppIds").value.trim();
+      localStorage.setItem("allAppIds", allAppIds);
+      renderGroupList();
+      renderAppAuthSelect();
+    }
+    // 渲染单APP授权的多选框
+    function renderAppAuthSelect() {
+      const appSelect = document.getElementById("authAppIds");
+      const appList = allAppIds.split("\n").map(id => id.trim()).filter(id => id);
+      appSelect.innerHTML = appList.map(appId => `<option value="${appId}">${appId}</option>`).join("");
+    }
+    // ===================== 登录 =====================
+    async function login() {
+      const key = document.getElementById("adminKeyInput").value.trim();
+      if (!key) { alert("请输入管理员密钥"); return; }
+      try {
+        const res = await fetch(`${API_BASE_URL}/admin/login`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ adminKey: key })
+        });
+        const data = await res.json();
+        if (data.code !== 200) { alert(data.msg); return; }
+        adminKey = key;
+        localStorage.setItem("adminKey", key);
+        document.getElementById("loginPage").style.display = "none";
+        document.getElementById("mainPage").style.display = "block";
+        // 先加载分组数据，再加载卡密列表
+        await loadAppGroups();
+        await loadCardList();
+        // 初始化APP列表
+        document.getElementById("allAppIds").value = allAppIds;
+        renderGroupList();
+        renderAppAuthSelect();
+      } catch (e) { alert("登录失败：" + e.message); }
+    }
+    // ===================== APP分组管理 =====================
+    async function loadAppGroups() {
+      try {
+        const res = await fetch(`${API_BASE_URL}/admin/groups/list`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ adminKey })
+        });
+        const data = await res.json();
+        if (data.code !== 200) { alert(data.msg); return; }
+        appGroups = data.data;
+        // 更新所有分组下拉框
+        updateGroupSelects();
+      } catch (e) { alert("加载APP分组失败：" + e.message); }
+    }
+    function renderGroupList() {
+      const groupList = document.getElementById("groupList");
+      groupList.innerHTML = "";
+      Object.entries(appGroups).forEach(([groupId, group]) => {
+        const groupItem = document.createElement("div");
+        groupItem.className = "group-item";
+        groupItem.innerHTML = `
+          <div class="grid-2">
+            <div class="form-group">
+              <label>分组名称</label>
+              <input type="text" class="group-name" value="${group.name || ""}" placeholder="基础VIP组">
+            </div>
+            <div class="form-group">
+              <label>包含APP（按住Ctrl多选）</label>
+              <select class="group-apps" multiple style="height: 100px;">
+                ${getAllAppIdsOptions(group.appIds || [])}
+              </select>
+            </div>
+          </div>
+          <button class="btn btn-danger" onclick="deleteAppGroup('${groupId}')">删除此分组</button>
+        `;
+        groupList.appendChild(groupItem);
+      });
+    }
+    function getAllAppIdsOptions(selectedApps = []) {
+      const appList = allAppIds.split("\n").map(id => id.trim()).filter(id => id);
+      return appList.map(appId => 
+        `<option value="${appId}" ${selectedApps.includes(appId) ? "selected" : ""}>${appId}</option>`
+      ).join("");
+    }
+    function updateGroupSelects() {
+      const cardGroupSelect = document.getElementById("cardGroupId");
+      const options = Object.entries(appGroups).map(([groupId, group]) => 
+        `<option value="${groupId}">${group.name}</option>`
+      ).join("");
+      if (options) {
+        cardGroupSelect.innerHTML = options;
+      } else {
+        cardGroupSelect.innerHTML = '<option value="">请先创建APP分组</option>';
+      }
+    }
+    function addAppGroup() {
+      const groupId = "group_" + Date.now();
+      appGroups[groupId] = { name: "", appIds: [] };
+      renderGroupList();
+    }
+    function deleteAppGroup(groupId) {
+      if (!confirm("确定要删除此分组吗？")) return;
+      delete appGroups[groupId];
+      renderGroupList();
+    }
+    async function saveAllGroups() {
+      // 读取所有分组数据
+      const groupItems = document.querySelectorAll("#groupList .group-item");
+      const groupIds = Object.keys(appGroups);
+      groupItems.forEach((item, index) => {
+        const groupId = groupIds[index];
+        const name = item.querySelector(".group-name").value.trim();
+        const appSelect = item.querySelector(".group-apps");
+        const appIds = Array.from(appSelect.selectedOptions).map(opt => opt.value);
+        appGroups[groupId] = { name, appIds };
+      });
+      try {
+        const res = await fetch(`${API_BASE_URL}/admin/login`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ adminKey })
+        });
+        const checkData = await res.json();
+        if (checkData.code !== 200) { alert("管理员密钥已失效，请重新登录"); logout(); return; }
 
-    <script>
-        const API = "https://kami.8888888.best"; // 换成你的
-        let pass = "";
-        let apps = ["App_01", "App_02", "App_03", "App_04", "App_05", "App_06", "App_07", "App_08"];
-        let groups = [];
-
-        // 初始化 APP 勾选框
-        document.getElementById('appBox').innerHTML = apps.map(a => `
-            <label class="flex items-center p-2 bg-white rounded-lg border hover:border-pink-300 cursor-pointer transition-all">
-                <input type="checkbox" name="apps" value="${a}" class="w-4 h-4 accent-pink-500 mr-2">
-                <span class="text-sm text-gray-600">${a}</span>
-            </label>
-        `).join('');
-
-        async function login() {
-            pass = document.getElementById('adminKey').value;
-            load();
+        const res = await fetch(`${API_BASE_URL}/admin/groups/save`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ adminKey, groups: appGroups })
+        });
+        const data = await res.json();
+        if (data.code !== 200) { alert(data.msg); return; }
+        alert(data.msg);
+        // 重新加载数据
+        await loadAppGroups();
+        await loadCardList();
+      } catch (e) { alert("保存失败：" + e.message); }
+    }
+    // ===================== 卡密管理 =====================
+    async function loadCardList() {
+      const keyword = document.getElementById("searchKeyword").value.trim();
+      const status = document.getElementById("searchStatus").value;
+      const authMode = document.getElementById("searchAuthMode").value;
+      try {
+        const res = await fetch(`${API_BASE_URL}/admin/cards/list`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ adminKey, page: currentPage, pageSize, keyword, status, authMode })
+        });
+        const data = await res.json();
+        if (data.code !== 200) { alert(data.msg); return; }
+        // 更新统计数据
+        const stats = data.data.stats;
+        document.getElementById("totalCards").textContent = stats.totalCards;
+        document.getElementById("activeCards").textContent = stats.activeCards;
+        document.getElementById("inactiveCards").textContent = stats.inactiveCards;
+        document.getElementById("expiredCards").textContent = stats.expiredCards;
+        document.getElementById("bannedCards").textContent = stats.bannedCards;
+        // 同步最新分组数据
+        if (data.data.appGroups) {
+          appGroups = data.data.appGroups;
+          updateGroupSelects();
         }
-
-        async function load() {
-            const r = await fetch(`${API}/admin/cards/list`, { method:'POST', body:JSON.stringify({adminKey:pass})});
-            const d = await r.json();
-            if(d.code !== 200) return alert("验证失败");
-            document.getElementById('loginBox').classList.add('hidden');
-            document.getElementById('mainUI').classList.remove('hidden');
-            render(d.data);
-        }
-
-        function render(data) {
-            groups = data.appGroups;
-            // 列表
-            document.getElementById('listBody').innerHTML = data.list.map(c => `
-                <tr class="border-b border-pink-50 hover:bg-pink-50/50">
-                    <td class="p-3"><b class="text-pink-600 font-mono select-all">${c.card_key}</b><br><span class="text-gray-400 text-xs">${c.name||'无备注'}</span></td>
-                    <td class="p-3 text-xs">${c.auth_mode==='group'?'<span class="bg-blue-100 p-1 rounded">组:'+c.app_group_id+'</span>':'单APP'}</td>
-                    <td class="p-3 text-xs text-gray-500">开：${new Date(c.create_time).toLocaleString()}<br>激：${c.activate_time?new Date(c.activate_time).toLocaleString():'<span class="text-pink-400">未激活</span>'}</td>
-                    <td class="p-3 font-mono text-xs text-gray-400">${c.device_id||'--'}</td>
-                    <td class="p-3">
-                        <span class="font-bold ${c.status==='normal'?'text-green-500':'text-red-500'}">${c.status==='normal'?'使用中':'已封禁'}</span>
-                        <div class="mt-1 space-x-2">
-                            <button onclick="act('${c.card_key}','${c.status==='normal'?'banned':'normal'}')" class="text-blue-400">切换</button>
-                            <button onclick="act('${c.card_key}','delete')" class="text-red-300">删除</button>
-                        </div>
-                    </td>
-                </tr>
-            `).join('');
-
-            // 下拉
-            document.getElementById('a_gid').innerHTML = '<option value="">-- 不使用分组，采用下方单选 --</option>' + groups.map(g=>`<option value="${g.id}">${g.name}</option>`).join('');
-
-            // 分组编辑
-            document.getElementById('gList').innerHTML = groups.map((g,i)=>`
-                <div class="glass p-4 border-l-4 border-pink-400">
-                    <div class="grid grid-cols-2 gap-4 mb-2">
-                        <input class="bg-transparent border-b font-bold" onchange="groups[${i}].id=this.value" value="${g.id}" placeholder="ID">
-                        <input class="bg-transparent border-b" onchange="groups[${i}].name=this.value" value="${g.name}" placeholder="组名">
-                    </div>
-                    <input class="w-full text-xs text-gray-400 bg-transparent" onchange="groups[${i}].app_ids=this.value.split(',')" value="${JSON.parse(g.app_ids).join(',')}" placeholder="APP ID 逗号隔开">
-                </div>
-            `).join('');
-        }
-
-        async function addCards() {
-            const chk = Array.from(document.querySelectorAll('input[name="apps"]:checked')).map(e=>e.value);
-            const b = {
-                adminKey: pass,
-                cardName: document.getElementById('a_name').value,
-                minutes: document.getElementById('a_min').value * document.getElementById('a_unit').value,
-                count: document.getElementById('a_count').value,
-                authMode: document.getElementById('a_gid').value ? 'group' : 'single',
-                appGroupId: document.getElementById('a_gid').value,
-                authAppIds: chk
-            };
-            await fetch(`${API}/admin/cards/add`, {method:'POST', body:JSON.stringify(b)});
-            load();
-            alert("生成成功！");
-        }
-
-        async function act(k,a) {
-            if(a==='delete' && !confirm("确定删除?")) return;
-            await fetch(`${API}/admin/cards/action`, {method:'POST', body:JSON.stringify({adminKey:pass, card:k, action:a})});
-            load();
-        }
-
-        function addG() { groups.push({id:'NEW', name:'新分组', app_ids:[]}); render({list:[], appGroups:groups}); }
-        async function saveG() {
-            await fetch(`${API}/admin/group-save`, {method:'POST', body:JSON.stringify({adminKey:pass, groups:groups})});
-            alert("分组已同步");
-            load();
-        }
-
-        function showT(t) {
-            document.querySelectorAll('.tab-c').forEach(e=>e.classList.add('hidden'));
-            document.getElementById('t-'+t).classList.remove('hidden');
-        }
-
-        // 浪漫爱心生成
-        setInterval(() => {
-            const h = document.createElement('div');
-            h.innerHTML = '❤️';
-            h.className = 'heart';
-            h.style.left = Math.random() * 100 + 'vw';
-            h.style.fontSize = (Math.random() * 20 + 10) + 'px';
-            document.body.appendChild(h);
-            setTimeout(() => h.remove(), 4000);
-        }, 400);
-    </script>
+        // 渲染表格
+        const tbody = document.getElementById("cardTableBody");
+        tbody.innerHTML = "";
+        data.data.list.forEach(item => {
+          let statusText = "";
+          let statusClass = "";
+          const now = Date.now();
+          if (item.status === "banned") { statusText = "已封禁"; statusClass = "status-banned"; }
+          else if (item.expireTime < now) { statusText = "已过期"; statusClass = "status-expired"; }
+          else if (!item.appBindings || Object.keys(item.appBindings).length === 0) { statusText = "未激活"; statusClass = "status-inactive"; }
+          else { statusText = "已激活"; statusClass = "status-active"; }
+          // 授权模式和范围显示
+          const authMode = item.authMode || "group";
+          let authModeText = authMode === "group" ? "分组授权" : "单APP授权";
+          let authRangeText = "";
+          if (authMode === "group") {
+            authRangeText = appGroups[item.appGroupId]?.name || "未知分组";
+          } else {
+            authRangeText = (item.authAppIds || []).join("、");
+          }
+          
+          let activatedAppsText = "-";
+          if (item.appBindings && Object.keys(item.appBindings).length > 0) {
+            activatedAppsText = Object.keys(item.appBindings).map(appId => {
+              const activateTime = item.activateTimes?.[appId] ? new Date(item.activateTimes[appId]).toLocaleString() : "-";
+              const lastOnline = item.lastOnlineTimes?.[appId] ? new Date(item.lastOnlineTimes[appId]).toLocaleString() : "-";
+              return `${appId}<br><small>激活:${activateTime}<br>在线:${lastOnline}</small>`;
+            }).join("<br><br>");
+          }
+          const tr = document.createElement("tr");
+          tr.innerHTML = `
+            <td>${item.card}</td>
+            <td>${item.name}</td>
+            <td>${authModeText}</td>
+            <td>${authRangeText}</td>
+            <td>${item.createTimeText}</td>
+            <td>${item.expireTimeText}</td>
+            <td>${activatedAppsText}</td>
+            <td><span class="status-tag ${statusClass}">${statusText}</span></td>
+            <td>
+              <div class="btn-group">
+                ${item.status === "banned" 
+                  ? `<button class="btn btn-success" onclick="changeCardStatus('${item.card}', 'unban')">解封</button>`
+                  : `<button class="btn btn-warning" onclick="changeCardStatus('${item.card}', 'ban')">封禁</button>`
+                }
+                <button class="btn btn-danger" onclick="deleteCard('${item.card}')">删除</button>
+              </div>
+            </td>
+          `;
+          tbody.appendChild(tr);
+        });
+        // 分页更新
+        const totalPage = Math.ceil(data.data.total / pageSize);
+        document.getElementById("currentPageText").textContent = currentPage;
+        document.getElementById("totalPageText").textContent = totalPage;
+        document.getElementById("prevBtn").disabled = currentPage <= 1;
+        document.getElementById("nextBtn").disabled = currentPage >= totalPage;
+      } catch (e) { alert("加载失败：" + e.message); }
+    }
+    function prevPage() { if (currentPage > 1) { currentPage--; loadCardList(); } }
+    function nextPage() { currentPage++; loadCardList(); }
+    // 生成卡密（修复：严格按模式提交参数）
+    async function generateCards() {
+      const cardName = document.getElementById("cardName").value.trim();
+      const days = parseInt(document.getElementById("cardDays").value);
+      const authMode = document.getElementById("authMode").value;
+      const mode = document.getElementById("generateMode").value;
+      
+      const body = { adminKey, cardName, days, authMode };
+      
+      // 【修复】只提交当前模式的参数，不会带多余的分组ID
+      if (authMode === "group") {
+        body.appGroupId = document.getElementById("cardGroupId").value;
+      } else if (authMode === "app") {
+        const appSelect = document.getElementById("authAppIds");
+        body.authAppIds = Array.from(appSelect.selectedOptions).map(opt => opt.value);
+      }
+      // 生成方式
+      if (mode === "auto") {
+        body.count = parseInt(document.getElementById("generateCount").value);
+        body.prefix = document.getElementById("cardPrefix").value.trim();
+        body.suffix = document.getElementById("cardSuffix").value.trim();
+      } else {
+        body.customCards = document.getElementById("customCards").value.trim();
+      }
+      try {
+        const res = await fetch(`${API_BASE_URL}/admin/cards/add`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(body)
+        });
+        const data = await res.json();
+        if (data.code !== 200) { alert(data.msg); return; }
+        const cardList = data.cards.join("\n");
+        alert(`${data.msg}\n\n卡密列表：\n${cardList}\n\n已自动复制到剪贴板`);
+        await navigator.clipboard.writeText(cardList);
+        loadCardList();
+      } catch (e) { alert("生成失败：" + e.message); }
+    }
+    async function deleteCard(card) {
+      if (!confirm(`确定要删除卡密【${card}】吗？此操作不可恢复！`)) return;
+      try {
+        const res = await fetch(`${API_BASE_URL}/admin/cards/delete`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ adminKey, card })
+        });
+        const data = await res.json();
+        if (data.code !== 200) { alert(data.msg); return; }
+        alert("删除成功");
+        loadCardList();
+      } catch (e) { alert("删除失败：" + e.message); }
+    }
+    async function changeCardStatus(card, action) {
+      const text = action === "ban" ? "封禁" : "解封";
+      if (!confirm(`确定要${text}卡密【${card}】吗？`)) return;
+      try {
+        const res = await fetch(`${API_BASE_URL}/admin/cards/ban`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ adminKey, card, action })
+        });
+        const data = await res.json();
+        if (data.code !== 200) { alert(data.msg); return; }
+        alert(`${text}成功`);
+        loadCardList();
+      } catch (e) { alert(`${text}失败：` + e.message); }
+    }
+    async function cleanExpired() {
+      if (!confirm("确定要清理所有过期卡密吗？此操作不可恢复！")) return;
+      try {
+        const res = await fetch(`${API_BASE_URL}/admin/cards/clean`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ adminKey })
+        });
+        const data = await res.json();
+        if (data.code !== 200) { alert(data.msg); return; }
+        alert(data.msg);
+        loadCardList();
+      } catch (e) { alert("清理失败：" + e.message); }
+    }
+    // 页面加载时检查登录状态
+    window.onload = () => {
+      if (adminKey) {
+        document.getElementById("adminKeyInput").value = adminKey;
+        login();
+      }
+    };
+  </script>
 </body>
 </html>
