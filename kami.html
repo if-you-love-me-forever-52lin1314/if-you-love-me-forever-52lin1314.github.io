@@ -53,7 +53,7 @@
 <body>
   <!-- ===================== 【小白仅需修改这里】你的Worker地址 ===================== -->
   <script>
-    const API_BASE_URL = "https://kami.8888888.best"; // 替换为你的Worker地址，末尾不加/
+    const API_BASE_URL = "https://8888888.best"; // 替换为你的Worker地址，末尾不加/
     // ==========================================================================
     
     let adminKey = localStorage.getItem("adminKey") || "";
@@ -390,22 +390,23 @@
         appGroups[groupId] = { name, appIds };
       });
       try {
-        const res = await fetch(`${API_BASE_URL}/admin/login`, {
+        // 修复：重复声明res的bug，这里把第二个res改成saveRes
+        const checkRes = await fetch(`${API_BASE_URL}/admin/login`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ adminKey })
         });
-        const checkData = await res.json();
+        const checkData = await checkRes.json();
         if (checkData.code !== 200) { alert("管理员密钥已失效，请重新登录"); logout(); return; }
 
-        const res = await fetch(`${API_BASE_URL}/admin/groups/save`, {
+        const saveRes = await fetch(`${API_BASE_URL}/admin/groups/save`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ adminKey, groups: appGroups })
         });
-        const data = await res.json();
-        if (data.code !== 200) { alert(data.msg); return; }
-        alert(data.msg);
+        const saveData = await saveRes.json();
+        if (saveData.code !== 200) { alert(saveData.msg); return; }
+        alert(saveData.msg);
         // 重新加载数据
         await loadAppGroups();
         await loadCardList();
