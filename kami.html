@@ -2,221 +2,236 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<title>卡密管理系统</title>
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>52霖科技-卡密管理</title>
 <style>
-*{box-sizing:border-box}
-body{margin:0;background:linear-gradient(135deg,#ff9a9e 0%,#fad0c4 50%,#fecfef 100%);
-  background-attachment:fixed;font-family:system-ui,sans-serif;color:#222}
-.heart{position:fixed;width:12px;height:12px;background:#ff5e7d;
-  transform:rotate(45deg);animation:fly 6s linear forwards;z-index:9999}
-.heart:before,.heart:after{content:'';position:absolute;width:12px;height:12px;
-  background:inherit;border-radius:50%}
-.heart:before{top:-6px;left:0}
-.heart:after{left:-6px;top:0}
-@keyframes fly{0%{opacity:1;transform:translateY(0) rotate(45deg)}
-  100%{opacity:0;transform:translateY(-100vh) rotate(45deg)}}
-.card{background:rgba(255,255,255,0.85);border-radius:16px;box-shadow:0 0 20px rgba(255,94,125,0.2);
-  padding:20px;margin-bottom:20px;border:1px solid rgba(255,94,125,0.1)}
-.btn{background:#ff5e7d;color:white;border:none;border-radius:12px;padding:10px 16px;
-  margin:4px;cursor:pointer;transition:all 0.2s}
-.btn:hover{transform:scale(1.05);box-shadow:0 0 12px #ff5e7d}
-input,select{width:100%;padding:10px;border-radius:10px;border:1px solid #ddd;
-  margin-bottom:10px;background:rgba(255,255,255,0.9)}
-.table{width:100%;border-collapse:collapse;margin-top:10px}
-.table th,.table td{padding:10px;text-align:left;border-bottom:1px solid #eee}
-.table th{background:rgba(255,94,125,0.1)}
-.modal{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.4);
-  display:flex;align-items:center;justify-content:center;padding:20px}
-.modal .box{background:white;border-radius:16px;max-width:500px;width:100%;padding:20px}
-.tabs{display:flex;gap:10px;margin-bottom:15px;flex-wrap:wrap}
-.tab{padding:10px 14px;border-radius:12px;background:#fff;cursor:pointer}
-.tab.active{background:#ff5e7d;color:white}
-.container{max-width:1200px;margin:0 auto;padding:20px}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:linear-gradient(135deg,#ffc8dd 0%,#ffafcc 50%,#fcd5ce 100%);min-height:100vh;padding:20px}
+.heart{position:fixed;width:14px;height:14px;background:#ff4d6d;transform:rotate(45deg);animation:heartFly 7s linear infinite;z-index:0;opacity:0.7}
+.heart:before,.heart:after{content:"";position:absolute;width:14px;height:14px;background:inherit;border-radius:50%}
+.heart:before{top:-7px;left:0}
+.heart:after{left:-7px;top:0}
+@keyframes heartFly{0%{transform:translateY(100vh) rotate(45deg);opacity:0.8}100%{transform:translateY(-10vh) rotate(405deg);opacity:0}}
+.container{max-width:1400px;margin:0 auto;position:relative;z-index:1}
+.card{background:rgba(255,255,255,0.9);border-radius:20px;padding:24px;margin-bottom:20px}
+.tabs{display:flex;gap:12px;margin-bottom:20px}
+.tab{padding:12px 24px;border-radius:14px;background:#fff;cursor:pointer;border:none}
+.tab.active{background:#ff4d6d;color:white}
+.btn{padding:10px 18px;border:none;border-radius:12px;background:#ff4d6d;color:white;cursor:pointer;margin:4px}
+.btn-green{background:#2ec4b6}
+.btn-red{background:#e71d36}
+input,select{width:100%;padding:12px;border-radius:12px;border:1px solid #ddd;margin:8px 0}
+table{width:100%;border-collapse:collapse}
+th,td{padding:12px;text-align:left;border-bottom:1px solid #eee}
+.check-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px;margin:10px 0}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,0.4);display:none;align-items:center;justify-content:center}
+.modal-box{background:white;padding:24px;border-radius:16px;min-width:450px}
 </style>
 </head>
 <body>
-<div class="container" id="app" style="display:none">
-  <div class="card">
-    <h2 style="margin:0;color:#ff5e7d">💕 卡密管理系统</h2>
-    <div class="tabs">
-      <div class="tab active" onclick="tab(0)">卡密管理</div>
-      <div class="tab" onclick="tab(1)">生成卡密</div>
-      <div class="tab" onclick="tab(2)">APP分组</div>
-      <div class="tab" onclick="tab(3)">操作日志</div>
-    </div>
-  </div>
+<script>
+function addHeart(){const h=document.createElement("div");h.className="heart";h.style.left=Math.random()*100+"vw";document.body.appendChild(h);setTimeout(()=>h.remove(),7000)}
+setInterval(addHeart,400);
+</script>
 
-  <div id="t0" class="tab-content">
-    <div class="card">
-      <button class="btn" onclick="batch('del')">批量删除</button>
-      <button class="btn" onclick="batch('ban')">批量封禁</button>
-      <button class="btn" onclick="batch('unban')">批量解封</button>
-      <button class="btn" onclick="exportCards()">导出卡密</button>
-      <button class="btn" onclick="loadList()">刷新</button>
-    </div>
-    <div class="card"><div id="list"></div></div>
-  </div>
+<!-- ============================== ✅ 只在这里修改APP！！！============================== -->
+<script>
+// 新增、删除、修改APP 全程只改这里！！！
+const GLOBAL_APP_LIST = [
+  { id: "APP1", name: "52霖影视" },
+  { id: "APP2", name: "52霖漫画" },
+  { id: "APP3", name: "52霖小说" },
+  { id: "APP4", name: "52霖动漫" },
+  { id: "APP5", name: "52霖短剧" },
+  { id: "APP6", name: "52霖音乐" },
+  { id: "APP7", name: "52霖游戏" },
+  { id: "APP8", name: "52霖工具" }
+];
+</script>
+<!-- ===================================================================================== -->
 
-  <div id="t1" class="tab-content" style="display:none">
-    <div class="card">
-      <input id="c-name" placeholder="卡密名称">
-      <div style="display:flex;gap:10px">
-        <input id="c-duration" type="number" placeholder="时长" style="width:60%">
-        <select id="c-unit" style="width:40%">
-          <option value="day">天</option>
-          <option value="hour">小时</option>
-          <option value="minute">分钟</option>
-        </select>
-      </div>
-      <input id="c-count" type="number" placeholder="生成数量" value="1">
-      <select id="c-mode"><option value="group">分组授权</option><option value="app">APP授权</option></select>
-      <div id="app-list"></div>
-      <select id="c-group"></select>
-      <div style="display:flex;gap:10px">
-        <label><input name="eff" type="radio" value="create" checked>创建生效</label>
-        <label><input name="eff" type="radio" value="activate">激活生效</label>
-      </div>
-      <input id="c-max" type="number" placeholder="最大激活设备数(0不限制)" value="0">
-      <button class="btn" onclick="generate()" style="width:100%">生成卡密</button>
-    </div>
-  </div>
-
-  <div id="t2" class="tab-content" style="display:none">
-    <div class="card">
-      <input id="g-name" placeholder="分组名称">
-      <div id="g-app-list"></div>
-      <button class="btn" onclick="saveGroup()">保存分组</button>
-    </div>
-    <div class="card"><div id="group-list"></div></div>
-  </div>
-
-  <div id="t3" class="tab-content" style="display:none">
-    <div class="card"><div id="logs"></div></div>
+<div class="modal" id="loginModal" style="display:flex">
+  <div class="modal-box">
+    <h2 style="color:#ff4d6d;text-align:center">🔐 管理员登录</h2>
+    <input type="password" id="adminPwd" placeholder="输入管理员密钥">
+    <button class="btn" style="width:100%" onclick="adminLogin()">登录</button>
   </div>
 </div>
 
-<div id="login" class="modal">
-  <div class="card" style="width:100%;max-width:400px">
-    <h3 style="color:#ff5e7d;text-align:center">🔐 管理员登录</h3>
-    <input id="key" type="password" placeholder="请输入管理员密钥">
-    <button class="btn" onclick="login()" style="width:100%">登录</button>
+<div class="container" id="mainPage" style="display:none">
+  <div class="card">
+    <h1 style="color:#ff4d6d;margin-bottom:16px">💕 52霖科技 卡密管理系统</h1>
+    <div class="tabs">
+      <button class="tab active" onclick="switchTab(0)">卡密管理</button>
+      <button class="tab" onclick="switchTab(1)">生成卡密</button>
+      <button class="tab" onclick="switchTab(2)">APP分组</button>
+      <button class="tab" onclick="switchTab(3)">操作日志</button>
+    </div>
+  </div>
+
+  <div id="tab0">
+    <div class="card">
+      <button class="btn btn-red" onclick="batchOpt('del')">批量删除</button>
+      <button class="btn" onclick="batchOpt('ban')">批量封禁</button>
+      <button class="btn btn-green" onclick="batchOpt('unban')">批量解封</button>
+      <button class="btn" onclick="exportAll()">导出全部卡密</button>
+      <button class="btn" onclick="loadCards()">刷新列表</button>
+    </div>
+    <div class="card"><table id="cardTable"></table></div>
+  </div>
+
+  <div id="tab1" style="display:none">
+    <div class="card">
+      <h3>✨ 批量生成卡密</h3>
+      <input id="cardName" placeholder="自定义卡密名称">
+      <input id="cardPrefix" placeholder="自定义卡密前缀（可选）">
+      <input id="cardSuffix" placeholder="自定义卡密后缀（可选）">
+      <div style="display:flex;gap:10px">
+        <input id="genDuration" type="number" placeholder="有效期时长" style="flex:1">
+        <select id="genUnit" style="width:150px">
+          <option value="minute">分钟</option>
+          <option value="hour">小时</option>
+          <option value="day" selected>天</option>
+        </select>
+      </div>
+      <input id="genCount" type="number" placeholder="批量生成数量" value="1">
+      <select id="authMode" onchange="modeChange()">
+        <option value="app">单APP授权</option>
+        <option value="group">分组授权</option>
+      </select>
+      <div id="appCheckBoxWrap" class="check-grid"></div>
+      <select id="groupSelect" style="display:none"></select>
+      <div style="display:flex;gap:10px">
+        <label><input type="radio" name="effTime" value="create" checked> 创建立即生效</label>
+        <label><input type="radio" name="effTime" value="activate"> 首次激活生效</label>
+      </div>
+      <input id="maxDevice" type="number" placeholder="最大绑定设备数 0=不限" value="0">
+      <button class="btn" style="width:100%;margin-top:10px" onclick="createCard()">一键批量生成</button>
+    </div>
+  </div>
+
+  <div id="tab2" style="display:none">
+    <div class="card">
+      <h3>📁 APP分组管理</h3>
+      <input id="newGroupId" placeholder="自定义分组ID（对接APP必填）">
+      <input id="newGroupName" placeholder="分组名称">
+      <div id="groupAppCheck" class="check-grid"></div>
+      <button class="btn btn-green" onclick="saveGroup()">保存分组</button>
+    </div>
+    <div class="card" id="groupListBox"></div>
+  </div>
+
+  <div id="tab3" style="display:none">
+    <div class="card"><table id="logTable"></table></div>
   </div>
 </div>
 
 <script>
 const API = "/api";
-let token = "";
-let tabIndex = 0;
-let groups = [], apps = ["APP_1","APP_2","APP_3","APP_4"];
+let adminKey = "";
 
-function createHeart() {
-  const h = document.createElement("div");
-  h.className = "heart";
-  h.style.left = Math.random() * 100 + "vw";
-  h.style.animationDuration = Math.random() * 3 + 4 + "s";
-  document.body.appendChild(h);
-  setTimeout(() => h.remove(), 6000);
-}
-setInterval(createHeart, 300);
-
-async function login() {
-  const k = document.getElementById("key").value;
-  const r = await fetch(API+"/admin/login", { method:"POST", body:JSON.stringify({adminKey:k}) });
-  const j = await r.json();
-  if (j.code === 200) { token = k; document.getElementById("login").remove(); document.getElementById("app").style.display = "block"; loadAll(); }
-  else alert("密钥错误");
+async function adminLogin(){
+  const pwd = document.getElementById("adminPwd").value;
+  const res = await fetch(API+"/admin/login",{method:"POST",body:JSON.stringify({adminKey:pwd})});
+  const j = await res.json();
+  if(j.code===200){ adminKey = pwd; document.getElementById("loginModal").style.display="none"; document.getElementById("mainPage").style.display="block"; initPage(); }
+  else alert("密钥错误！");
 }
 
-function tab(i) {
-  tabIndex = i;
-  document.querySelectorAll(".tab").forEach((e,j) => e.classList.toggle("active",j===i));
-  document.querySelectorAll(".tab-content").forEach((e,j) => e.style.display = j===i?"block":"none");
+// 渲染APP复选框
+function renderAppCheck(){
+  let html = "";
+  GLOBAL_APP_LIST.forEach(app=>{
+    html += `<label><input type="checkbox" class="appCheckItem" value="${app.id}"> ${app.name} (ID:${app.id})</label>`
+  })
+  document.getElementById("appCheckBoxWrap").innerHTML = html;
+  document.getElementById("groupAppCheck").innerHTML = html;
 }
 
-async function loadAll() { loadGroups(); loadList(); loadLogs(); }
-
-async function loadGroups() {
-  const r = await fetch(API+"/admin/groups/list", { method:"POST", body:JSON.stringify({adminKey:token}) });
-  const j = await r.json();
-  groups = j.data || [];
-  const sel = document.getElementById("c-group");
-  sel.innerHTML = groups.map(g => `<option value="${g.group_id}">${g.name}</option>`).join("");
+async function initPage(){ renderAppCheck(); await loadGroups(); await loadCards(); }
+function switchTab(i){
+  document.querySelectorAll(".tab").forEach((e,j)=>e.classList.toggle("active",j===i));
+  document.querySelectorAll("#tab0,#tab1,#tab2,#tab3").forEach((e,j)=>e.style.display = j===i?"block":"none");
+}
+function modeChange(){
+  const m = document.getElementById("authMode").value;
+  document.getElementById("appCheckBoxWrap").style.display = m==="app"?"grid":"none";
+  document.getElementById("groupSelect").style.display = m==="group"?"block":"none";
 }
 
-async function loadList() {
-  const r = await fetch(API+"/admin/cards/list", { method:"POST", body:JSON.stringify({adminKey:token}) });
-  const j = await r.json();
-  const list = j.data || [];
-  document.getElementById("list").innerHTML = `
-  <table class="table">
-    <tr><th><input type="checkbox" id="checkAll"></th><th>卡密</th><th>名称</th><th>状态</th><th>激活/设备</th><th>到期时间</th><th>操作</th></tr>
-    ${list.map(c => `
-    <tr>
-      <td><input type="checkbox" class="card-item" value="${c.card}"></td>
-      <td>${c.card}</td>
-      <td>${c.name}</td>
-      <td>${c.status==='banned'?'封禁':'正常'}</td>
-      <td>${Object.keys(JSON.parse(c.device_ids||'{}')).length}</td>
-      <td>${new Date(c.expire_time).toLocaleString()}</td>
-      <td>
-        <button class="btn" onclick="renew('${c.card}')">续期</button>
-      </td>
-    </tr>`).join("")}
-  </table>`;
+async function loadCards(){
+  const res = await fetch(API+"/admin/card/list",{method:"POST",body:JSON.stringify({adminKey})});
+  const list = (await res.json()).data || [];
+  let html = `<tr><th>选择</th><th>卡密</th><th>名称</th><th>状态</th><th>激活状态</th><th>到期时间</th><th>操作</th></tr>`;
+  list.forEach(c=>{
+    html += `<tr>
+      <td><input type="checkbox" class="cardCheck" value="${c.card}"></td>
+      <td>${c.card}</td><td>${c.name}</td>
+      <td>${c.status==="banned"?"封禁":"正常"}</td>
+      <td>${c.isActive?"✅已激活":"⏳未激活"}</td>
+      <td>${new Date(c.expireTime).toLocaleString()}</td>
+      <td><button class="btn" onclick="renewCard('${c.card}')">续期</button></td>
+    </tr>`
+  })
+  document.getElementById("cardTable").innerHTML = html;
 }
 
-async function generate() {
-  const name = document.getElementById("c-name").value;
-  const duration = document.getElementById("c-duration").value;
-  const unit = document.getElementById("c-unit").value;
-  const count = document.getElementById("c-count").value;
-  const mode = document.getElementById("c-mode").value;
-  const group = document.getElementById("c-group").value;
-  const eff = document.querySelector('input[name="eff"]:checked').value;
-  const max = document.getElementById("c-max").value;
-  const appIds = Array.from(document.querySelectorAll('.app-check:checked')).map(i=>i.value);
-  const d = { adminKey:token, name, duration, unit, count, authMode:mode, groupId:group, appIds, effectiveMode:eff, maxDevices:max };
-  const r = await fetch(API+"/admin/cards/add", { method:"POST", body:JSON.stringify(d) });
-  const j = await r.json();
-  alert("生成成功："+j.cards.join("\n"));
-  loadList();
+async function batchOpt(action){
+  const select = Array.from(document.querySelectorAll(".cardCheck:checked")).map(i=>i.value);
+  if(!select.length) return alert("请先勾选卡密！");
+  await fetch(API+"/admin/card/batch",{method:"POST",body:JSON.stringify({adminKey,cardList:select,action})});
+  loadCards();
 }
 
-async function batch(act) {
-  const ids = Array.from(document.querySelectorAll('.card-item:checked')).map(i=>i.value);
-  if (!ids.length) return alert("请选择");
-  await fetch(API+"/admin/cards/batch", { method:"POST", body:JSON.stringify({adminKey:token, ids, act}) });
-  loadList();
+async function renewCard(card){
+  const num = prompt("输入续期时长");
+  const unit = prompt("输入单位 minute/hour/day");
+  await fetch(API+"/admin/card/renew",{method:"POST",body:JSON.stringify({adminKey,card,num,unit})});
+  loadCards();
 }
 
-async function renew(card) {
-  const d = prompt("续期时长（数字）");
-  const u = prompt("单位 day/hour/minute");
-  await fetch(API+"/admin/cards/renew", { method:"POST", body:JSON.stringify({adminKey:token, card, d, unit:u}) });
-  loadList();
+async function createCard(){
+  const name = document.getElementById("cardName").value;
+  const prefix = document.getElementById("cardPrefix").value;
+  const suffix = document.getElementById("cardSuffix").value;
+  const duration = document.getElementById("genDuration").value;
+  const unit = document.getElementById("genUnit").value;
+  const count = document.getElementById("genCount").value;
+  const authMode = document.getElementById("authMode").value;
+  const effMode = document.querySelector('input[name="effTime"]:checked').value;
+  const maxD = document.getElementById("maxDevice").value;
+  const appIds = Array.from(document.querySelectorAll(".appCheckItem:checked")).map(i=>i.value);
+  const groupId = document.getElementById("groupSelect").value;
+
+  const res = await fetch(API+"/admin/card/create",{
+    method:"POST",body:JSON.stringify({adminKey,cardName:name,prefix,suffix,duration,unit,count,authMode,effMode,maxDevice:maxD,appIds,groupId})
+  })
+  const j = await res.json();
+  alert(`生成成功！\n${j.cards.join("\n")}`); loadCards();
 }
 
-async function loadLogs() {
-  const r = await fetch(API+"/admin/logs", { method:"POST", body:JSON.stringify({adminKey:token}) });
-  const j = await r.json();
-  document.getElementById("logs").innerHTML = `<table class="table">
-    <tr><th>操作</th><th>目标</th><th>IP</th><th>时间</th></tr>
-    ${j.data.map(l=>`<tr>
-      <td>${l.action}</td>
-      <td>${l.target}</td>
-      <td>${l.ip}</td>
-      <td>${new Date(l.create_time).toLocaleString()}</td>
-    </tr>`).join("")}
-  </table>`;
+async function loadGroups(){
+  const res = await fetch(API+"/admin/group/all",{method:"POST",body:JSON.stringify({adminKey})});
+  const groups = (await res.json()).data || [];
+  let optHtml = `<option value="">请选择分组</option>`;
+  groups.forEach(g=>optHtml += `<option value="${g.group_id}">${g.name}</option>`);
+  document.getElementById("groupSelect").innerHTML = optHtml;
 }
 
-function exportCards() {
-  const cards = Array.from(document.querySelectorAll('.card-item:checked')).map(i=>i.value);
+async function saveGroup(){
+  const gid = document.getElementById("newGroupId").value;
+  const gname = document.getElementById("newGroupName").value;
+  const appIds = Array.from(document.querySelectorAll('#groupAppCheck input:checked')).map(i=>i.value);
+  await fetch(API+"/admin/group/save",{method:"POST",body:JSON.stringify({adminKey,groupId:gid,groupName:gname,appIds})});
+  alert("分组保存成功！"); loadGroups();
+}
+
+async function exportAll(){
+  const res = await fetch(API+"/admin/card/export",{method:"POST",body:JSON.stringify({adminKey})});
+  const list = (await res.json()).data || [];
   const a = document.createElement("a");
-  a.href = URL.createObjectURL(new Blob([cards.join("\n")],{type:"text/plain"}));
-  a.download = "cards.txt";
-  a.click();
+  a.href = URL.createObjectURL(new Blob([list.join("\n")]));
+  a.download = "全部卡密.txt"; a.click();
 }
 </script>
 </body>
